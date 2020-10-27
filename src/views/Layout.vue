@@ -1,15 +1,15 @@
 <template>
-  <About />
+    <Layout/>
 </template>
 
 <script>
 // @ is an alias to /src
-import About from "@/components/About.vue";
+import Layout from '@/components/Layout.vue'
 
 export default {
-  name: "About",
+  name: 'LayoutView',
   components: {
-    About,
-  },
-};
+    Layout
+  }
+}
 </script>
