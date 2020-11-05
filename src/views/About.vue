@@ -7,7 +7,7 @@
 import About from "@/components/About.vue";
 
 export default {
-  name: "About",
+  name: "AboutView",
   components: {
     About,
   },

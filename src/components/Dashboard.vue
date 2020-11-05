@@ -1,6 +1,11 @@
 <template>
   <div>
-    <h1>Soy About</h1>
+    <h1>Soy Dashboard</h1>
+    <v-skeleton-loader
+      class="mx-auto"
+      max-width="300"
+      type="card"
+    ></v-skeleton-loader>
   </div>
 </template>
 
