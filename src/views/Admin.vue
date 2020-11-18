@@ -20,7 +20,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link to="/admin/configuracion/informacion-nosotros">
+        <v-list-item link to="/admin/services">
           <v-list-item-action>
             <v-icon>mdi-laptop</v-icon>
           </v-list-item-action>
@@ -38,12 +38,21 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link to="/admin/configuracion/informacion-nosotros">
+        <v-list-item link to="/admin/clients">
           <v-list-item-action>
             <v-icon>mdi-account-group-outline</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Clientes</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link to="/admin/clients">
+          <v-list-item-action>
+            <v-icon>mdi-account-group-outline</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Presupuestos</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -56,7 +65,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link to="/admin/configuracion/informacion-nosotros">
+        <v-list-item link to="/admin/blog">
           <v-list-item-action>
             <v-icon>mdi-post-outline</v-icon>
           </v-list-item-action>
@@ -74,16 +83,15 @@
           </v-list-item-content>
         </v-list-item>
 
-          <v-list-item link to="/admin/settings">
-            <v-list-item-action>
-              <v-icon>mdi-cog</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Configuración</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+        <v-list-item link to="/admin/settings">
+          <v-list-item-action>
+            <v-icon>mdi-cog</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Configuración</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
 
-    
         <v-divider></v-divider>
 
         <v-list-item link to="/">

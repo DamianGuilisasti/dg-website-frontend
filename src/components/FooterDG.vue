@@ -12,11 +12,11 @@
       <v-row class="text-center">
         <v-col cols="12" sm="12" md="4">
           <h3 class="white--text pb-5">Teléfono</h3>
-          <p class="white--text">(341) 657 3141</p>
+          <p class="white--text">{{companyPhone}}</p>
         </v-col>
         <v-col cols="12" sm="12" md="4">
           <h3 class="white--text pb-5">Email</h3>
-          <p class="white--text">hola @ damianguilisasti.com.ar</p></v-col
+          <p class="white--text">{{companyEmail}}</p></v-col
         >
         <v-col cols="12" sm="12" md="4">
           <h3 class="white--text">Sígueme</h3>
@@ -103,7 +103,8 @@ import axios from "axios";
 export default {
   name: "FooterDG",
   data: () => ({
-    settingsArray: [],
+    companyEmail: "",
+    companyPhone: "",
     facebook: "",
     instagram: "",
     youtube: "",
@@ -116,7 +117,8 @@ export default {
     axios
       .get("settings/list")
       .then(function (response) {
-        me.settingsArray = response.data;
+        me.companyPhone = response.data[0].companyPhone;
+        me.companyEmail = response.data[0].companyEmail;
         me.facebook = response.data[0].socialMedia.facebook;
         me.instagram = response.data[0].socialMedia.instagram;
         me.youtube = response.data[0].socialMedia.youtube;

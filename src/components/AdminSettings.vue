@@ -25,6 +25,30 @@
 
               <v-row>
                 <v-col cols="12">
+                  <v-text-field
+                    label="Teléfono de la empresa"
+                    v-model="companyPhone"
+                    outlined
+                    persistent-hint
+                    hint="Dejar en vacío para desactivarlo - Esta información se mostrará toda la página."
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+
+              <v-row>
+                <v-col cols="12">
+                  <v-text-field
+                    label="Email de la empresa"
+                    v-model="companyEmail"
+                    outlined
+                    persistent-hint
+                    hint="Dejar en vacío para desactivarlo - Esta información se mostrará toda la página."
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+
+              <v-row>
+                <v-col cols="12">
                   <v-textarea
                     outlined
                     name="input-7-4"
@@ -173,6 +197,69 @@
               </v-row>
             </v-expansion-panel-content>
           </v-expansion-panel>
+
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              <h3>Logo</h3>
+              <template v-slot:actions>
+                <v-icon color="primary"> $expand </v-icon>
+              </template>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-row>
+                <v-col cols="12">
+                  <v-file-input
+                    v-if="!imageURL"
+                    v-model="imageUploaded"
+                    color="deep-purple accent-4"
+                    label="Logo de la empresa"
+                    placeholder="Seleccionar logo"
+                    prepend-icon="mdi-paperclip"
+                    outlined
+                    persistent-hint
+                    hint="El logo debe ser de formato PNG o JPG."
+                    :show-size="1000"
+                  >
+                    <template v-slot:selection="{ index, text }">
+                      <v-chip
+                        v-if="index < 2"
+                        color="deep-purple accent-4"
+                        dark
+                        label
+                        small
+                      >
+                        {{ text }}
+                      </v-chip>
+
+                      <span
+                        v-else-if="index === 2"
+                        class="overline grey--text text--darken-3 mx-2"
+                      >
+                        +{{ files.length - 2 }} File(s)
+                      </span>
+                    </template>
+                  </v-file-input>
+
+                  <img height="50px" :src="imageURL" v-if="imageURL" />
+                </v-col>
+              </v-row>
+
+              <v-row>
+                <v-col>
+                  <v-btn color="success" class="mr-4" @click="updateLogo"
+                    >Guardar cambios</v-btn
+                  >
+                  <v-btn
+                    v-if="imageURL"
+                    color="red--text"
+                    class="mr-4"
+                    @click="deleteLogo"
+                    >Eliminar logo</v-btn
+                  >
+                </v-col>
+              </v-row>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
         </v-expansion-panels>
 
         <div class="text-center ma-2">
@@ -210,6 +297,8 @@ export default {
     snackbarUpdate: false,
     snackbarError: false,
     companyName: "",
+    companyEmail: "",
+    companyPhone: "",
     dataId: "",
     aboutInfo: "",
     facebook: "",
@@ -220,6 +309,9 @@ export default {
     twitter: "",
     phone: "",
     text: "",
+    imageFile: "",
+    imageUploaded: null,
+    imageURL: "",
   }),
   mounted() {
     let me = this;
@@ -228,6 +320,8 @@ export default {
       .then(function (response) {
         me.aboutInfo = response.data[0].aboutInfo;
         me.companyName = response.data[0].companyName;
+        me.companyPhone = response.data[0].companyPhone;
+        me.companyEmail = response.data[0].companyEmail;
         me.phone = response.data[0].whatsapp.phone;
         me.text = response.data[0].whatsapp.text;
         me.facebook = response.data[0].socialMedia.facebook;
@@ -236,6 +330,7 @@ export default {
         me.linkedin = response.data[0].socialMedia.linkedin;
         me.youtube = response.data[0].socialMedia.youtube;
         me.twitter = response.data[0].socialMedia.twitter;
+        me.imageURL = response.data[0].logoURL.imageURL;
         me.dataId = response.data[0]._id;
       })
       .catch(function (error) {
@@ -243,6 +338,30 @@ export default {
       });
   },
   methods: {
+    deleteLogo() {
+      let me = this;
+
+      axios
+        .put("settings/deleteLogo", {_id: this.dataId})
+        .then(function (response) {
+          me.updateNewLogo();
+          me.snackbarUpdate = true;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    updateNewLogo() {
+      let me = this;
+      axios
+        .get("settings/list")
+        .then(function (response) {
+          me.imageURL = response.data[0].logoURL.imageURL;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     updateInfo() {
       let me = this;
       axios
@@ -250,6 +369,8 @@ export default {
           _id: this.dataId,
           aboutInfo: this.aboutInfo,
           companyName: this.companyName,
+          companyPhone: this.companyPhone,
+          companyEmail: this.companyEmail,
         })
         .then(function (response) {
           me.snackbarUpdate = true;
@@ -295,6 +416,32 @@ export default {
           me.snackbarError = true;
         });
     },
+    updateLogo() {
+      let me = this;
+      let formData = new FormData();
+
+      formData.append("_id", this.dataId);
+      formData.append("image", this.imageFile);
+
+      axios
+        .put("settings/updateLogo", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(function (response) {
+          me.updateNewLogo();
+          me.snackbarUpdate = true;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+  },
+  watch: {
+    imageUploaded: function () {
+      this.imageFile = event.target.files[0];
+    },
   },
 };
 </script>
@@ -302,5 +449,9 @@ export default {
 <style>
 .v-application p {
   margin-bottom: 0px;
+}
+
+.imageURL:hover {
+  background-color: rgba(0, 0, 0, 0.6);
 }
 </style>

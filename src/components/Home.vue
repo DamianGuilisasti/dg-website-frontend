@@ -2,57 +2,26 @@
   <div id="app">
     <v-app>
       <v-main>
-        <section id="hero">
-          <v-row no-gutters>
-            <v-img
-              :min-height="'calc(100vh - ' + $vuetify.application.top + 'px)'"
-              src="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80"
-            >
-              <v-theme-provider dark>
-                <v-container fill-height>
-                  <v-row
-                    align="center"
-                    class="white--text mx-auto"
-                    justify="center"
-                  >
-                    <v-col class="white--text text-center" cols="12" tag="h1">
-                      <span
-                        :class="[
-                          $vuetify.breakpoint.smAndDown
-                            ? 'display-1'
-                            : 'display-2',
-                        ]"
-                        class="font-weight-light"
-                      >
-                        WELCOME TO
-                      </span>
-
-                      <br />
-
-                      <span
-                        :class="[
-                          $vuetify.breakpoint.smAndDown
-                            ? 'display-3'
-                            : 'display-4',
-                        ]"
-                        class="font-weight-black"
-                      >
-                        VUETIFY
-                      </span>
-                    </v-col>
-
-                    <v-btn
-                      class="align-self-end"
-                      fab
-                      outlined
-                      @click="$vuetify.goTo('#about-me')"
-                    >
-                      <v-icon>mdi-chevron-double-down</v-icon>
-                    </v-btn>
-                  </v-row>
-                </v-container>
-              </v-theme-provider>
-            </v-img>
+        <section id="presentation" class="container">
+          <v-row align="center" justify="space-around" class="mt-5">
+            <v-col cols="12" md="6">
+              <v-card
+                class="elevation-24 mx-auto"
+                style="height: 400px; max-width: 100%; width: 700px"
+              >
+                <v-img src="../assets/damian.png"> </v-img>
+              </v-card>
+            </v-col>
+            <v-col cols="auto">
+              <h1 class="font-weight-bold display-4">
+                Guilisasti <span class="font-weight-light">Damián</span>
+              </h1>
+              <div class="grey--text mb-md-12 mb-6 display-1">
+                Full Stack <em>Web Developer</em>
+              </div>
+              <v-btn x-large dark color="secondary" block class="mt-3 elevation-6">Contact me</v-btn>
+            </v-col>
+            <v-col cols="12"> </v-col>
           </v-row>
         </section>
 
@@ -68,24 +37,22 @@
               <v-divider></v-divider>
             </v-responsive>
 
-            <v-responsive
-              class="mx-auto title font-weight-light mb-8"
-              max-width="720"
-            >
-              {{aboutInfo}}
-            </v-responsive>
-
-            <v-avatar class="elevation-12 mb-12" size="128">
-              <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
-            </v-avatar>
-
-            <div></div>
-
-            <v-btn color="grey" href="https://vuetifyjs.com" outlined large>
-              <span class="grey--text text--darken-1 font-weight-bold">
-                Vuetify Documentation
-              </span>
-            </v-btn>
+            <v-row>
+              <v-col cols="6">
+                <v-avatar class="elevation-12 mb-12" size="400">
+                  <v-img
+                    src="https://cdn.vuetifyjs.com/images/john.png"
+                  ></v-img> </v-avatar
+              ></v-col>
+              <v-col cols="6">
+                <v-responsive
+                  class="mx-auto title font-weight-light mb-8"
+                  max-width="720"
+                >
+                  {{ aboutInfo }}asd
+                </v-responsive>
+              </v-col>
+            </v-row>
           </v-container>
 
           <div class="py-12"></div>
@@ -130,6 +97,40 @@
             </v-row>
           </v-container>
 
+          <div class="py-12"></div>
+        </section>
+
+        <section id="reviews" class="grey lighten-3">
+          <v-slide-group v-model="model" class="pa-4" show-arrows>
+            <v-slide-item v-for="n in 8" :key="n" v-slot="{ active, toggle }">
+              <v-card class="elevation-3 ma-4" width="300">
+                <v-card-title class="headline">
+                  Rate Our Framework
+                </v-card-title>
+                <v-card-text>
+                  If you enjoy using Vuetify, please take a few seconds to rate
+                  your experience with the framework. It really helps!
+
+                  <div class="text-center mt-12">
+                    <v-rating
+                      readonly
+                      value="5"
+                      color="yellow darken-3"
+                      background-color="grey darken-1"
+                      empty-icon="$ratingFull"
+                      half-increments
+                      hover
+                      large
+                    ></v-rating>
+                  </div>
+                </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions>
+                  <p class="ml-2">Ruben Farina</p>
+                </v-card-actions>
+              </v-card>
+            </v-slide-item>
+          </v-slide-group>
           <div class="py-12"></div>
         </section>
 
@@ -179,23 +180,42 @@
               <v-divider></v-divider>
             </v-responsive>
 
-            <v-carousel v-model="model">
-              <v-carousel-item v-for="(color, i) in colors" :key="color">
-                <v-sheet :color="color" height="100%" tile>
+            <v-slide-group v-model="model" class="pa-4" show-arrows>
+              <v-slide-item v-for="n in 8" :key="n" v-slot="{ active, toggle }">
+                <v-card
+                  :color="active ? 'primary' : 'grey lighten-1'"
+                  class="ma-4"
+                  height="200"
+                  width="200"
+                  @click="toggle"
+                >
                   <v-row class="fill-height" align="center" justify="center">
-                    <div class="display-3">Slide {{ i + 1 }}</div>
+                    <v-scale-transition>
+                      <v-icon
+                        v-if="active"
+                        color="white"
+                        size="48"
+                        v-text="'mdi-close-circle-outline'"
+                      ></v-icon>
+                    </v-scale-transition>
                   </v-row>
-                </v-sheet>
-              </v-carousel-item>
-            </v-carousel>
+                </v-card>
+              </v-slide-item>
+            </v-slide-group>
+
+            <v-expand-transition>
+              <v-sheet v-if="model != null" height="200" tile>
+                <v-row class="fill-height" align="center" justify="center">
+                  <h3 class="title">Selected {{ model }}</h3>
+                </v-row>
+              </v-sheet>
+            </v-expand-transition>
           </v-container>
 
           <div class="py-12"></div>
         </section>
 
         <section id="blog">
-          <div class="py-12"></div>
-
           <v-container>
             <h2
               class="display-2 font-weight-bold mb-3 text-uppercase text-center"
@@ -245,7 +265,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
   data: () => ({
     aboutInfo: "",
@@ -299,13 +319,7 @@ export default {
       ["5m", "Total Downloads"],
     ],
     model: 0,
-      colors: [
-        'primary',
-        'secondary',
-        'yellow darken-2',
-        'red',
-        'orange',
-      ],
+    colors: ["primary", "secondary", "yellow darken-2", "red", "orange"],
   }),
   mounted() {
     let me = this;
@@ -320,7 +334,7 @@ export default {
       .catch(function (error) {
         console.log(error);
       });
-  }
+  },
 };
 </script>
 
@@ -334,7 +348,9 @@ export default {
   transform: translateY(-4px);
   transition: box-shadow 0.2s, transform 0.2s;
 }
-
+#presentation{
+  margin-top: 150px;
+}
 </style>
 
 

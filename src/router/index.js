@@ -10,6 +10,9 @@ import ErrorPath from '../components/ErrorPath'
 import Dashboard from '../components/Dashboard'
 import Login from '../views/Login'
 import AdminSettings from '../components/AdminSettings'
+import AdminServices from '../components/AdminServices'
+import AdminClients from '../components/AdminClients'
+import BlogAdmin from '../components/BlogAdmin'
 
 Vue.use(VueRouter)
 
@@ -35,12 +38,22 @@ const routes = [
         name: 'Dashboard'
       },
       {
-        path: 'About',
-        component: About,
-        name: 'About'
+        path: 'Blog',
+        component: BlogAdmin,
+        name: 'BlogAdmin'
       },
       {
-        path: 'settings',
+        path: 'Services',
+        component: AdminServices,
+        name: 'AdminServices'
+      },
+      {
+        path: 'Clients',
+        component: AdminClients,
+        name: 'AdminClients'
+      },
+      {
+        path: 'Settings',
         component: AdminSettings,
         name: 'AdminSettings'
       },
