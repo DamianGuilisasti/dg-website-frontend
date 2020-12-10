@@ -47,7 +47,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link to="/admin/clients">
+        <v-list-item link to="/admin/budgets">
           <v-list-item-action>
             <v-icon>mdi-account-group-outline</v-icon>
           </v-list-item-action>

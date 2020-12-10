@@ -3,13 +3,13 @@
     <v-card>
       <v-data-table
         :headers="headers"
-        :items="services"
+        :items="posts"
         :search="search"
         :loading="loadingData"
         ><!-- loading-text="Loading... Please wait" -->
         <template v-slot:top>
           <v-toolbar flat color="dark">
-            <v-toolbar-title>Servicios</v-toolbar-title>
+            <v-toolbar-title>Presupuestos</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-card-title>
               <v-text-field
@@ -29,7 +29,7 @@
                   class="mb-2"
                   v-bind="attrs"
                   v-on="on"
-                  >Agregar servicio</v-btn
+                  >Agregar presupuesto</v-btn
                 >
               </template>
               <v-card>
@@ -252,30 +252,39 @@ export default {
     search: "",
     headers: [
       {
-        text: "Nombre",
+        text: "Cliente",
         align: "start",
         filterable: true,
-        value: "name",
+        value: "client",
       },
       {
-        text: "Precio",
+        text: "Fecha",
         filterable: true,
-        value: "price",
+        value: "date",
+      },
+      {
+        text: "Total",
+        filterable: true,
+        value: "total",
       },
       { text: "Estado", filterable: true, value: "state" },
       { text: "Acciones", value: "actions" },
     ],
-    services: [],
+    posts: [],
   }),
   methods: {
+    validate() {
+      return this.$refs.form.validate();
+    },
+
     editItem(item) {
-      this.editedIndex = this.services.indexOf(item);
+      this.editedIndex = this.posts.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
-      const index = this.services.indexOf(item);
+      const index = this.posts.indexOf(item);
       confirm("Estás a punto de eliminar el producto ¿Continuar?") &&
         this.desserts.splice(index, 1);
     },
@@ -291,56 +300,59 @@ export default {
 
     save() {
       let me = this;
-      if (this.editedIndex > -1) {
-        axios
-          .put("services/update", {
-            // _id: this.editedItem._id,
-            // code: this.editedItem.code,
-            // name: this.editedItem.name,
-            // description: this.editedItem.description,
-            // category: this.editedItem.category,
-            // stock: this.editedItem.stock,
-            // price: this.editedItem.price,
-          })
-          .then(function (response) {
-            me.initialize();
-            me.snackbarUpdate = true;
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      } else {
-        let me = this;
-        let formData = new FormData();
+      if (this.validate()) {
+        if (this.editedIndex > -1) {
+          axios
+            .put("posts/update", {
+              // _id: this.editedItem._id,
+              // code: this.editedItem.code,
+              // name: this.editedItem.name,
+              // description: this.editedItem.description,
+              // category: this.editedItem.category,
+              // stock: this.editedItem.stock,
+              // price: this.editedItem.price,
+            })
+            .then(function (response) {
+              me.initialize();
+              me.snackbarUpdate = true;
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        } else {
+          let me = this;
+          let formData = new FormData();
 
-        formData.append("title", "asd"); //this.editedItem.title
-        formData.append("category", "asd2"); //this.editedItem.category
-        formData.append("author", "asd3"); //this.editedItem.author
-        formData.append("tags", "asd4"); //this.editedItem.tags
+          formData.append("title", "asd"); //this.editedItem.title
+          formData.append("category", "asd2"); //this.editedItem.category
+          formData.append("author", "asd3"); //this.editedItem.author
+          formData.append("tags", "asd4"); //this.editedItem.tags
 
-        axios
-          .post("services/add", formData, {
-            headers: {
-              "Accept": "text/plain",
-            },
-          })
-          .then(function (response) {
-            me.snackbarAdd = true;
-            me.initialize();
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+          axios
+            .post("posts/add", formData, {
+              headers: {
+                Accept: "text/plain",
+              },
+            })
+            .then(function (response) {
+              me.snackbarAdd = true;
+              me.initialize();
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        }
+        this.close();
       }
-      this.close();
     },
     initialize() {
       let me = this;
       axios
-        .get("services/list")
+        .get("posts/list")
         .then(function (response) {
-          me.services = response.data;
+          me.posts = response.data;
           me.loadingData = false;
+          console.log(me.posts);
         })
         .catch(function (error) {
           console.log(error);
@@ -350,8 +362,8 @@ export default {
   computed: {
     formTitle() {
       return this.editedIndex === -1
-        ? "Nueva publicación"
-        : "Editar publicación";
+        ? "Nuevo presupuesto"
+        : "Editar presupuesto";
     },
   },
   mounted() {

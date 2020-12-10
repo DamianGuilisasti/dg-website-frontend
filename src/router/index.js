@@ -1,97 +1,103 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Layout from '../views/Layout'
-import Home from '../views/Home'
-import Portfolio from '../views/Portfolio'
-import Blog from '../views/Blog'
-import About from '../components/About'
-import Admin from '../views/Admin'
-import ErrorPath from '../components/ErrorPath'
-import Dashboard from '../components/Dashboard'
-import Login from '../views/Login'
-import AdminSettings from '../components/AdminSettings'
-import AdminServices from '../components/AdminServices'
-import AdminClients from '../components/AdminClients'
-import BlogAdmin from '../components/BlogAdmin'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Layout from "../views/Layout";
+import Home from "../views/Home";
+import Portfolio from "../views/Portfolio";
+import Blog from "../views/Blog";
+import About from "../components/About";
+import Admin from "../views/Admin";
+import ErrorPath from "../components/ErrorPath";
+import Dashboard from "../components/Dashboard";
+import Login from "../views/Login";
+import AdminSettings from "../components/AdminSettings";
+import AdminServices from "../components/AdminServices";
+import AdminClients from "../components/AdminClients";
+import BlogAdmin from "../components/BlogAdmin";
+import AdminBudgets from "../components/AdminBudgets";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '*',
-    component: ErrorPath
+    path: "*",
+    component: ErrorPath,
   },
   {
-    path: '/Login',
+    path: "/Login",
     component: Login,
-    name: 'Login'
+    name: "Login",
   },
   {
-    path: '/admin',
+    path: "/admin",
     component: Admin,
-    name: 'Admin',
-    redirect: '/admin/dashboard',
+    name: "Admin",
+    redirect: "/admin/dashboard",
     children: [
       {
-        path: 'Dashboard',
+        path: "Dashboard",
         component: Dashboard,
-        name: 'Dashboard'
+        name: "Dashboard",
       },
       {
-        path: 'Blog',
+        path: "Blog",
         component: BlogAdmin,
-        name: 'BlogAdmin'
+        name: "BlogAdmin",
       },
       {
-        path: 'Services',
+        path: "Services",
         component: AdminServices,
-        name: 'AdminServices'
+        name: "AdminServices",
       },
       {
-        path: 'Clients',
+        path: "Clients",
         component: AdminClients,
-        name: 'AdminClients'
+        name: "AdminClients",
       },
       {
-        path: 'Settings',
-        component: AdminSettings,
-        name: 'AdminSettings'
+        path: "Budgets",
+        component: AdminBudgets,
+        name: "AdminBudgets",
       },
-    ]
+      {
+        path: "Settings",
+        component: AdminSettings,
+        name: "AdminSettings",
+      },
+    ],
   },
   {
-    path: '/',
+    path: "/",
     component: Layout,
     name: "Layout",
     children: [
       {
-        path: '/',
+        path: "/",
         component: Home,
-        name: 'Home'
+        name: "Home",
       },
       {
-        path: 'About',
+        path: "About",
         component: About,
-        name: 'About'
+        name: "About",
       },
       {
-        path: '/Portfolio',
+        path: "/Portfolio",
         component: Portfolio,
-        name: 'Portfolio'
+        name: "Portfolio",
       },
       {
-        path: '/Blog',
+        path: "/Blog",
         component: Blog,
-        name: 'Blog'
-      }
-    ]
+        name: "Blog",
+      },
+    ],
   },
 ];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

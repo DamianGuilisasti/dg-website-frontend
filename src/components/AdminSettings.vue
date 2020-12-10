@@ -209,6 +209,7 @@
               <v-row>
                 <v-col cols="12">
                   <v-file-input
+                    :loading="loadingLogo"
                     v-if="!imageURL"
                     v-model="imageUploaded"
                     color="deep-purple accent-4"
@@ -228,7 +229,7 @@
                         label
                         small
                       >
-                        {{ text }}
+                        {{ text }} 
                       </v-chip>
 
                       <span
@@ -261,41 +262,16 @@
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
-
-        <div class="text-center ma-2">
-          <v-snackbar v-model="snackbarUpdate" color="success">
-            <p>Los cambios se han realizado correctamente.</p>
-            <template v-slot:action="{ attrs }">
-              <v-btn dark text v-bind="attrs" @click="snackbarUpdate = false"
-                >Cerrar</v-btn
-              >
-            </template>
-          </v-snackbar>
-
-          <v-snackbar v-model="snackbarError" color="warning">
-            <p>
-              Ha ocurrido un error, por favor actualice la página e intentelo
-              nuevamente.
-            </p>
-            <template v-slot:action="{ attrs }">
-              <v-btn dark text v-bind="attrs" @click="snackbarError = false"
-                >Cerrar</v-btn
-              >
-            </template>
-          </v-snackbar>
-        </div>
       </v-form>
     </v-col>
   </v-row>
 </template>
 
 <script>
+import Vuex from "vuex";
 import axios from "axios";
 export default {
   data: () => ({
-    snackbarAdd: false,
-    snackbarUpdate: false,
-    snackbarError: false,
     companyName: "",
     companyEmail: "",
     companyPhone: "",
@@ -312,6 +288,11 @@ export default {
     imageFile: "",
     imageUploaded: null,
     imageURL: "",
+    whatsapp: {
+      phone: "",
+      text: "",
+    },
+    loadingLogo: false,
   }),
   mounted() {
     let me = this;
@@ -340,15 +321,22 @@ export default {
   methods: {
     deleteLogo() {
       let me = this;
-
       axios
-        .put("settings/deleteLogo", {_id: this.dataId})
+        .put("settings/deleteLogo", { _id: this.dataId })
         .then(function (response) {
+          me.imageUploaded = null;
           me.updateNewLogo();
-          me.snackbarUpdate = true;
+          me.$store.dispatch("setSnackbar", {
+            text: "Se eliminó correctamente el logo.",
+          });
         })
         .catch(function (error) {
           console.log(error);
+          me.$store.dispatch("setSnackbar", {
+            text:
+              "Hubo un error al eliminar el logo, por favor actualice la página e intente nuevamente.",
+            color: "error",
+          });
         });
     },
     updateNewLogo() {
@@ -373,11 +361,17 @@ export default {
           companyEmail: this.companyEmail,
         })
         .then(function (response) {
-          me.snackbarUpdate = true;
+          me.$store.dispatch("setSnackbar", {
+            text: "Se actualizo correctamente la información.",
+          });
         })
         .catch(function (error) {
           console.log(error);
-          me.snackbarError = true;
+          me.$store.dispatch("setSnackbar", {
+            text:
+              "Hubo un error al actualizar la información, por favor actualice la página e intente nuevamente.",
+            color: "error",
+          });
         });
     },
     updateSocialMedia() {
@@ -393,11 +387,17 @@ export default {
           linkedin: this.linkedin,
         })
         .then(function (response) {
-          me.snackbarUpdate = true;
+          me.$store.dispatch("setSnackbar", {
+            text: "Se actualizo correctamente las redes sociales.",
+          });
         })
         .catch(function (error) {
           console.log(error);
-          me.snackbarError = true;
+          me.$store.dispatch("setSnackbar", {
+            text:
+              "Hubo un error al actualizar las redes sociales, por favor actualice la página e intente nuevamente.",
+            color: "error",
+          });
         });
     },
     updateWhatsapp() {
@@ -409,14 +409,25 @@ export default {
           text: this.text,
         })
         .then(function (response) {
-          me.snackbarUpdate = true;
+          me.$store.dispatch("setSnackbar", {
+            text: "Se actualizo correctamente la información de Whatsapp.",
+          });
         })
         .catch(function (error) {
           console.log(error);
-          me.snackbarError = true;
+          me.$store.dispatch("setSnackbar", {
+            text:
+              "Hubo un error al actualizar la información de Whatsapp, por favor actualice la página e intente nuevamente.",
+            color: "error",
+          });
         });
     },
     updateLogo() {
+      if (this.imageFile === "") {
+        this.snackbarError = true;
+        return;
+      }
+      this.loadingLogo = true;
       let me = this;
       let formData = new FormData();
 
@@ -431,10 +442,18 @@ export default {
         })
         .then(function (response) {
           me.updateNewLogo();
-          me.snackbarUpdate = true;
+          me.loadingLogo = false;
+          me.$store.dispatch("setSnackbar", {
+            text: "Se actualizo correctamente el logo.",
+          });
         })
         .catch(function (error) {
           console.log(error);
+          me.$store.dispatch("setSnackbar", {
+            text:
+              "Hubo un error al actualizar el logo, por favor actualice la página e intente nuevamente.",
+            color: "error",
+          });
         });
     },
   },

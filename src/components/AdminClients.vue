@@ -3,10 +3,30 @@
     <v-card>
       <v-data-table
         :headers="headers"
-        :items="posts"
+        :items="clients"
         :search="search"
         :loading="loadingData"
-        ><!-- loading-text="Loading... Please wait" -->
+        loading-text="Cargando clientes... Por favor espere."
+        no-data-text="No hay información de clientes, por favor cargue nuevos clientes."
+      >
+        <template v-slot:item.services="{ item }">
+          {{ clientServices(item) }}
+        </template>
+
+        <template v-slot:item.monthlypayment="{ item }">
+          {{ clientMonthlyPayment(item) }}
+        </template>
+
+        <!--         <template v-slot:item.totalpayment="{ item }">
+          {{ clientTotalPayment(item) }}
+        </template> -->
+
+        <template v-slot:item.state="{ item }">
+          <v-chip :color="getStateColor(item.state)" dark>
+            {{ getState(item.state) }}
+          </v-chip>
+        </template>
+
         <template v-slot:top>
           <v-toolbar flat color="dark">
             <v-toolbar-title>Clientes</v-toolbar-title>
@@ -39,135 +59,180 @@
 
                 <v-card-text>
                   <v-container>
-                    <v-row align="center" justify="space-around">
+                    <v-row>
+                      <v-col cols="12" sm="6" md="6">
+                        <v-text-field
+                          v-model="editedItem.name"
+                          label="Nombre"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="6">
+                        <v-text-field
+                          v-model="editedItem.lastname"
+                          label="Apellido"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12" sm="6" md="6">
+                        <v-text-field
+                          v-model="editedItem.email"
+                          label="Email"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="6">
+                        <v-text-field
+                          v-model="editedItem.phone"
+                          label="Teléfono"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+
+                    <v-row
+                      align="center"
+                      justify="space-around"
+                      v-if="editedIndex == -1"
+                    >
+                      <v-col class="d-flex" cols="12" sm="12" md="12">
+                        <v-select
+                          label="Seleccione servicio/s"
+                          v-model="editedItem.services"
+                          :items="servicesList"
+                          @change="servicesAdded"
+                        ></v-select>
+                      </v-col>
+                    </v-row>
+
+                    <v-row
+                      align="center"
+                      justify="space-around"
+                      v-if="editedIndex > -1"
+                    >
+                      <v-col class="d-flex" cols="12" sm="12" md="12">
+                        <v-select
+                          label="Agregar servicio/s"
+                          v-model="updatedServices"
+                          :items="servicesList"
+                          @change="editedServicesAdd"
+                        ></v-select>
+                      </v-col>
+                    </v-row>
+
+                    <v-row v-if="editedIndex > -1">
                       <v-col cols="12">
-                        <v-text-field
-                          v-model="editedItem.title"
-                          label="Título"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                    <v-row align="center" justify="space-around">
-                      <v-col class="d-flex" cols="12" sm="6" md="6">
-                        <v-select
-                          label="Seleccione categoría"
-                          v-model="editedItem.category"
-                        ></v-select>
-                      </v-col>
-                      <v-col class="d-flex" cols="12" sm="6" md="6">
-                        <v-btn tile color="success">
-                          <v-icon left> mdi-plus </v-icon>
-                          nueva categoría
-                        </v-btn>
-                      </v-col>
-                    </v-row>
-
-                    <v-row align="center" justify="space-around">
-                      <v-col cols="12" sm="12" md="12">
-                        <v-textarea
-                          solo
-                          name="input-7-4"
-                          label="Publicación"
-                          outlined
-                        ></v-textarea>
-                      </v-col>
-                    </v-row>
-
-                    <v-row align="center" justify="space-around">
-                      <v-col cols="12" sm="6" md="6">
-                        <v-select
-                          label="Seleccione autor"
-                          v-model="editedItem.author"
-                        ></v-select>
-                      </v-col>
-
-                      <v-col cols="12" sm="6" md="6">
-                        <v-text-field
-                          v-model="editedItem.tags"
-                          label="Etiquetas"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-
-                    <!--                     <v-row align="center" justify="space-around">
-                      <v-col
-                        cols="12"
-                        sm="12"
-                        md="12"
-                        v-if="imagepreview === ''"
-                      >
-                        <v-file-input
-                          label="Imagen principal"
-                          chips
-                          accept="image/*"
-                          show-size
-                        ></v-file-input>
-                      </v-col>
-
-                      <v-col
-                        cols="12"
-                        sm="12"
-                        md="12"
-                        v-if="imagepreview !== ''"
-                      >
-                        <img
-                          :src="imagepreview"
-                          style="width: 100px; height: 100px"
-                        />
-
-                        <v-icon
-                          @click="deletePreview"
-                          dark
-                          color="red"
-                          style="
-                            position: absolute;
-                            margin-top: 5px;
-                            left: 40px;
-                          "
+                        <v-data-table
+                          :headers="servicesHeaderEdited"
+                          :items="editedItem.services"
+                          :items-per-page="5"
+                          class="elevation-1"
                         >
-                          mdi-close
-                        </v-icon>
+                          <template v-slot:item.actions="{ item }">
+                            <v-icon
+                              small
+                              @click="deleteClientService(item)"
+                              class="mr-2"
+                              >mdi-close</v-icon
+                            >
+                          </template>
+                        </v-data-table>
                       </v-col>
                     </v-row>
 
-                    <v-row align="center" justify="space-around">
-                      <v-col
-                        cols="12"
-                        sm="12"
-                        md="12"
-                        v-if="imagepreview === ''"
-                      >
-                        <v-file-input
-                          label="Imágenes secundarias"
-                          chips
-                          accept="image/*"
-                          show-size
-                        ></v-file-input>
-                      </v-col>
-
-                      <v-col
-                        cols="12"
-                        sm="12"
-                        md="12"
-                        v-if="imagepreview !== ''"
-                      >
-                        <img
-                          :src="imagepreview"
-                          style="width: 100px; height: 100px"
-                        />
-
-                        <v-icon
-                          @click="deletePreview"
-                          dark
-                          color="red"
-                          style="
-                            position: absolute;
-                            margin-top: 5px;
-                            left: 40px;
-                          "
+                    <v-row v-if="servicesArray.length > 0">
+                      <v-col cols="12">
+                        <v-data-table
+                          :headers="servicesHeader"
+                          :items="servicesArray"
+                          :items-per-page="5"
+                          class="elevation-1"
                         >
-                          mdi-close
-                        </v-icon>
+                          <template v-slot:item.actions="{ item }">
+                            <v-icon
+                              small
+                              @click="servicesArray.splice(item, 1)"
+                              class="mr-2"
+                              >mdi-close</v-icon
+                            >
+                          </template>
+                        </v-data-table>
+                      </v-col>
+                    </v-row>
+
+                    <!--                     <v-row align="center" v-if="servicesArray.length > 0">
+                      <v-col class="d-flex" cols="12">
+                        <v-simple-table>
+                          <template v-slot:default>
+                            <thead>
+                              <tr>
+                                <th class="text-left">Servicio</th>
+                                <th class="text-left">Fecha de alta</th>
+                                <th class="text-left">Cancelar</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                v-for="(item, k) in servicesArray"
+                                :key="item.text"
+                              >
+                                <td>{{ item.text }}</td>
+                                <td>
+                                  <v-menu
+                                    :ref="'dialog' + k"
+                                    v-model="item.menu"
+                                    :close-on-content-click="false"
+                                    :return-value.sync="item.date"
+                                    transition="scale-transition"
+                                    offset-y
+                                    min-width="290px"
+                                  >
+                                    <template v-slot:activator="{ on, attrs }">
+                                      <v-text-field
+                                        v-model="item.serviceDate"
+                                        label="Seleccione fecha de alta"
+                                        prepend-icon="mdi-calendar"
+                                        readonly
+                                        v-bind="attrs"
+                                        v-on="on"
+                                      ></v-text-field>
+                                    </template>
+
+                                    <v-date-picker
+                                      v-model="item.serviceDate"
+                                      no-title
+                                      scrollable
+                                    >
+                                      <v-spacer></v-spacer>
+                                      <v-btn
+                                        text
+                                        color="primary"
+                                        @click="item.menu = false"
+                                      >
+                                        Cancel
+                                      </v-btn>
+                                      <v-btn
+                                        text
+                                        color="primary"
+                                        @click="
+                                          $refs['dialog' + k][0].save(item.date)
+                                        "
+                                      >
+                                        OK
+                                      </v-btn>
+                                    </v-date-picker>
+                                  </v-menu>
+                                </td>
+                                <td>
+                                    <v-icon
+                                      small
+                                      @click="servicesArray.splice(item, 1)"
+                                      class="mr-2"
+                                      >mdi-cancel</v-icon
+                                    >
+                                </td>
+                              </tr>
+                            </tbody>
+                          </template>
+                        </v-simple-table>
                       </v-col>
                     </v-row> -->
                   </v-container>
@@ -186,7 +251,7 @@
         </template>
         <template v-slot:item.actions="{ item }">
           <v-icon small @click="editItem(item)" class="mr-2">mdi-pencil</v-icon>
-          <v-icon small @click="deleteItem(item)" class="mr-2"
+          <v-icon small @click="deleteClient(item)" class="mr-2"
             >mdi-delete</v-icon
           >
           <v-icon
@@ -202,156 +267,386 @@
         </template></v-data-table
       >
     </v-card>
-    <div class="text-center ma-2">
-      <v-snackbar v-model="snackbarAdd" color="success">
-        <p>Publicación agregada correctamente.</p>
-        <template v-slot:action="{ attrs }">
-          <v-btn dark text v-bind="attrs" @click="snackbarAdd = false"
-            >Cerrar</v-btn
-          >
-        </template>
-      </v-snackbar>
-
-      <v-snackbar v-model="snackbarUpdate" color="success">
-        <p>Publicación actualizada correctamente.</p>
-        <template v-slot:action="{ attrs }">
-          <v-btn dark text v-bind="attrs" @click="snackbarUpdate = false"
-            >Cerrar</v-btn
-          >
-        </template>
-      </v-snackbar>
-
-      <v-snackbar v-model="snackbarDelete" color="warning">
-        <p>Publicación eliminada correctamente.</p>
-        <template v-slot:action="{ attrs }">
-          <v-btn dark text v-bind="attrs" @click="snackbarDelete = false"
-            >Cerrar</v-btn
-          >
-        </template>
-      </v-snackbar>
-    </div>
   </div>
 </template>
 
 <script>
+import Vuex from "vuex";
 import axios from "axios";
 export default {
   data: () => ({
+    updatedServices: [],
+    item: {
+      menu: false,
+    },
+    servicesList: [],
     loadingData: true,
     dialog: false,
     editedIndex: -1,
     editedItem: {
-      title: "",
-      category: "",
-      author: "",
-      tags: "",
+      name: "",
+      lastname: "",
+      email: "",
+      phone: "",
+      services: "",
     },
-    snackbarAdd: "",
-    snackbarUpdate: "",
-    snackbarDelete: "",
     search: "",
     headers: [
       {
         text: "Nombre",
         align: "start",
         filterable: true,
-        value: "title",
+        value: "name",
       },
       {
         text: "Apellido",
         filterable: true,
-        value: "category",
+        value: "lastname",
       },
       {
         text: "Email",
         filterable: true,
-        value: "date",
+        value: "email",
       },
       {
         text: "Teléfono",
         filterable: true,
-        value: "author",
+        value: "phone",
       },
       {
         text: "Servicios",
         filterable: true,
-        value: "tags",
+        value: "services",
       },
       {
         text: "Pago mensual",
         filterable: true,
-        value: "tags",
+        value: "monthlypayment",
       },
-      {
+      /*       {
         text: "Total pagado",
         filterable: true,
-        value: "tags",
-      },
+        value: "totalpayment",
+      }, */
       { text: "Estado", filterable: true, value: "state" },
       { text: "Acciones", value: "actions" },
     ],
-    posts: [],
+    servicesHeader: [
+      {
+        text: "Servicio",
+        align: "start",
+        value: "text",
+      },
+      /*       {
+        text: "Fecha de alta",
+        value: "serviceDate",
+      }, */
+      { text: "Eliminar servicio", value: "actions" },
+    ],
+    servicesHeaderEdited: [
+      {
+        text: "Servicio",
+        align: "start",
+        value: "name",
+      },
+      /*       {
+        text: "Fecha de alta",
+        value: "serviceDate",
+      }, */
+      { text: "Eliminar servicio", value: "actions" },
+    ],
+    servicesArray: [],
+    clients: [],
   }),
   methods: {
+    //Services
+
+    deleteClientService(item) {
+      const index = this.editedItem.services.indexOf(item);
+      this.editedItem.services.splice(index, 1);
+    },
+
+    servicesAdded(event) {
+      let me = this;
+      let id = event;
+      this.servicesList.map(function (i) {
+        if (id == i.value) {
+          const repeated = me.servicesArray.findIndex((x) => x.text == i.text);
+          console.log(repeated);
+          if (repeated == -1) {
+            me.servicesArray.push({
+              text: i.text,
+              //serviceDate: new Date().toISOString().substr(0, 10),
+            });
+          } else {
+            me.$store.dispatch("setSnackbar", {
+              text: `Este servicio ya fue agregado.`,
+              color: "red",
+            });
+          }
+        }
+      });
+    },
+
+    editedServicesAdd(event) {
+      let me = this;
+      let id = event;
+      this.servicesList.map(function (i) {
+        if (id == i.value) {
+          console.log(me.editedItem.services);
+          const repeated = me.editedItem.services.findIndex((x) => x.name == i.text);
+          console.log(repeated);
+          if (repeated == -1) {
+            me.editedItem.services.push({
+              name: i.text,
+            });
+          } else {
+            me.$store.dispatch("setSnackbar", {
+              text: `Este servicio ya fue agregado.`,
+              color: "red",
+            });
+          }
+        }
+      });
+    },
+
+    servicesSelect() {
+      let me = this;
+      let serviceList = [];
+      axios
+        .get("services/list")
+        .then(function (response) {
+          serviceList = response.data;
+          serviceList.map(function (i) {
+            me.servicesList.push({ text: i.name, value: i._id });
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    clientServices(item) {
+      const elements = [];
+      item.services.map(function (i) {
+        elements.push(i.name);
+      });
+      return elements.join(", ");
+    },
+    clientMonthlyPayment(item) {
+      let price = 0;
+      item.services.map(function (i) {
+        price += i.price;
+      });
+      return price;
+    },
+
+    //DataTable
+
+    getStateColor(state) {
+      if (state === 1) return "green";
+      else return "red";
+    },
+    getState(state) {
+      if (state === 1) return "Activo";
+      else return "Desactivado";
+    },
+
+    desactivateItem(item) {
+      let me = this;
+      axios
+        .put("clients/desactivate", {
+          _id: item._id,
+        })
+        .then(function (response) {
+          me.initialize();
+          me.$store.dispatch("setSnackbar", {
+            text: `Se desactivó correctamente el cliente ${
+              item.name + " " + item.lastname
+            }.`,
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+    activateItem(item) {
+      let me = this;
+      axios
+        .put("clients/activate", {
+          _id: item._id,
+        })
+        .then(function (response) {
+          me.initialize();
+          me.$store.dispatch("setSnackbar", {
+            text: `Se activó correctamente el cliente ${
+              item.name + " " + item.lastname
+            }.`,
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+    //Init
+
+    initialize() {
+      let me = this;
+      axios
+        .get("clients/list")
+        .then(function (response) {
+          me.clients = response.data;
+          if (response.data.length == 0) {
+            me.loadingData = false;
+          }
+          me.loadingData = false;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    /*     clientServices(item) {
+      const elements = [];
+      item.services.map(function (i) {
+        elements.push(i.service.name);
+      });
+      return elements.join(", ");
+    }, */
+
+    /* clientTotalPayment(item) {
+      //obtener la cantidad de DIAS que el cliente tuvo/tiene el servicio.
+      //dividir el costo del servicio /30 así se calcula cuanto paga por día.
+      //calcular diferencia de dias entre la fecha que solicitó el servicio y la fecha actual.
+      const today = new Date();
+
+      // To calculate the time difference of two dates
+      //const Difference_In_Time = today - item.services.  date1.getTime();
+
+      // To calculate the no. of days between two dates
+      //const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+      let total = 0;
+
+      item.services.map(function (i) {
+        // let time = today - i.serviceDate.date.getTime();
+        // let days = time / (1000 * 3600 * 24);
+        // let subtotal = days * i.service.price;
+        // total += subtotal;
+        // console.log(total);
+      });
+
+      let price = 0;
+      item.services.map(function (i) {
+        price += i.service.price;
+      });
+      return price;
+    }, */
+
+    //Edit
+
     editItem(item) {
-      this.editedIndex = this.posts.indexOf(item);
+      console.log(item);
+      this.editedIndex = this.clients.indexOf(item);
       this.editedItem = Object.assign({}, item);
+      console.log(this.editedItem);
       this.dialog = true;
     },
 
-    deleteItem(item) {
-      const index = this.posts.indexOf(item);
-      confirm("Estás a punto de eliminar el producto ¿Continuar?") &&
-        this.desserts.splice(index, 1);
+    //Delete
+
+    deleteClient(item) {
+      let me = this;
+      let clientId = item._id;
+      confirm("Estás a punto de eliminar el cliente ¿Continuar?") &&
+        axios
+          .delete("clients/delete", {
+            params: { id: clientId },
+          })
+          .then(function (response) {
+            me.initialize();
+            me.$store.dispatch("setSnackbar", {
+              text: `Se eliminó correctamente el cliente ${
+                item.name + " " + item.lastname
+              }.`,
+            });
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     },
 
     close() {
-      //this.imagepreview = "";
       this.dialog = false;
+      this.servicesArray = [];
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
     },
 
+    //Save
+
     save() {
       let me = this;
       if (this.editedIndex > -1) {
+        const servicesUpdated = [];
+
+        this.editedItem.services.map(function (i) {
+          console.log(i);
+          me.servicesList.map(function (u) {
+            if (i.name == u.text) {
+              servicesUpdated.push(u.value);
+            }
+          });
+        });
+
         axios
-          .put("posts/update", {
-            // _id: this.editedItem._id,
-            // code: this.editedItem.code,
-            // name: this.editedItem.name,
-            // description: this.editedItem.description,
-            // category: this.editedItem.category,
-            // stock: this.editedItem.stock,
-            // price: this.editedItem.price,
+          .put("clients/update", {
+            _id: this.editedItem._id,
+            name: this.editedItem.name,
+            lastname: this.editedItem.lastname,
+            email: this.editedItem.email,
+            phone: this.editedItem.phone,
+            services: servicesUpdated,
           })
           .then(function (response) {
             me.initialize();
-            me.snackbarUpdate = true;
+            me.$store.dispatch("setSnackbar", {
+              text: `Se actualizó correctamente el cliente ${
+                response.data.name + " " + response.data.lastname
+              }.`,
+            });
           })
           .catch(function (error) {
             console.log(error);
           });
       } else {
         let me = this;
-        let formData = new FormData();
-
-        formData.append("title", "asd"); //this.editedItem.title
-        formData.append("category", "asd2"); //this.editedItem.category
-        formData.append("author", "asd3"); //this.editedItem.author
-        formData.append("tags", "asd4"); //this.editedItem.tags
+        const servicesSelected = [];
+        this.servicesArray.map(function (i) {
+          me.servicesList.map(function (u) {
+            if (i.text == u.text) {
+              servicesSelected.push(u.value);
+            }
+          });
+        });
 
         axios
-          .post("posts/add", formData, {
-            headers: {
-              Accept: "text/plain",
-            },
+          .post("clients/add", {
+            name: this.editedItem.name,
+            lastname: this.editedItem.lastname,
+            email: this.editedItem.email,
+            phone: this.editedItem.phone,
+            services: servicesSelected,
           })
           .then(function (response) {
-            me.snackbarAdd = true;
             me.initialize();
+            me.$store.dispatch("setSnackbar", {
+              text: `Se agregó correctamente el cliente ${
+                response.data.name + " " + response.data.lastname
+              }.`,
+            });
           })
           .catch(function (error) {
             console.log(error);
@@ -359,29 +654,15 @@ export default {
       }
       this.close();
     },
-    initialize() {
-      let me = this;
-      axios
-        .get("posts/list")
-        .then(function (response) {
-          me.posts = response.data;
-          me.loadingData = false;
-          console.log(me.posts);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
   },
   computed: {
     formTitle() {
-      return this.editedIndex === -1
-        ? "Nueva publicación"
-        : "Editar publicación";
+      return this.editedIndex === -1 ? "Nuevo cliente" : "Editar cliente";
     },
   },
   mounted() {
     this.initialize();
+    this.servicesSelect();
   },
 };
 </script>
