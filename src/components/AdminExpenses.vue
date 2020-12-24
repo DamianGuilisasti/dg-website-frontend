@@ -3,11 +3,11 @@
     <v-card>
       <v-data-table
         :headers="headers"
-        :items="services"
+        :items="expenses"
         :search="search"
         :loading="loadingData"
-        loading-text="Cargando servicios... Por favor espere."
-        no-data-text="No hay información de servicios, por favor cargue nuevos servicios."
+        loading-text="Cargando gastos... Por favor espere."
+        no-data-text="No hay información de gastos, por favor cargue nuevos gastos."
       >
         <template v-slot:item.state="{ item }">
           <v-chip :color="getStateColor(item.state)" dark>
@@ -17,7 +17,7 @@
 
         <template v-slot:top>
           <v-toolbar flat color="dark">
-            <v-toolbar-title>Servicios</v-toolbar-title>
+            <v-toolbar-title>Gastos</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-card-title>
               <v-text-field
@@ -37,7 +37,7 @@
                   class="mb-2"
                   v-bind="attrs"
                   v-on="on"
-                  >Agregar servicio</v-btn
+                  >Agregar Gasto</v-btn
                 >
               </template>
               <v-card>
@@ -57,24 +57,9 @@
 
                       <v-col cols="12">
                         <v-text-field
-                          v-model="editedItem.description"
-                          label="Descripción"
-                        ></v-text-field>
-                      </v-col>
-
-                      <v-col cols="12">
-                        <v-text-field
                           v-model="editedItem.price"
                           label="Precio"
                         ></v-text-field>
-                      </v-col>
-
-                      <v-col cols="12">
-                        <v-select
-                          label="Tipo de servicio"
-                          v-model="editedItem.serviceType"
-                          :items="servicesType"
-                        ></v-select>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -117,7 +102,6 @@ import Vuex from "vuex";
 import axios from "axios";
 export default {
   data: () => ({
-    servicesType: ["Fijo", "Mensual", "Anual"],
     loadingData: true,
     dialog: false,
     editedIndex: -1,
@@ -134,14 +118,6 @@ export default {
         value: "name",
       },
       {
-        text: "Descripción",
-        value: "description",
-      },
-      {
-        text: "Tipo de servicio",
-        value: "serviceType",
-      },
-      {
         text: "Precio",
         filterable: true,
         value: "price",
@@ -149,7 +125,7 @@ export default {
       { text: "Estado", filterable: true, value: "state" },
       { text: "Acciones", value: "actions" },
     ],
-    services: [],
+    expenses: [],
   }),
   methods: {
     //DataTable
@@ -166,13 +142,13 @@ export default {
     desactivateItem(item) {
       let me = this;
       axios
-        .put("services/desactivate", {
+        .put("expenses/desactivate", {
           _id: item._id,
         })
         .then(function (response) {
           me.initialize();
           me.$store.dispatch("setSnackbar", {
-            text: `Se desactivó correctamente el servicio.`,
+            text: `Se desactivó correctamente el gasto.`,
           });
         })
         .catch(function (error) {
@@ -183,13 +159,13 @@ export default {
     activateItem(item) {
       let me = this;
       axios
-        .put("services/activate", {
+        .put("expenses/activate", {
           _id: item._id,
         })
         .then(function (response) {
           me.initialize();
           me.$store.dispatch("setSnackbar", {
-            text: `Se activó correctamente el servicio.`,
+            text: `Se activó correctamente el gasto.`,
           });
         })
         .catch(function (error) {
@@ -198,7 +174,7 @@ export default {
     },
 
     editItem(item) {
-      this.editedIndex = this.services.indexOf(item);
+      this.editedIndex = this.expenses.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
@@ -206,15 +182,15 @@ export default {
     deleteItem(item) {
       let me = this;
       let serviceId = item._id;
-      confirm("Estás a punto de eliminar el servicio ¿Continuar?") &&
+      confirm("Estás a punto de eliminar el gasto ¿Continuar?") &&
         axios
-          .delete("services/delete", {
+          .delete("expenses/delete", {
             params: { id: serviceId },
           })
           .then(function (response) {
             me.initialize();
             me.$store.dispatch("setSnackbar", {
-              text: `Se eliminó correctamente el servicio.`,
+              text: `Se eliminó correctamente el gasto.`,
             });
           })
           .catch(function (error) {
@@ -234,17 +210,15 @@ export default {
       let me = this;
       if (this.editedIndex > -1) {
         axios
-          .put("services/update", {
+          .put("expenses/update", {
             _id: this.editedItem._id,
             name: this.editedItem.name,
-            description: this.editedItem.description,
             price: this.editedItem.price,
-            serviceType: this.editedItem.serviceType,
           })
           .then(function (response) {
             me.initialize();
             me.$store.dispatch("setSnackbar", {
-              text: `Se actualizó correctamente el servicio.`,
+              text: `Se actualizó correctamente el gasto.`,
             });
           })
           .catch(function (error) {
@@ -252,17 +226,16 @@ export default {
           });
       } else {
         let me = this;
+
         axios
-          .post("services/add", {
+          .post("expenses/add", {
             name: this.editedItem.name,
-            description: this.editedItem.description,
             price: this.editedItem.price,
-            serviceType: this.editedItem.serviceType,
           })
           .then(function (response) {
             me.initialize();
             me.$store.dispatch("setSnackbar", {
-              text: `Se agregó correctamente el servicio.`,
+              text: `Se agregó correctamente el gasto.`,
             });
           })
           .catch(function (error) {
@@ -274,9 +247,9 @@ export default {
     initialize() {
       let me = this;
       axios
-        .get("services/list")
+        .get("expenses/list")
         .then(function (response) {
-          me.services = response.data;
+          me.expenses = response.data;
           me.loadingData = false;
         })
         .catch(function (error) {
@@ -286,7 +259,7 @@ export default {
   },
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "Nuevo servicio" : "Editar servicio";
+      return this.editedIndex === -1 ? "Nuevo gasto" : "Editar gasto";
     },
   },
   mounted() {

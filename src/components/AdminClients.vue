@@ -64,12 +64,16 @@
                         <v-text-field
                           v-model="editedItem.name"
                           label="Nombre"
+                          :rules="nameRules"
+                          required
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="6">
                         <v-text-field
                           v-model="editedItem.lastname"
                           label="Apellido"
+                          :rules="lastnameRules"
+                          required
                         ></v-text-field>
                       </v-col>
                     </v-row>
@@ -78,12 +82,24 @@
                         <v-text-field
                           v-model="editedItem.email"
                           label="Email"
+                          :rules="emailRules"
+                          required
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="6">
                         <v-text-field
-                          v-model="editedItem.phone"
+                          v-model.number="editedItem.phone"
                           label="Teléfono"
+                          type="number"
+                          :rules="phoneRules"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="editedItem.address"
+                          label="Dirección"
                         ></v-text-field>
                       </v-col>
                     </v-row>
@@ -93,7 +109,7 @@
                       justify="space-around"
                       v-if="editedIndex == -1"
                     >
-                      <v-col class="d-flex" cols="12" sm="12" md="12">
+                      <v-col cols="12" sm="12" md="12">
                         <v-select
                           label="Seleccione servicio/s"
                           v-model="editedItem.services"
@@ -108,7 +124,7 @@
                       justify="space-around"
                       v-if="editedIndex > -1"
                     >
-                      <v-col class="d-flex" cols="12" sm="12" md="12">
+                      <v-col cols="12" sm="12" md="12">
                         <v-select
                           label="Agregar servicio/s"
                           v-model="updatedServices"
@@ -357,6 +373,24 @@ export default {
     ],
     servicesArray: [],
     clients: [],
+    nameRules: [
+      (v) => !!v || "El nombre es requerido",
+      (v) => (v && v.length >= 3) || "El nombre debe ser mayor a 3 caracteres",
+    ],
+    lastnameRules: [
+      (v) => !!v || "El apellido es requerido",
+      (v) =>
+        (v && v.length >= 3) || "El apellido debe ser mayor a 3 caracteres",
+    ],
+    emailRules: [
+      (v) => !!v || "El email es requerido",
+      (v) => /.+@.+\..+/.test(v) || "El email debe ser válido",
+    ],
+    phoneRules: [
+      (v) =>
+        typeof v == "number" ||
+        "El teléfono debe ser válido, escribir solo números",
+    ],
   }),
   methods: {
     //Services
@@ -372,7 +406,6 @@ export default {
       this.servicesList.map(function (i) {
         if (id == i.value) {
           const repeated = me.servicesArray.findIndex((x) => x.text == i.text);
-          console.log(repeated);
           if (repeated == -1) {
             me.servicesArray.push({
               text: i.text,
@@ -393,9 +426,9 @@ export default {
       let id = event;
       this.servicesList.map(function (i) {
         if (id == i.value) {
-          console.log(me.editedItem.services);
-          const repeated = me.editedItem.services.findIndex((x) => x.name == i.text);
-          console.log(repeated);
+          const repeated = me.editedItem.services.findIndex(
+            (x) => x.name == i.text
+          );
           if (repeated == -1) {
             me.editedItem.services.push({
               name: i.text,
@@ -578,7 +611,6 @@ export default {
 
     close() {
       this.dialog = false;
-      this.servicesArray = [];
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
@@ -607,6 +639,7 @@ export default {
             name: this.editedItem.name,
             lastname: this.editedItem.lastname,
             email: this.editedItem.email,
+            address: this.editedItem.address,
             phone: this.editedItem.phone,
             services: servicesUpdated,
           })
@@ -631,12 +664,12 @@ export default {
             }
           });
         });
-
         axios
           .post("clients/add", {
             name: this.editedItem.name,
             lastname: this.editedItem.lastname,
             email: this.editedItem.email,
+            address: this.editedItem.address,
             phone: this.editedItem.phone,
             services: servicesSelected,
           })
@@ -650,6 +683,10 @@ export default {
           })
           .catch(function (error) {
             console.log(error);
+            me.$store.dispatch("setSnackbar", {
+              text: `Ocurrió un error, por favor actualice la página y vuelta a intentarlo.`,
+              color: "red",
+            });
           });
       }
       this.close();

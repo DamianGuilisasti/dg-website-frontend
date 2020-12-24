@@ -14,6 +14,9 @@ import AdminServices from "../components/AdminServices";
 import AdminClients from "../components/AdminClients";
 import BlogAdmin from "../components/BlogAdmin";
 import AdminBudgets from "../components/AdminBudgets";
+import AdminExpenses from "../components/AdminExpenses";
+
+import store from "../store";
 
 Vue.use(VueRouter);
 
@@ -31,6 +34,9 @@ const routes = [
     path: "/admin",
     component: Admin,
     name: "Admin",
+    meta: {
+      AdminRol: true,
+    },
     redirect: "/admin/dashboard",
     children: [
       {
@@ -62,6 +68,11 @@ const routes = [
         path: "Settings",
         component: AdminSettings,
         name: "AdminSettings",
+      },
+      {
+        path: "Expenses",
+        component: AdminExpenses,
+        name: "AdminExpenses",
       },
     ],
   },
@@ -98,6 +109,16 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const rutaProtegida = to.matched.some((record) => record.meta.AdminRol);
+  if (rutaProtegida && store.state.token === '') {
+    next({ name: "Login" });
+  } else {
+    next();
+  }
+  next();
 });
 
 export default router;

@@ -47,9 +47,18 @@
           </v-list-item-content>
         </v-list-item>
 
+        <v-list-item link to="/admin/users">
+          <v-list-item-action>
+            <v-icon>mdi-card-account-details-outline</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Usuarios</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
         <v-list-item link to="/admin/budgets">
           <v-list-item-action>
-            <v-icon>mdi-account-group-outline</v-icon>
+            <v-icon>mdi-file-outline</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Presupuestos</v-list-item-title>
@@ -62,6 +71,15 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Facturación</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link to="/admin/expenses">
+          <v-list-item-action>
+            <v-icon>mdi-trending-down</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Gastos</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -143,7 +161,7 @@
               <v-divider class="my-3"></v-divider>
               <v-btn depressed rounded text> Editar cuenta </v-btn>
               <v-divider class="my-3"></v-divider>
-              <v-btn depressed rounded text> SALIR </v-btn>
+              <v-btn depressed rounded text @click="logout"> SALIR </v-btn>
             </div>
           </v-list-item-content>
         </v-card>
@@ -163,9 +181,20 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "AdminView",
   data: () => ({ drawer: null }),
+  methods: {
+    logout() {
+      this.$store.dispatch("exit");
+    },
+  },
+  created() {
+    this.$store.dispatch("autoLogin");
+    //this.getUserInfo();
+    //this.getTheme();
+  },
 };
 </script>
 

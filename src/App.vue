@@ -3,7 +3,7 @@
     <v-main>
       <router-view />
     </v-main>
-    <div class="text-center ma-2">
+    <div class="text-center"> <!-- se quito el ma-2 -->
       <v-snackbar v-model="snackbar.showing" :color="snackbar.color">
         <p>{{ snackbar.text }}</p>
         <template v-slot:action="{ attrs }">
@@ -67,3 +67,7 @@ export default {
   },
 };
 </script>
+
+<!-- <style lang="scss" src="./styles/app.scss"></style> -->
+
+ 
