@@ -18,6 +18,9 @@ export default new Vuex.Store({
     setToken(state, token) {
       state.token = token;
     },
+    setUser(state, User) {
+      state.userDB = User.id;
+    },
   },
   actions: {
     setSnackbar({ commit }, snackbar) {
@@ -27,7 +30,8 @@ export default new Vuex.Store({
     },
     saveToken({ commit }, token) {
       commit("setToken", token);
-      //commit("setUser", decode(token));
+      const User = decode(token);
+      commit("setUser", User);
       localStorage.setItem("token", token);
     },
     exit({ commit }) {
@@ -40,7 +44,8 @@ export default new Vuex.Store({
       let token = localStorage.getItem("token");
       if (token) {
         commit("setToken", token);
-        //commit("setUser", decode(token));
+        const User = decode(token);
+        commit("setUser", User);
       } else {
         router.push({ name: "Login" });
       }

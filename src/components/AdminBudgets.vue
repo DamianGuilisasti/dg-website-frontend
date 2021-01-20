@@ -323,8 +323,7 @@
     </template>
   </div>
 </template>
-  </div>
-</template>
+
 
 <script>
 import Vuex from "vuex";
@@ -419,27 +418,43 @@ export default {
 
     approvedItem(item) {
       let me = this;
+      let header = { token: this.$store.state.token };
+      let configuration = { headers: header };
       axios
-        .put("budgets/approved", {
-          _id: item._id,
-        })
+        .put(
+          "budgets/approved",
+          {
+            _id: item._id,
+          },
+          configuration
+        )
         .then(function (response) {
           me.initialize();
           me.$store.dispatch("setSnackbar", {
-            text: `Se aprobó el correctamente el presupuesto.`,
+            text: `Se aprobó correctamente el presupuesto.`,
           });
         })
         .catch(function (error) {
           console.log(error);
+          me.$store.dispatch("setSnackbar", {
+            text: `No se pudo aprobar el presupuesto, por favor actualice la página e intente nuevamente.`,
+            color: "red",
+          });
         });
     },
 
     desactivateItem(item) {
       let me = this;
+      let header = { token: this.$store.state.token };
+      let configuration = { headers: header };
       axios
-        .put("budgets/desactivate", {
-          _id: item._id,
-        })
+        .put(
+          "budgets/desactivate",
+          {
+            _id: item._id,
+          },
+          configuration
+        )
         .then(function (response) {
           me.initialize();
           me.$store.dispatch("setSnackbar", {
@@ -448,15 +463,25 @@ export default {
         })
         .catch(function (error) {
           console.log(error);
+          me.$store.dispatch("setSnackbar", {
+            text: `No se pudo desaprobar el presupuesto, por favor actualice la página e intente nuevamente.`,
+            color: "red",
+          });
         });
     },
 
     activateItem(item) {
       let me = this;
+      let header = { token: this.$store.state.token };
+      let configuration = { headers: header };
       axios
-        .put("budgets/activate", {
-          _id: item._id,
-        })
+        .put(
+          "budgets/activate",
+          {
+            _id: item._id,
+          },
+          configuration
+        )
         .then(function (response) {
           me.initialize();
           me.$store.dispatch("setSnackbar", {
@@ -465,6 +490,10 @@ export default {
         })
         .catch(function (error) {
           console.log(error);
+          me.$store.dispatch("setSnackbar", {
+            text: `No se pudo activar el presupuesto, por favor actualice la página e intente nuevamente.`,
+            color: "red",
+          });
         });
     },
 
@@ -481,6 +510,7 @@ export default {
         axios
           .delete("budgets/delete", {
             params: { id: budgetId },
+            headers: { token: me.$store.state.token },
           })
           .then(function (response) {
             me.initialize();
@@ -490,6 +520,10 @@ export default {
           })
           .catch(function (error) {
             console.log(error);
+            me.$store.dispatch("setSnackbar", {
+              text: `No se pudo eliminar el presupuesto, por favor actualice la página e intente nuevamente.`,
+              color: "red",
+            });
           });
     },
 
@@ -503,13 +537,19 @@ export default {
 
     save() {
       let me = this;
+      let header = { token: this.$store.state.token };
+      let configuration = { headers: header };
       if (this.editedIndex > -1) {
         axios
-          .put("budgets/update", {
-            _id: this.editedItem._id,
-            name: this.editedItem.name,
-            price: this.editedItem.price,
-          })
+          .put(
+            "budgets/update",
+            {
+              _id: this.editedItem._id,
+              name: this.editedItem.name,
+              price: this.editedItem.price,
+            },
+            configuration
+          )
           .then(function (response) {
             me.initialize();
             me.$store.dispatch("setSnackbar", {
@@ -518,9 +558,15 @@ export default {
           })
           .catch(function (error) {
             console.log(error);
+            me.$store.dispatch("setSnackbar", {
+              text: `No se pudo actualizar el presupuesto, por favor actualice la página e intente nuevamente.`,
+              color: "red",
+            });
           });
       } else {
         let me = this;
+        let header = { token: this.$store.state.token };
+        let configuration = { headers: header };
         const servicesSelected = [];
         this.servicesArray.map(function (i) {
           me.servicesList.map(function (u) {
@@ -530,26 +576,37 @@ export default {
           });
         });
         axios
-          .post("budgets/add", {
-            client: this.editedItem.clients,
-            services: servicesSelected,
-          })
+          .post(
+            "budgets/add",
+            {
+              client: this.editedItem.clients,
+              services: servicesSelected,
+            },
+            configuration
+          )
           .then(function (response) {
             me.initialize();
             me.$store.dispatch("setSnackbar", {
               text: `Se agregó correctamente el presupuesto.`,
             });
+            me.servicesArray = [];
           })
           .catch(function (error) {
             console.log(error);
+            me.$store.dispatch("setSnackbar", {
+              text: `No se pudo crear el presupuesto, por favor actualice la página e intente nuevamente.`,
+              color: "red",
+            });
           });
       }
       this.close();
     },
     initialize() {
       let me = this;
+      let header = { token: this.$store.state.token };
+      let configuration = { headers: header };
       axios
-        .get("budgets/list")
+        .get("budgets/list", configuration)
         .then(function (response) {
           me.budgets = response.data;
           me.loadingData = false;
@@ -560,9 +617,11 @@ export default {
     },
     clientsSelect() {
       let me = this;
+      let header = { token: this.$store.state.token };
+      let configuration = { headers: header };
       let clientsList = [];
       axios
-        .get("clients/list")
+        .get("clients/list", configuration)
         .then(function (response) {
           clientsList = response.data;
           clientsList.map(function (i) {
@@ -575,9 +634,11 @@ export default {
     },
     servicesSelect() {
       let me = this;
+      let header = { token: this.$store.state.token };
+      let configuration = { headers: header };
       let serviceList = [];
       axios
-        .get("services/list")
+        .get("services/list", configuration)
         .then(function (response) {
           serviceList = response.data;
           serviceList.map(function (i) {
@@ -651,6 +712,7 @@ export default {
           .post("budgets/uploadPDF", formData, {
             headers: {
               "Content-Type": "multipart/form-data",
+              token: me.$store.state.token,
             },
           })
           .then(function (response) {

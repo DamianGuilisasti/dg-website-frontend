@@ -20,7 +20,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link to="/admin/services">
+        <v-list-item link to="/admin/services" v-if="isAdmin()">
           <v-list-item-action>
             <v-icon>mdi-laptop</v-icon>
           </v-list-item-action>
@@ -47,7 +47,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link to="/admin/users">
+        <v-list-item link to="/admin/users" v-if="isAdmin()">
           <v-list-item-action>
             <v-icon>mdi-card-account-details-outline</v-icon>
           </v-list-item-action>
@@ -62,6 +62,15 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Presupuestos</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link to="/admin/emails">
+          <v-list-item-action>
+            <v-icon>mdi-email</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Emails</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -128,14 +137,14 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-spacer></v-spacer>
-      <v-text-field
+      <!--       <v-text-field
         flat
         solo-inverted
         hide-details
         prepend-inner-icon="mdi-magnify"
         label="Buscar"
         class="hidden-sm-and-down"
-      ></v-text-field>
+      ></v-text-field> -->
       <v-spacer></v-spacer>
 
       <v-btn icon>
@@ -145,21 +154,25 @@
       <v-menu bottom min-width="200px" rounded offset-y>
         <template v-slot:activator="{ on }">
           <v-btn icon x-large v-on="on">
-            <v-avatar color="brown" size="40">
-              <span class="white--text headline">DG</span>
+            <v-avatar class="avatar-background" size="40">
+              <span class="white--text headline">{{ initials }}</span>
             </v-avatar>
           </v-btn>
         </template>
         <v-card>
           <v-list-item-content class="justify-center">
             <div class="mx-auto text-center">
-              <v-avatar color="brown">
-                <span class="white--text headline">DG</span>
+              <v-avatar class="avatar-background">
+                <span class="white--text headline">{{ initials }}</span>
               </v-avatar>
-              <h3 class="pt-4">Damián Guilisasti</h3>
-              <p class="caption mt-1">damianguilisasti@gmail.com</p>
+              <h3 class="pt-4">
+                {{ userInfo.name + " " + userInfo.lastname }}
+              </h3>
+              <p class="caption mt-1">{{ userInfo.email }}</p>
               <v-divider class="my-3"></v-divider>
-              <v-btn depressed rounded text> Editar cuenta </v-btn>
+              <v-btn depressed rounded text link to="/admin/editaccount">
+                Editar cuenta
+              </v-btn>
               <v-divider class="my-3"></v-divider>
               <v-btn depressed rounded text @click="logout"> SALIR </v-btn>
             </div>
@@ -182,24 +195,56 @@
 
 <script>
 import axios from "axios";
+import Vuex from "vuex";
 export default {
   name: "AdminView",
-  data: () => ({ drawer: null }),
+  data: () => ({
+    drawer: null,
+    userInfo: { rol: [{ name: "" }] },
+    initials: "",
+  }),
   methods: {
+    getUserInfo() {
+      let me = this;
+      let header = { token: this.$store.state.token };
+      let configuration = { headers: header };
+      const userId = this.$store.state.userDB;
+      const url = `user/query?_id=${userId}`;
+      axios
+        .get(url, configuration)
+        .then(function (response) {
+          me.userInfo = response.data;
+          me.initials =
+            me.userInfo.name.slice(0, 1) + me.userInfo.lastname.slice(0, 1);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    isAdmin() {
+      if (this.userInfo.rol[0].name === "Admin") return true;
+      else return false;
+    },
     logout() {
       this.$store.dispatch("exit");
     },
   },
   created() {
     this.$store.dispatch("autoLogin");
-    //this.getUserInfo();
+    this.getUserInfo();
+
     //this.getTheme();
   },
+  mounted() {},
 };
 </script>
 
 <style scoped lang="scss">
+@import "@/styles/variables.scss";
 .v-main {
   padding: 64px 64px 64px 64px !important;
+}
+.avatar-background {
+  background: $primarycolor;
 }
 </style>

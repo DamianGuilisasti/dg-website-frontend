@@ -165,10 +165,16 @@ export default {
 
     desactivateItem(item) {
       let me = this;
+      let header = { token: this.$store.state.token };
+      let configuration = { headers: header };
       axios
-        .put("services/desactivate", {
-          _id: item._id,
-        })
+        .put(
+          "services/desactivate",
+          {
+            _id: item._id,
+          },
+          configuration
+        )
         .then(function (response) {
           me.initialize();
           me.$store.dispatch("setSnackbar", {
@@ -182,10 +188,16 @@ export default {
 
     activateItem(item) {
       let me = this;
+      let header = { token: this.$store.state.token };
+      let configuration = { headers: header };
       axios
-        .put("services/activate", {
-          _id: item._id,
-        })
+        .put(
+          "services/activate",
+          {
+            _id: item._id,
+          },
+          configuration
+        )
         .then(function (response) {
           me.initialize();
           me.$store.dispatch("setSnackbar", {
@@ -210,6 +222,9 @@ export default {
         axios
           .delete("services/delete", {
             params: { id: serviceId },
+            headers: {
+              token: me.$store.state.token,
+            },
           })
           .then(function (response) {
             me.initialize();
@@ -232,15 +247,21 @@ export default {
 
     save() {
       let me = this;
+      let header = { token: this.$store.state.token };
+      let configuration = { headers: header };
       if (this.editedIndex > -1) {
         axios
-          .put("services/update", {
-            _id: this.editedItem._id,
-            name: this.editedItem.name,
-            description: this.editedItem.description,
-            price: this.editedItem.price,
-            serviceType: this.editedItem.serviceType,
-          })
+          .put(
+            "services/update",
+            {
+              _id: this.editedItem._id,
+              name: this.editedItem.name,
+              description: this.editedItem.description,
+              price: this.editedItem.price,
+              serviceType: this.editedItem.serviceType,
+            },
+            configuration
+          )
           .then(function (response) {
             me.initialize();
             me.$store.dispatch("setSnackbar", {
@@ -252,13 +273,19 @@ export default {
           });
       } else {
         let me = this;
+        let header = { token: this.$store.state.token };
+        let configuration = { headers: header };
         axios
-          .post("services/add", {
-            name: this.editedItem.name,
-            description: this.editedItem.description,
-            price: this.editedItem.price,
-            serviceType: this.editedItem.serviceType,
-          })
+          .post(
+            "services/add",
+            {
+              name: this.editedItem.name,
+              description: this.editedItem.description,
+              price: this.editedItem.price,
+              serviceType: this.editedItem.serviceType,
+            },
+            configuration
+          )
           .then(function (response) {
             me.initialize();
             me.$store.dispatch("setSnackbar", {
@@ -273,8 +300,10 @@ export default {
     },
     initialize() {
       let me = this;
+      let header = { token: this.$store.state.token };
+      let configuration = { headers: header };
       axios
-        .get("services/list")
+        .get("services/list", configuration)
         .then(function (response) {
           me.services = response.data;
           me.loadingData = false;

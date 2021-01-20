@@ -27,6 +27,12 @@
           </v-chip>
         </template>
 
+        <template v-slot:item.isPaid="{ item }">
+          <v-chip :color="getIsPaidColor(item.isPaid)" dark>
+            {{ getIsPaid(item.isPaid) }}
+          </v-chip>
+        </template>
+
         <template v-slot:top>
           <v-toolbar flat color="dark">
             <v-toolbar-title>Clientes</v-toolbar-title>
@@ -280,6 +286,16 @@
           <v-icon small @click="activateItem(item)" v-if="item.state === 0"
             >mdi-eye</v-icon
           >
+          <v-icon
+            small
+            @click="isNotPaidItem(item)"
+            class="mr-2"
+            v-if="item.isPaid === true"
+            >mdi-currency-usd-off</v-icon
+          >
+          <v-icon small @click="isPaidItem(item)" v-if="item.isPaid === false"
+            >mdi-currency-usd</v-icon
+          >
         </template></v-data-table
       >
     </v-card>
@@ -338,6 +354,11 @@ export default {
         text: "Pago mensual",
         filterable: true,
         value: "monthlypayment",
+      },
+      {
+        text: "Abonado",
+        filterable: true,
+        value: "isPaid",
       },
       /*       {
         text: "Total pagado",
@@ -445,9 +466,11 @@ export default {
 
     servicesSelect() {
       let me = this;
+      let header = { token: this.$store.state.token };
+      let configuration = { headers: header };
       let serviceList = [];
       axios
-        .get("services/list")
+        .get("services/list", configuration)
         .then(function (response) {
           serviceList = response.data;
           serviceList.map(function (i) {
@@ -484,6 +507,15 @@ export default {
       else return "Desactivado";
     },
 
+    getIsPaidColor(isPaid) {
+      if (isPaid === true) return "green";
+      else return "red";
+    },
+    getIsPaid(isPaid) {
+      if (isPaid === true) return "Si";
+      else return "No";
+    },
+
     desactivateItem(item) {
       let me = this;
       axios
@@ -515,6 +547,44 @@ export default {
             text: `Se activó correctamente el cliente ${
               item.name + " " + item.lastname
             }.`,
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+    isPaidItem(item) {
+      let me = this;
+      axios
+        .put("clients/clientIsPaid", {
+          _id: item._id,
+        })
+        .then(function (response) {
+          me.initialize();
+          me.$store.dispatch("setSnackbar", {
+            text: `El cliente ${
+              item.name + " " + item.lastname
+            } pagó correctamente.`,
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+    isNotPaidItem(item) {
+      let me = this;
+      axios
+        .put("clients/clientIsNotPaid", {
+          _id: item._id,
+        })
+        .then(function (response) {
+          me.initialize();
+          me.$store.dispatch("setSnackbar", {
+            text: `El cliente ${
+              item.name + " " + item.lastname
+            } no abonó el servicio.`,
           });
         })
         .catch(function (error) {

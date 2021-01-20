@@ -1,7 +1,9 @@
 <template>
   <v-row>
-    <v-col cols="12" sm="12" md="12" xl="8">
-      <v-form>
+    <v-col cols="12" sm="12" md="12" xl="12">
+      <h1>Configuración</h1>
+      <v-divider></v-divider>
+      <v-form class="pt-5">
         <v-expansion-panels>
           <v-expansion-panel>
             <v-expansion-panel-header>
@@ -229,7 +231,7 @@
                         label
                         small
                       >
-                        {{ text }} 
+                        {{ text }}
                       </v-chip>
 
                       <span

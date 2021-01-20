@@ -15,6 +15,9 @@ import AdminClients from "../components/AdminClients";
 import BlogAdmin from "../components/BlogAdmin";
 import AdminBudgets from "../components/AdminBudgets";
 import AdminExpenses from "../components/AdminExpenses";
+import AdminEmails from "../components/AdminEmails";
+import AdminUsers from "../components/AdminUsers";
+import AdminEditAccount from "../components/AdminEditAccount";
 
 import store from "../store";
 
@@ -58,6 +61,21 @@ const routes = [
         path: "Clients",
         component: AdminClients,
         name: "AdminClients",
+      },
+      {
+        path: "EditAccount",
+        component: AdminEditAccount,
+        name: "AdminEditAccount",
+      },
+      {
+        path: "Users",
+        component: AdminUsers,
+        name: "AdminUsers",
+      },
+      {
+        path: "Emails",
+        component: AdminEmails,
+        name: "AdminEmails",
       },
       {
         path: "Budgets",
@@ -113,7 +131,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const rutaProtegida = to.matched.some((record) => record.meta.AdminRol);
-  if (rutaProtegida && store.state.token === '') {
+  if (rutaProtegida && store.state.token === "") {
     next({ name: "Login" });
   } else {
     next();

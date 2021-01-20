@@ -3,10 +3,7 @@
     <v-main class="main">
       <v-container class="fill-height container" fluid>
         <v-row align="center" class="no-gutters">
-          <v-col
-            lg="7"
-            class="d-flex justify-center align-center col-left"
-          >
+          <v-col lg="7" class="d-flex justify-center align-center col-left">
             <div>
               <v-row>
                 <v-col cols="12">
@@ -33,7 +30,7 @@
             lg="5"
             class="d-flex justify-center align-center col-right"
           >
-            <div class="login-wrapper pt-16 pt-sm-0">
+            <div class="login-wrapper pt-sm-0">
               <div class="my-16">
                 <p class="display-2 text-center font-weight-medium my-10">
                   ¡Hola!
@@ -48,12 +45,14 @@
                   ></v-text-field>
 
                   <v-text-field
+                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                     id="password"
                     label="Contraseña"
                     name="password"
                     prepend-icon="mdi-lock"
-                    type="password"
+                    :type="show ? 'text' : 'password'"
                     v-model="password"
+                    @click:append="show = !show"
                   ></v-text-field>
 
                   <v-flex class="red--text" v-if="errorMessage">
@@ -61,12 +60,16 @@
                   </v-flex>
                 </v-form>
                 <v-row>
-                  <v-col cols="6">
+                  <v-col cols="12" lg="6" md="6">
                     <v-btn @click="login" class="btn-login" elevation="2" small
                       >Ingresar</v-btn
                     >
                   </v-col>
-                  <v-col cols="6"><v-btn class="btn-forget" small text>Olvidé la contraseña</v-btn></v-col>
+                  <v-col cols="12" lg="6" md="6"
+                    ><v-btn class="btn-forget" small text
+                      >Olvidé la contraseña</v-btn
+                    ></v-col
+                  >
                 </v-row>
               </div>
             </div>
@@ -87,6 +90,7 @@ export default {
     email: "",
     password: "",
     errorMessage: null,
+    show: false,
   }),
   methods: {
     login() {
@@ -94,23 +98,19 @@ export default {
       axios
         .post("/user/login", { email: this.email, password: this.password })
         .then((response) => {
-          console.log(response.data);
           return response.data;
-          
         })
         .then((data) => {
           this.$store.dispatch("saveToken", data.token);
           this.$router.push({ name: "Dashboard" });
         })
         .catch(function (error) {
-          console.log(error);
-/*           if (error.response.status === 404) {
-            me.errorMessage =
-              "No existe el usuario o las datos ingresados son incorrectos.";
-          } else {
-            me.errorMessage =
-              "Ha ocurrido un error en el servidor, por favor intentarlo nuevamente.";
-          } */
+          if (error.response.status === 404 || 401) {
+            me.$store.dispatch("setSnackbar", {
+              text: `Usuario o contraseña incorrecta.`,
+              color: "red",
+            });
+          }
         });
     },
   },
@@ -118,8 +118,7 @@ export default {
 </script>
 
 <style lang="scss">
-
-@import '@/styles/variables.scss';
+@import "@/styles/variables.scss";
 
 .main {
   padding: 0px !important;
@@ -142,7 +141,7 @@ export default {
   align-items: center;
 }
 .panel-text {
-  font-size: 60px;
+  font-size: 50px;
   color: #fff;
   font-weight: 500;
 }
@@ -160,11 +159,17 @@ export default {
   margin: 0 auto;
 }
 .container .login-wrapper {
-  width: 320px;
+  width: auto;
   height: auto;
 }
 .panel-forget-password {
   color: $primarycolor;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+  //overflow: hidden;
 }
 </style>
 

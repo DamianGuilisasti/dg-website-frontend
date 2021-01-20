@@ -19,7 +19,14 @@
               <div class="grey--text mb-md-12 mb-6 display-1">
                 Full Stack <em>Web Developer</em>
               </div>
-              <v-btn x-large dark color="secondary" block class="mt-3 elevation-6">Contact me</v-btn>
+              <v-btn
+                x-large
+                dark
+                color="secondary"
+                block
+                class="mt-3 elevation-6"
+                >Contact me</v-btn
+              >
             </v-col>
             <v-col cols="12"> </v-col>
           </v-row>
@@ -215,6 +222,45 @@
           <div class="py-12"></div>
         </section>
 
+        <section id="budget">
+          <v-container class="mb-4">
+            <v-stepper v-model="e1">
+              <v-stepper-header>
+                <template v-for="n in steps">
+                  <v-stepper-step
+                    :key="`${n}-step`"
+                    :complete="e1 > n"
+                    :step="n"
+                    editable
+                  >
+                    Step {{ n }}
+                  </v-stepper-step>
+
+                  <v-divider v-if="n !== steps" :key="n"></v-divider>
+                </template>
+              </v-stepper-header>
+
+              <v-stepper-items>
+                <v-stepper-content
+                  v-for="n in steps"
+                  :key="`${n}-content`"
+                  :step="n"
+                >
+                  <v-card
+                    class="mb-12"
+                    color="grey lighten-1"
+                    height="200px"
+                  ></v-card>
+
+                  <v-btn color="primary" @click="nextStep(n)"> Continuar </v-btn>
+
+                  <v-btn text> Cancelar </v-btn>
+                </v-stepper-content>
+              </v-stepper-items>
+            </v-stepper>
+          </v-container>
+        </section>
+
         <section id="blog">
           <v-container>
             <h2
@@ -268,6 +314,8 @@
 import axios from "axios";
 export default {
   data: () => ({
+    e1: 1,
+    steps: 2,
     aboutInfo: "",
     articles: [
       {
@@ -321,6 +369,15 @@ export default {
     model: 0,
     colors: ["primary", "secondary", "yellow darken-2", "red", "orange"],
   }),
+  methods: {
+    nextStep(n) {
+      if (n === this.steps) {
+        this.e1 = 1;
+      } else {
+        this.e1 = n + 1;
+      }
+    },
+  },
   mounted() {
     let me = this;
     axios
@@ -335,6 +392,13 @@ export default {
         console.log(error);
       });
   },
+  watch: {
+    steps(val) {
+      if (this.e1 > val) {
+        this.e1 = val;
+      }
+    },
+  },
 };
 </script>
 
@@ -348,7 +412,7 @@ export default {
   transform: translateY(-4px);
   transition: box-shadow 0.2s, transform 0.2s;
 }
-#presentation{
+#presentation {
   margin-top: 150px;
 }
 </style>
