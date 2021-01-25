@@ -195,7 +195,6 @@
 
 <script>
 import axios from "axios";
-import Vuex from "vuex";
 export default {
   name: "AdminView",
   data: () => ({

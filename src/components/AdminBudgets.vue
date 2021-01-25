@@ -326,7 +326,6 @@
 
 
 <script>
-import Vuex from "vuex";
 import axios from "axios";
 import moment from "moment";
 import jsPDF from "jspdf";

@@ -113,7 +113,6 @@
 </template>
 
 <script>
-import Vuex from "vuex";
 import axios from "axios";
 export default {
   data: () => ({

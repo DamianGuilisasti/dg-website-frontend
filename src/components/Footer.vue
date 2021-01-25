@@ -101,7 +101,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "FooterDG",
+  name: "Footer",
   data: () => ({
     companyEmail: "",
     companyPhone: "",

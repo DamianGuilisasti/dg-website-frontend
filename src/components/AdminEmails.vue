@@ -54,7 +54,6 @@ import { validationMixin } from "vuelidate";
 import { required, maxLength, email } from "vuelidate/lib/validators";
 import axios from "axios";
 import moment from "moment";
-import vuex from "vuex";
 
 export default {
   mixins: [validationMixin],
@@ -163,6 +162,7 @@ export default {
         .post("budgets/uploadBillPDF", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
+            token: me.$store.state.token,
           },
         })
         .then(function (response) {

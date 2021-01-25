@@ -1,8 +1,8 @@
 <template>
   <div>
-    <NavbarDG />
+    <Navbar />
     <router-view />
-    <FooterDG />
+    <Footer />
     <Whatsapp />
   </div>
 </template>
@@ -10,14 +10,14 @@
 <script>
 import axios from "axios";
 // @ is an alias to /src
-import NavbarDG from "@/components/NavbarDG";
-import FooterDG from "@/components/FooterDG";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import Whatsapp from "@/components/Whatsapp";
 export default {
   name: "LayoutView",
   components: {
-    NavbarDG,
-    FooterDG,
+    Navbar,
+    Footer,
     Whatsapp
   },
   data: () => ({
