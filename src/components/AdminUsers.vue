@@ -68,7 +68,6 @@
                         <v-text-field
                           v-model="editedItem.username"
                           label="Usuario"
-                          :rules="userRules"
                           required
                         ></v-text-field>
                       </v-col>
@@ -76,35 +75,39 @@
                         <v-text-field
                           v-model="editedItem.email"
                           label="Email"
-                          :rules="emailRules"
                           required
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="6">
                         <v-text-field
                           v-if="editedIndex === -1"
-                          v-model="editedItem.newPassword"
+                          v-model="password"
                           label="Contraseña"
-                          :rules="passwordRules"
                           required
                         ></v-text-field>
                         <v-text-field
                           v-if="editedIndex !== -1"
-                          v-model="editedItem.newPassword"
+                          v-model="newpassword"
                           label="Nueva Contraseña"
-                          :rules="passwordRules"
                           required
                         ></v-text-field>
                       </v-col>
                       <v-col class="d-flex" cols="12" sm="6" md="6">
                         <v-select
-                          v-model="editedItem.userrole"
+                          v-if="editedIndex === -1"
+                          v-model="role"
                           :items="userrolList"
-                          label="Seleccione el rol"
-                          :rules="userroleRules"
-                          required
+                          label="Seleccione Rol"
                           item-value="_id"
                           item-text="name"
+                        ></v-select>
+                        <v-select
+                          v-if="editedIndex !== -1"
+                          v-model="role"
+                          :items="userrolList"
+                          label="Editar Rol"
+                          item-text="name"
+                          item-value="id"
                         ></v-select>
                       </v-col>
                     </v-row>
@@ -172,10 +175,18 @@ export default {
     ],
     usersArray: [],
     userrolList: [],
+    role: "",
+    roleId: "",
+    password: "",
+    newpassword: "",
     editedIndex: -1,
     editedItem: {
       name: "",
-      description: "",
+      lastname: "",
+      username: "",
+      password: "",
+      email: "",
+      rol: [],
     },
     defaultItem: {
       name: "",
@@ -231,10 +242,21 @@ export default {
         .get("roles/list")
         .then(function (response) {
           me.userrolList = response.data;
+          console.log(me.userrolList);
         })
         .catch(function (error) {
           console.log(error);
         });
+    },
+    getRole() {
+      let me = this;
+      const role = this.editedItem.rol[0].name;
+      this.userrolList.map(function (i) {
+        if (i.name === role) {
+          me.role = i.name;
+          me.roleId = i._id;
+        }
+      });
     },
     userRols(item) {
       const elements = [];
@@ -311,7 +333,6 @@ export default {
         .get("user/list", configuration)
         .then(function (response) {
           me.usersArray = response.data;
-          console.log(response.data);
         })
         .catch(function (error) {
           console.log(error);
@@ -325,6 +346,8 @@ export default {
     editItem(item) {
       this.editedIndex = this.usersArray.indexOf(item);
       this.editedItem = Object.assign({}, item);
+      console.log(this.editedItem);
+      this.getRole();
       this.dialog = true;
     },
 
@@ -373,6 +396,13 @@ export default {
 
       if (this.validate()) {
         if (this.editedIndex > -1) {
+          const roleName = this.role;
+          this.userrolList.map(function (i) {
+            if (i.name === roleName) {
+              me.roleId = i._id;
+            }
+          });
+
           axios
             .put(
               "user/update",
@@ -382,8 +412,8 @@ export default {
                 lastname: this.editedItem.lastname,
                 username: this.editedItem.username,
                 email: this.editedItem.email,
-                password: this.editedItem.newPassword, //revisar esto.
-                userrole: this.editedItem.userrole,
+                password: this.newpassword,
+                rol: this.roleId,
               },
               configuration
             )
@@ -401,6 +431,7 @@ export default {
               });
             });
         } else {
+          console.log(this.editedItem.username, this.editedItem.email);
           axios
             .post(
               "user/add",
@@ -409,8 +440,8 @@ export default {
                 lastname: this.editedItem.lastname,
                 username: this.editedItem.username,
                 email: this.editedItem.email,
-                password: this.editedItem.newPassword,
-                rol: this.editedItem.userrole,
+                password: this.password,
+                rol: this.role,
                 state: 1,
               },
               configuration

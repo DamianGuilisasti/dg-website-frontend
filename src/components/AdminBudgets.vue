@@ -93,7 +93,7 @@
                       justify="space-around"
                       v-if="editedIndex > -1"
                     >
-                      <v-col class="d-flex" cols="12" sm="12" md="12">
+                      <v-col cols="12" sm="12" md="12">
                         <v-select
                           label="Agregar servicio/s"
                           v-model="updatedServices"
@@ -114,7 +114,7 @@
                           <template v-slot:item.actions="{ item }">
                             <v-icon
                               small
-                              @click="deleteClientService(item)"
+                              @click="deleteEditedService(item)"
                               class="mr-2"
                               >mdi-close</v-icon
                             >
@@ -149,7 +149,7 @@
                   <v-spacer></v-spacer>
                   <v-btn class="ma-2" @click="close">Cancelar</v-btn>
                   <v-btn class="ma-2" color="success" @click="save">
-                    Generar
+                    {{ saveTitle }}
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -274,7 +274,7 @@
                             ${{ Math.round(budgetSubTotal) }}
                           </th>
                         </tr>
-                        <tr>
+                        <!--                         <tr>
                           <th></th>
                           <th></th>
                           <th></th>
@@ -282,15 +282,16 @@
                           <th style="text-align: right">
                             ${{ Math.round((budgetSubTotal * 21) / 100) }}
                           </th>
-                        </tr>
+                        </tr> -->
                         <tr>
                           <th></th>
                           <th></th>
                           <th></th>
                           <th colspan="2" style="text-align: right">TOTAL:</th>
                           <th style="text-align: right">
-                            ${{ Math.round(budgetSubTotal * 1.21) }}
+                            ${{ Math.round(budgetSubTotal) }}
                           </th>
+                          <!--  ${{ Math.round(budgetSubTotal * 1.21) }} -->
                         </tr>
                       </tfoot>
                     </table>
@@ -387,6 +388,7 @@ export default {
     serviceList: [],
     servicesArray: [],
     servicesList: [],
+    updatedServices: [],
   }),
   methods: {
     //DataTable
@@ -501,7 +503,10 @@ export default {
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
-
+    deleteEditedService(item) {
+      const index = this.editedItem.services.indexOf(item);
+      this.editedItem.services.splice(index, 1);
+    },
     deleteItem(item) {
       let me = this;
       let budgetId = item._id;
@@ -539,13 +544,20 @@ export default {
       let header = { token: this.$store.state.token };
       let configuration = { headers: header };
       if (this.editedIndex > -1) {
+        const servicesEditedSelected = [];
+        this.editedItem.services.map(function (i) {
+          me.servicesList.map(function (u) {
+            if (i.name == u.text) {
+              servicesEditedSelected.push(u.value);
+            }
+          });
+        });
         axios
           .put(
             "budgets/update",
             {
               _id: this.editedItem._id,
-              name: this.editedItem.name,
-              price: this.editedItem.price,
+              services: servicesEditedSelected,
             },
             configuration
           )
@@ -672,6 +684,28 @@ export default {
         }
       });
     },
+    editedServicesAdd(event) {
+      let me = this;
+      let id = event;
+      this.servicesList.map(function (i) {
+        console.log(i);
+        if (id == i.value) {
+          const repeated = me.editedItem.services.findIndex(
+            (x) => x.text == i.text
+          );
+          if (repeated == -1) {
+            me.editedItem.services.push({
+              name: i.text,
+            });
+          } else {
+            me.$store.dispatch("setSnackbar", {
+              text: `Este servicio ya fue agregado.`,
+              color: "red",
+            });
+          }
+        }
+      });
+    },
     sendEmail() {
       let me = this;
       const template = document.getElementById("budgetTemplate");
@@ -781,6 +815,9 @@ export default {
       return this.editedIndex === -1
         ? "Nuevo presupuesto"
         : "Editar presupuesto";
+    },
+    saveTitle() {
+      return this.editedIndex === -1 ? "Generar" : "Actualizar";
     },
   },
   mounted() {

@@ -89,7 +89,7 @@ export default {
 
       axios
         .put(
-          "/user/update",
+          "/user/updateInEditAccount",
           {
             _id: this.userInfo._id,
             name: this.userInfo.name,

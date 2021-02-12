@@ -19,7 +19,11 @@ export default new Vuex.Store({
       state.token = token;
     },
     setUser(state, User) {
-      state.userDB = User.id;
+      if (User) {
+        state.userDB = User.id;
+      } else {
+        state.userDB = null;
+      }
     },
   },
   actions: {
@@ -35,8 +39,8 @@ export default new Vuex.Store({
       localStorage.setItem("token", token);
     },
     exit({ commit }) {
-      commit("setToken", "");
-      commit("setUser", "");
+      commit("setToken", null);
+      commit("setUser", null);
       localStorage.removeItem("token");
       router.push({ name: "Login" });
     },

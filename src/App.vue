@@ -1,11 +1,28 @@
 <template>
-  <v-app>
+  <v-app id="inspire">
     <v-main>
-      <router-view />
+      <router-view></router-view>
     </v-main>
-    <div class="text-center"> <!-- se quito el ma-2 -->
+    <v-fab-transition>
+      <v-btn
+        class="mb-15"
+        v-scroll="onScroll"
+        v-show="fab"
+        fab
+        color="white"
+        fixed
+        width="50"
+        height="50"
+        bottom
+        right
+        @click="toTop"
+      >
+        <i class="fa fa-angle-up"></i>
+      </v-btn>
+    </v-fab-transition>
+    <div class="text-center">
       <v-snackbar v-model="snackbar.showing" :color="snackbar.color">
-        <p>{{ snackbar.text }}</p>
+        <p class="white--text">{{ snackbar.text }}</p>
         <template v-slot:action="{ attrs }">
           <v-btn dark text v-bind="attrs" @click="snackbar.showing = false"
             >Cerrar</v-btn
@@ -18,9 +35,21 @@
 
 <script>
 import axios from "axios";
-import Vuex, { mapState } from "vuex";
+import { mapState } from "vuex";
 export default {
-  data: () => ({}),
+  data: () => ({
+    fab: false,
+  }),
+  methods: {
+    onScroll(e) {
+      if (typeof window === "undefined") return;
+      const top = window.pageYOffset || e.target.scrollTop || 0;
+      this.fab = top > 60;
+    },
+    toTop() {
+      this.$vuetify.goTo(0);
+    },
+  },
   computed: {
     ...mapState(["snackbar"]),
   },
@@ -68,6 +97,36 @@ export default {
 };
 </script>
 
-<!-- <style lang="scss" src="./styles/app.scss"></style> -->
+<style scoped>
+.v-btn--fab.v-btn--contained {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+.v-btn--icon.v-size--default .v-icon,
+.v-btn--fab.v-size--default .v-icon {
+  height: 30px;
+  font-size: 30px;
+  width: 30px;
+}
+.v-btn--fab.v-btn--fixed {
+  z-index: 99;
+}
+.fa-angle-up {
+  display: block;
+  line-height: 48px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #f9004d;
+}
+.v-btn--absolute.v-btn--bottom,
+.v-btn--fixed.v-btn--bottom {
+  bottom: 60px;
+}
+
+.v-btn--absolute.v-btn--right,
+.v-btn--fixed.v-btn--right {
+  right: 50px;
+}
+</style>
+
 
  

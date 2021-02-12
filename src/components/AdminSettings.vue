@@ -7,7 +7,7 @@
         <v-expansion-panels>
           <v-expansion-panel>
             <v-expansion-panel-header>
-              <h3>Información de la empresa</h3>
+              <h3 class="mb--0">Información de la empresa</h3>
               <template v-slot:actions>
                 <v-icon color="primary"> $expand </v-icon>
               </template>
@@ -64,7 +64,7 @@
 
               <v-row>
                 <v-col>
-                  <v-btn color="success" class="mr-4" @click="updateInfo"
+                  <v-btn color="success" class="mr-4 mt-4" @click="updateInfo"
                     >Guardar cambios</v-btn
                   >
                 </v-col>
@@ -74,7 +74,7 @@
 
           <v-expansion-panel>
             <v-expansion-panel-header>
-              <h3>Redes sociales</h3>
+              <h3 class="mb--0">Redes sociales</h3>
               <template v-slot:actions>
                 <v-icon color="primary"> $expand </v-icon>
               </template>
@@ -150,7 +150,10 @@
 
               <v-row>
                 <v-col>
-                  <v-btn color="success" class="mr-4" @click="updateSocialMedia"
+                  <v-btn
+                    color="success"
+                    class="mr-4 mt-4"
+                    @click="updateSocialMedia"
                     >Guardar cambios</v-btn
                   >
                 </v-col>
@@ -160,7 +163,7 @@
 
           <v-expansion-panel>
             <v-expansion-panel-header>
-              <h3>Whatsapp</h3>
+              <h3 class="mb--0">Whatsapp</h3>
               <template v-slot:actions>
                 <v-icon color="primary"> $expand </v-icon>
               </template>
@@ -192,7 +195,10 @@
 
               <v-row>
                 <v-col>
-                  <v-btn color="success" class="mr-4" @click="updateWhatsapp"
+                  <v-btn
+                    color="success"
+                    class="mr-4 mt-4"
+                    @click="updateWhatsapp"
                     >Guardar cambios</v-btn
                   >
                 </v-col>
@@ -202,7 +208,7 @@
 
           <v-expansion-panel>
             <v-expansion-panel-header>
-              <h3>Logo</h3>
+              <h3 class="mb--0">Logo</h3>
               <template v-slot:actions>
                 <v-icon color="primary"> $expand </v-icon>
               </template>
@@ -249,13 +255,13 @@
 
               <v-row>
                 <v-col>
-                  <v-btn color="success" class="mr-4" @click="updateLogo"
+                  <v-btn color="success" class="mr-4 mt-4" @click="updateLogo"
                     >Guardar cambios</v-btn
                   >
                   <v-btn
                     v-if="imageURL"
                     color="red--text"
-                    class="mr-4"
+                    class="mr-4 mt-4"
                     @click="deleteLogo"
                     >Eliminar logo</v-btn
                   >

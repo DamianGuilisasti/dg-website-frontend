@@ -25,7 +25,7 @@
                 color="secondary"
                 block
                 class="mt-3 elevation-6"
-                >Contact me</v-btn
+                >Contáctame</v-btn
               >
             </v-col>
             <v-col cols="12"> </v-col>

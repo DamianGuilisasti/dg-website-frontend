@@ -1,12 +1,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import decode from "jwt-decode";
 import Layout from "../views/Layout";
 import Home from "../views/Home";
 import Portfolio from "../views/Portfolio";
 import Blog from "../views/Blog";
 import About from "../components/About";
 import Admin from "../views/Admin";
-import ErrorPath from "../components/ErrorPath";
+import ErrorPath from "../views/404";
 import Dashboard from "../components/Dashboard";
 import Login from "../views/Login";
 import AdminSettings from "../components/AdminSettings";
@@ -29,7 +30,7 @@ const routes = [
     component: ErrorPath,
   },
   {
-    path: "/Login",
+    path: "/login",
     component: Login,
     name: "Login",
   },
@@ -130,12 +131,37 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const rutaProtegida = to.matched.some((record) => record.meta.AdminRol);
-  if (rutaProtegida && store.state.token === "") {
-    next({ name: "Login" });
-  } else {
-    next();
+  const protectedRouteAdmin = to.matched.some((record) => record.meta.AdminRol);
+  const protectedRouteSeller = to.matched.some(
+    (record) => record.meta.SellerRol
+  );
+
+  let token = localStorage.getItem("token");
+
+  if (token && to.name !== "Login" && protectedRouteAdmin) {
+    try {
+      const User = decode(token);
+
+      let isAdmin = User.rol.some((user) => user.name === "Admin");
+
+      if (isAdmin) {
+        next();
+      } else {
+        GoToLogin();
+        store.dispatch("setSnackbar", {
+          text: `No tienes los permisos para ingresar.`,
+          color: "red",
+        });
+      }
+    } catch (error) {
+      GoToLogin();
+    }
   }
+
+  function GoToLogin() {
+    store.dispatch("exit");
+  }
+
   next();
 });
 

@@ -1,11 +1,7 @@
 <template>
-  <a v-if="phone"
-    :href="whatsappLink"
-    class="whatsapp"
-    target="_blank"
+  <a v-if="phone" :href="whatsappLink" class="whatsapp" target="_blank">
+    <v-icon color="#fff" large class="whatsapp-icon">mdi-whatsapp</v-icon></a
   >
-    <i class="fa fa-whatsapp whatsapp-icon"></i
-  ></a>
 </template>
 <script>
 import axios from "axios";
@@ -28,10 +24,10 @@ export default {
       });
   },
   computed: {
-      whatsappLink(){
-          return "https://wa.me/"+ this.phone + "?text="+ this.text
-      } 
-  }
+    whatsappLink() {
+      return "https://wa.me/" + this.phone + "?text=" + this.text;
+    },
+  },
 };
 </script>
 <style scoped lang="scss">
@@ -42,7 +38,6 @@ export default {
   bottom: 40px;
   right: 40px;
   background-color: #25d366;
-  color: #fff;
   border-radius: 50px;
   text-align: center;
   font-size: 30px;
@@ -50,6 +45,6 @@ export default {
 }
 
 .whatsapp-icon {
-  margin-top: 13px;
+  margin-top: 5px;
 }
 </style>

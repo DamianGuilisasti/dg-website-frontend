@@ -19,7 +19,7 @@
               </v-row>
               <v-row>
                 <v-col cols="12" class="text-center">
-                  <p class="panel-text">Panel de Administración</p>
+                  <p class="panel-text white--text">Panel de Administración</p>
                 </v-col>
               </v-row>
             </div>
