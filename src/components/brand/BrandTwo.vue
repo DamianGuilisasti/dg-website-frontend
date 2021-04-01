@@ -15,36 +15,132 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        brandImages: [
-          {
-            src: require("../../assets/images/brand/brand-01.png"),
-            url: "#",
-          },
-          {
-            src: require("../../assets/images/brand/brand-02.png"),
-            url: "#",
-          },
-          {
-            src: require("../../assets/images/brand/brand-03.png"),
-            url: "#",
-          },
-          {
-            src: require("../../assets/images/brand/brand-04.png"),
-            url: "#",
-          },
-          {
-            src: require("../../assets/images/brand/brand-05.png"),
-            url: "#",
-          },
-          {
-            src: require("../../assets/images/brand/brand-06.png"),
-            url: "#",
-          },
-        ],
-      };
-    },
-  };
+export default {
+  data() {
+    return {
+      brandImages: [
+        {
+          src: require("../../assets/images/brand/1.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/2.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/3.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/4.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/5.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/6.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/7.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/8.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/9.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/10.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/11.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/12.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/13.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/14.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/15.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/16.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/17.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/18.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/19.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/20.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/21.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/22.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/23.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/24.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/25.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/26.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/27.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/28.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/29.png"),
+          url: "#",
+        },
+        {
+          src: require("../../assets/images/brand/30.png"),
+          url: "#",
+        },
+      ],
+    };
+  },
+};
 </script>

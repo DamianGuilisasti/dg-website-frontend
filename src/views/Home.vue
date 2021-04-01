@@ -50,9 +50,28 @@
             <ServiceTwo />
           </v-col>
         </v-row>
+        <v-row class="mt-15">
+          <v-col lg="8" cols="12" class="mt_md--50">
+            <Technologies />
+          </v-col>
+          <v-col lg="4" cols="12">
+            <div
+              class="section-title text-left mt--30 mt_md--5 mt_mobile--5 mb_mobile--10"
+            >
+              <h2 class="heading-title">Tecnologías</h2>
+              <p>Últimas tecnologías del mercado.</p>
+            </div>
+          </v-col>
+        </v-row>
       </v-container>
     </div>
     <!-- End Service Area -->
+
+    <!-- Start Technologies Area -->
+    <div class="rn-brand-area brand-separation">
+      <v-container> </v-container>
+    </div>
+    <!-- End Technologies Area -->
 
     <!-- Start Portfolio Area -->
     <!--     <div
@@ -152,11 +171,14 @@
     <!-- End Call to action Area  -->
 
     <!-- Start Contact Area  -->
-    <div class="rn-contact-area rn-section-gap bg_color--5 section" id="contact">
+    <div
+      class="rn-contact-area rn-section-gap bg_color--5 section"
+      id="contact"
+    >
       <div class="contact-form--1">
         <v-container>
           <Contact>
-<!--             <img
+            <!--             <img
               slot="contact-img"
               class="w-100"
               src="../assets/images/about/about-6.jpg"
@@ -188,6 +210,7 @@ import Brand from "../components/brand/Brand";
 import Contact from "../components/contact/ContactAddress";
 import Footer from "../components/footer/FooterTwo";
 import CallToAction from "../components/callto-action/CallToAction";
+import Technologies from "../components/brand/BrandThree";
 
 export default {
   components: {
@@ -203,6 +226,7 @@ export default {
     Footer,
     CallToAction,
     Contact,
+    Technologies,
   },
   data() {
     return {

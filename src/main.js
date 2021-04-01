@@ -17,7 +17,7 @@ Vue.config.productionTip = false;
 Vue.use(CoolLightBox);
 Vue.use(VueScrollactive);
 
-axios.defaults.baseURL = "http://localhost:3000/api";
+axios.defaults.baseURL = "http://localhost:4000/api"; //cambiar en producción dejar solo el /api
 
 new Vue({
   router,

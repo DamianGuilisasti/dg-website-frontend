@@ -18,7 +18,7 @@
               <div class="single-tab-content">
                 <ul>
                   <li v-for="(item, i) in item.content" :key="i">
-                    <router-link to="/service"
+                    <router-link to="/#"
                       >{{ item.title }}
                       <span> - {{ item.name }}</span></router-link
                     >
@@ -68,27 +68,37 @@ export default {
             },
             {
               title: "Vue Js",
-              name: "Frontend",
+              name: "SPA Framework",
               desc: "",
             },
             {
               title: "Vuetify",
-              name: "Frontend",
+              name: "UI Framework",
+              desc: "",
+            },
+                        {
+              title: "NUXT Js",
+              name: "SSR",
+              desc: "",
+            },
+            {
+              title: "REST API",
+              name: "APIs",
               desc: "",
             },
             {
               title: "Node Js",
-              name: "Server",
+              name: "Backend",
               desc: "",
             },
             {
               title: "Express",
-              name: "Server",
+              name: "Backend Framework",
               desc: "",
             },
             {
               title: "MongoDb",
-              name: "Databases",
+              name: "NoSQL Databases",
               desc: "",
             },
             {
@@ -99,6 +109,11 @@ export default {
             {
               title: "AWS",
               name: "Cloud Services",
+              desc: "",
+            },
+            {
+              title: "NGINX",
+              name: "Server",
               desc: "",
             },
             {
@@ -151,7 +166,6 @@ export default {
               name: "Intermedio",
               desc: "",
             },
-
           ],
         },
       ],

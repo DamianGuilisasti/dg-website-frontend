@@ -37,7 +37,7 @@
 
 <script>
 import axios from "axios";
-import Header from "../components/header/Header";
+import Header from "../components/header/HeaderOnePage";
 import FooterTwo from "../components/footer/FooterTwo";
 import CallToAction from "../components/callto-action/CallToAction";
 export default {

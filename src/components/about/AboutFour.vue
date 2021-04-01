@@ -12,8 +12,7 @@
           <p class="description">
             Soy un autodidacta que le encanta la tecnología y el desarrollo de
             software, trabajé para todo tipo de empresas, pequeñas, medias y
-            grandes. Me encanta aprender todo el tiempo, desde idiomas, nuevas
-            tecnologías, cosas relacionadas a Ingeniería, etc, siempre estoy
+            grandes. Me encanta aprender todo el tiempo, desde nuevas tecnologías, idiomas, cosas relacionadas a Ingeniería, etc, siempre estoy
             realizando algún curso o capacitación, creo que las ganas lo son
             todo al momento de autosuperarse. <br><br>Mi objetivo es el desarrollo de
             software escalable, seguro y confiable.

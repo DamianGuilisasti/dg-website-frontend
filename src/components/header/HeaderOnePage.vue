@@ -88,10 +88,10 @@ export default {
   data: () => ({
     drawer: false,
     items: [
-      { title: "Home", to: "#home" },
-      { title: "Sobre mi", to: "#about" },
-      { title: "Servicios", to: "#service" },
-      { title: "Reseñas", to: "#tesimonial" },
+      { title: "Home", to: "/#home" },
+      { title: "Sobre mi", to: "/#about" },
+      { title: "Servicios", to: "/#service" },
+      { title: "Reseñas", to: "/#tesimonial" },
     ],
     icon: "menu",
     closeIcon: "x",
