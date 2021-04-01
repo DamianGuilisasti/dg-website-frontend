@@ -50,7 +50,7 @@
             <ServiceTwo />
           </v-col>
         </v-row>
-        <v-row class="mt-15">
+<!--         <v-row class="mt-15">
           <v-col lg="8" cols="12" class="mt_md--50">
             <Technologies />
           </v-col>
@@ -62,7 +62,7 @@
               <p>Últimas tecnologías del mercado.</p>
             </div>
           </v-col>
-        </v-row>
+        </v-row> -->
       </v-container>
     </div>
     <!-- End Service Area -->
