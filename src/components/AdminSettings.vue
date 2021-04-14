@@ -431,7 +431,6 @@ export default {
     },
     updateLogo() {
       if (this.imageFile === "") {
-        this.snackbarError = true;
         return;
       }
       this.loadingLogo = true;

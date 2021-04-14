@@ -16,7 +16,7 @@
     <div class="section about-area rn-section-gap bg_color--1" id="about">
       <div class="about-wrapper">
         <v-container>
-          <About>
+          <About :about="about">
             <img
               slot="thum-img"
               class="w-100"
@@ -50,7 +50,7 @@
             <ServiceTwo />
           </v-col>
         </v-row>
-<!--         <v-row class="mt-15">
+        <!--         <v-row class="mt-15">
           <v-col lg="8" cols="12" class="mt_md--50">
             <Technologies />
           </v-col>
@@ -177,7 +177,7 @@
     >
       <div class="contact-form--1">
         <v-container>
-          <Contact>
+          <Contact :phone="phone" :address="address" :email="email">
             <!--             <img
               slot="contact-img"
               class="w-100"
@@ -231,6 +231,10 @@ export default {
   data() {
     return {
       imageURL: "",
+      email: "",
+      address: "",
+      phone: "",
+      about: "",
     };
   },
   methods: {},
@@ -240,6 +244,11 @@ export default {
       .get("settings/list")
       .then(function (response) {
         me.imageURL = response.data[0].logoURL.imageURL;
+        me.email = response.data[0].companyEmail;
+        me.address = response.data[0].companyAddress;
+        me.phone = response.data[0].companyPhone;
+        me.about = response.data[0].aboutInfo;
+        console.log(response.data);
       })
       .catch(function (error) {
         console.log(error);

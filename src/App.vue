@@ -63,6 +63,8 @@ export default {
               aboutInfo: "",
               companyName: "",
               companyPhone: "",
+              companyAddress: "",
+              companyEmail: "",
               socialMedia: {
                 facebook: "",
                 instagram: "",
@@ -70,10 +72,6 @@ export default {
                 google: "",
                 youtube: "",
                 linkedin: "",
-              },
-              contactInfo: {
-                phone: "",
-                email: "",
               },
               logoURL: {
                 public_id: "",
