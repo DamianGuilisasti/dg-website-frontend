@@ -7,9 +7,9 @@
       <div
         class="slide slide-style-2 slider-box-content without-overlay d-flex align-center bg_image"
         data-black-overlay="1"
-        v-for="(slider, i) in sliderContent"
+        v-for="(slider, i) in sliders"
         :key="i"
-        :style="{ backgroundImage: 'url(' + slider.src + ')' }"
+        
       >
         <v-container>
           <div class="inner" :class="slider.text_position">
@@ -31,47 +31,65 @@
 </template>
 
 <script>
-  import VueSlickCarousel from "vue-slick-carousel";
+import axios from "axios"
+import VueSlickCarousel from "vue-slick-carousel";
 
-  export default {
-    components: { VueSlickCarousel },
-    data() {
-      return {
-        sliderContent: [
-          {
-            text_position: "text-right",
-            src: require("../../assets/images/bg/bg-image-30.jpg"),
-            title: "Agency.",
-            desc: ` There are many variations of passages but the majority have suffered alteration.`,
-          },
-          {
-            text_position: "text-left",
-            src: require("../../assets/images/bg/bg-image-29.jpg"),
-            title: "Agency.",
-            desc: `There are many variations of passages but the majority have suffered alteration.`,
-          },
-        ],
-        settings: {
-          fade: true,
-          dots: true,
-          arrows: true,
-          infinite: true,
-          speed: 1000,
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          adaptiveHeight: true,
-          margin: 20,
+export default {
+  
+  components: { VueSlickCarousel },
+  data() {
+    return {
+            sliderContent: [
+        {
+          src: require("../../assets/images/bg/dg-bg.jpg"),
+          title: "Web Development.",
+          desc: ` Posiciona tu negocio con un Sitio Web desarrollado con las mejores y útlimas tecnologías del mercado. Competí inteligentemente.`,
         },
-      };
-    },
-  };
+        {
+          src: require("../../assets/images/bg/dg-bg-slider-2.jpg"),
+          title: "Ecommerce.",
+          desc: ` Vendé tus productos de manera digital y ofrecé la mejor experiencia a tus clientes. `,
+        },
+      ],
+      sliders: [
+        {
+          title: "",
+          subtitle: "",
+        }
+      ],
+      settings: {
+        fade: true,
+        dots: true,
+        arrows: true,
+        infinite: true,
+        speed: 1000,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        adaptiveHeight: true,
+        margin: 20,
+      },
+    };
+  },
+  created() {
+         let me = this;
+      axios
+        .get("sliders/list")
+        .then(function (response) {
+          me.sliders = response.data;
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+  },
+};
 </script>
 
 <style lang="scss">
-  .slick-slide {
-    img {
-      display: block;
-      width: 100%;
-    }
+.slick-slide {
+  img {
+    display: block;
+    width: 100%;
   }
+}
 </style>

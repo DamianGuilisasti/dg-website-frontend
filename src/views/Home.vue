@@ -235,24 +235,42 @@ export default {
       address: "",
       phone: "",
       about: "",
+      sliders: [],
     };
   },
-  methods: {},
+  methods: {
+    getSettings() {
+      let me = this;
+      axios
+        .get("settings/list")
+        .then(function (response) {
+          me.imageURL = response.data[0].logoURL.imageURL;
+          me.email = response.data[0].companyEmail;
+          me.address = response.data[0].companyAddress;
+          me.phone = response.data[0].companyPhone;
+          me.about = response.data[0].aboutInfo;
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    getSliders() {
+      let me = this;
+      axios
+        .get("sliders/list")
+        .then(function (response) {
+          me.sliders = response.data;
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+  },
   mounted() {
-    let me = this;
-    axios
-      .get("settings/list")
-      .then(function (response) {
-        me.imageURL = response.data[0].logoURL.imageURL;
-        me.email = response.data[0].companyEmail;
-        me.address = response.data[0].companyAddress;
-        me.phone = response.data[0].companyPhone;
-        me.about = response.data[0].aboutInfo;
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    this.getSettings();
+    this.getSliders();
   },
 };
 </script>

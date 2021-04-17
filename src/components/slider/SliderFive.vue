@@ -5,11 +5,11 @@
       class="rn-slider-area slider-activation rn-slick-dot dot-light mb--0"
     >
       <div
-        class="slide slide-style-2 d-flex align-center justify-center fullscreen bg_image"
+        class="slide slide-style-2 align-center justify-center fullscreen bg_image"
         data-black-overlay="5"
-        v-for="(slider, i) in sliderContent"
-        :key="i"
-        :style="{ backgroundImage: 'url(' + slider.src + ')' }"
+        v-for="slider in sliders"
+        :key="slider._id"
+        :style="{ backgroundImage: 'url(' + slider.sliderImg.url + ')' }"
       >
         <v-container>
           <v-row>
@@ -17,7 +17,7 @@
               <div class="inner text-center">
                 <h1 class="heading-title theme-gradient">{{ slider.title }}</h1>
                 <p class="description">
-                  {{ slider.desc }}
+                  {{ slider.subtitle }}
                 </p>
                 <div class="slide-btn">
                   <a
@@ -39,6 +39,7 @@
 
 <script>
 import VueSlickCarousel from "vue-slick-carousel";
+import axios from "axios";
 
 export default {
   components: { VueSlickCarousel },
@@ -56,6 +57,12 @@ export default {
           desc: ` Vendé tus productos de manera digital y ofrecé la mejor experiencia a tus clientes. `,
         },
       ],
+      sliders: [
+        {
+          title: "",
+          subtitle: ""
+        }
+      ],
       settings: {
         fade: true,
         dots: true,
@@ -68,6 +75,18 @@ export default {
       },
     };
   },
+  mounted() {
+    let me = this;
+    axios
+      .get("sliders/list")
+      .then(function (response) {
+        me.sliders = response.data;
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
 };
 </script>
 
@@ -78,4 +97,7 @@ export default {
     width: 100%;
   }
 }
+/* .slick-slide {
+    float: initial !important;
+} */
 </style>
