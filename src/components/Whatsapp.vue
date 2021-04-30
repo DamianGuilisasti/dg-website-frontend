@@ -10,7 +10,7 @@ export default {
     phone: "",
     text: "",
   }),
-  mounted() {
+  created() {
     let me = this;
     axios
       .get("settings/list")

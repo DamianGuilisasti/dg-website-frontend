@@ -378,7 +378,7 @@ export default {
       }
     },
   },
-  mounted() {
+  created() {
     let me = this;
     axios
       .get("settings/list")

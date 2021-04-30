@@ -112,7 +112,7 @@ export default {
     twitter: "",
     google: ""
   }),
-  mounted() {
+  created() {
     let me = this;
     axios
       .get("settings/list")

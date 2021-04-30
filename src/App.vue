@@ -53,7 +53,7 @@ export default {
   computed: {
     ...mapState(["snackbar"]),
   },
-  mounted() {
+  created() {
     axios
       .get("settings/list")
       .then(function (response) {
@@ -80,6 +80,10 @@ export default {
               whatsapp: {
                 phone: "",
                 text: "",
+              },
+              companyImg: {
+                public_id: "",
+                imageURL: "",
               },
             })
             .then(function (response) {})

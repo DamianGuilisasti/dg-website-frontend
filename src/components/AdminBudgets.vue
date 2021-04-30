@@ -820,7 +820,7 @@ export default {
       return this.editedIndex === -1 ? "Generar" : "Actualizar";
     },
   },
-  mounted() {
+  created() {
     this.initialize();
     this.clientsSelect();
     this.servicesSelect();

@@ -49,7 +49,7 @@ export default {
   data() {
     return { imageURL: "" };
   },
-  mounted() {
+  created() {
     let me = this;
     axios
       .get("settings/list")

@@ -370,7 +370,7 @@ export default {
         : "Editar publicación";
     },
   },
-  mounted() {
+  created() {
     this.initialize();
   },
 };

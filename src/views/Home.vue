@@ -17,12 +17,7 @@
       <div class="about-wrapper">
         <v-container>
           <About :about="about">
-            <img
-              slot="thum-img"
-              class="w-100"
-              src="../assets/images/about/damian-bg.jpg"
-              alt="About Images"
-            />
+            <img slot="thum-img" class="w-100" :src="companyImg" />
           </About>
         </v-container>
       </div>
@@ -74,29 +69,36 @@
     <!-- End Technologies Area -->
 
     <!-- Start Portfolio Area -->
-    <!--     <div
-      class="section rn-portfolio-area rn-section-gap bg_color--1"
-      id="portfolio"
-    >
-      <div class="portfolio-sacousel-inner pb--30">
-        <v-container>
-          <v-row>
-            <v-col lg="12">
-              <div class="section-title text-center mb--20 mb_sm--0 mb_md--0">
-                <h2 class="heading-title">Proyectos realizados</h2>
-                <p>
-                  There are many variations of passages of Lorem Ipsum
-                  available,
-                  <br />
-                  but the majority have suffered alteration.
-                </p>
-              </div>
-            </v-col>
-          </v-row>
-        </v-container>
-        <Portfolio />
+    <v-container fluid>
+      <div
+        class="section rn-portfolio-area rn-section-gap bg_color--1"
+        id="portfolio"
+      >
+        <div class="portfolio-sacousel-inner pb--30">
+          <v-container>
+            <v-row>
+              <v-col lg="12">
+                <div class="section-title text-center mb--20 mb_sm--0 mb_md--0">
+                  <h2 class="heading-title">Proyectos realizados</h2>
+                  <p>
+                    There are many variations of passages of Lorem Ipsum
+                    available,
+                    <br />
+                    but the majority have suffered alteration.
+                  </p>
+                </div>
+              </v-col>
+            </v-row>
+          </v-container>
+          <Portfolio />
+        </div>
+        <div class="mt--50 text-center">
+          <a class="rn-button-style--2 btn_solid" href="about.html"
+            >Ver más proyectos</a
+          >
+        </div>
       </div>
-    </div> -->
+    </v-container>
     <!-- End Portfolio Area -->
 
     <!-- Start Counterup Area -->
@@ -174,6 +176,7 @@
     <div
       class="rn-contact-area rn-section-gap bg_color--5 section"
       id="contact"
+      v-if="phone || address || email"
     >
       <div class="contact-form--1">
         <v-container>
@@ -202,7 +205,7 @@ import Header from "../components/header/HeaderOnePage";
 import SliderFive from "../components/slider/SliderFive";
 import About from "../components/about/AboutFour";
 import ServiceTwo from "../components/service/ServiceTwo";
-import Portfolio from "../components/portfolio/Portfolio";
+import Portfolio from "../components/portfolio/PortfolioSix";
 import CounterOne from "../components/counter/CounterOne";
 import Testimonial from "../components/testimonial/Testimonial";
 import Blog from "../components/blog/Blog";
@@ -236,6 +239,7 @@ export default {
       phone: "",
       about: "",
       sliders: [],
+      companyImg: "",
     };
   },
   methods: {
@@ -249,6 +253,7 @@ export default {
           me.address = response.data[0].companyAddress;
           me.phone = response.data[0].companyPhone;
           me.about = response.data[0].aboutInfo;
+          me.companyImg = response.data[0].companyImg.imageURL;
           console.log(response.data);
         })
         .catch(function (error) {
@@ -268,7 +273,7 @@ export default {
         });
     },
   },
-  mounted() {
+  created() {
     this.getSettings();
     this.getSliders();
   },

@@ -317,7 +317,7 @@ export default {
       return this.editedIndex === -1 ? "Nuevo servicio" : "Editar servicio";
     },
   },
-  mounted() {
+  created() {
     this.initialize();
   },
 };

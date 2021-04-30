@@ -1,6 +1,7 @@
 <template>
   <div>
     <VueSlickCarousel
+    v-if="sliders"
       v-bind="settings"
       class="rn-slider-area slider-activation rn-slick-dot dot-light mb--0"
     >
@@ -75,7 +76,7 @@ export default {
       },
     };
   },
-  mounted() {
+  created() {
     let me = this;
     axios
       .get("sliders/list")

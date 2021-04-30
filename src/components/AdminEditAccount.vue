@@ -159,7 +159,6 @@ export default {
   created() {
     this.getUserInfo();
   },
-  mounted() {},
 };
 </script>
 

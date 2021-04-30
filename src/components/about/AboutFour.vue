@@ -9,9 +9,8 @@
       <div class="about-inner inner pt--100 pt_sm--40 pt_md--40">
         <div class="section-title">
           <h2 class="heading-title">Sobre mi</h2>
-          <p class="description">
-            {{ about }}
-          </p>
+          <div id="description">
+          </div>
         </div>
         <!-- End .section-title -->
         <div class="tab-wrapper mt--30">
@@ -32,7 +31,31 @@ export default {
     about: String,
   },
   data() {
-    return {};
+    return {
+    };
+  },
+  methods: {
+    convert() {
+      let element = document.getElementById("description");
+
+/*       let parser = new DOMParser();
+      let doc = parser.parseFromString(this.about, "text/html");
+      
+      element.appendChild(doc.body); */
+
+      element.insertAdjacentHTML("afterbegin", this.about)
+      
+    },
+  },
+  updated() {
+    this.convert()
   },
 };
 </script>
+
+<style lang="scss">
+.section-title p {
+  padding: 0 !important;
+  font-weight: 200 !important;
+}
+</style>
