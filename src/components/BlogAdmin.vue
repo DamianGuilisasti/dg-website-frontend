@@ -356,7 +356,6 @@ export default {
         .then(function (response) {
           me.posts = response.data;
           me.loadingData = false;
-          console.log(me.posts);
         })
         .catch(function (error) {
           console.log(error);

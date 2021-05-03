@@ -648,10 +648,8 @@ export default {
     //Edit
 
     editItem(item) {
-      console.log(item);
       this.editedIndex = this.clients.indexOf(item);
       this.editedItem = Object.assign({}, item);
-      console.log(this.editedItem);
       this.dialog = true;
     },
 
@@ -694,7 +692,6 @@ export default {
         const servicesUpdated = [];
 
         this.editedItem.services.map(function (i) {
-          console.log(i);
           me.servicesList.map(function (u) {
             if (i.name == u.text) {
               servicesUpdated.push(u.value);

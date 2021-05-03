@@ -145,7 +145,6 @@ export default {
         .get("logos/list")
         .then(function (response) {
           me.logos = response.data;
-          console.log(me.logos)
         })
         .catch(function (error) {
           console.log(error);

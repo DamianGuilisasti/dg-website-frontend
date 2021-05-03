@@ -688,7 +688,6 @@ export default {
       let me = this;
       let id = event;
       this.servicesList.map(function (i) {
-        console.log(i);
         if (id == i.value) {
           const repeated = me.editedItem.services.findIndex(
             (x) => x.text == i.text

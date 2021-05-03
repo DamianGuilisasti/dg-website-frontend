@@ -76,7 +76,6 @@ export default {
         .get("sliders/list")
         .then(function (response) {
           me.sliders = response.data;
-          console.log(response.data);
         })
         .catch(function (error) {
           console.log(error);

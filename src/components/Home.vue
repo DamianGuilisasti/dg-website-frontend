@@ -383,7 +383,6 @@ export default {
     axios
       .get("settings/list")
       .then(function (response) {
-        console.log(response);
         me.aboutInfo = response.data[0].aboutInfo;
         me.companyName = response.data[0].companyName;
         me.dataId = response.data[0]._id;

@@ -254,7 +254,6 @@ export default {
           me.phone = response.data[0].companyPhone;
           me.about = response.data[0].aboutInfo;
           me.companyImg = response.data[0].companyImg.imageURL;
-          console.log(response.data);
         })
         .catch(function (error) {
           console.log(error);
@@ -266,7 +265,6 @@ export default {
         .get("sliders/list")
         .then(function (response) {
           me.sliders = response.data;
-          console.log(response.data);
         })
         .catch(function (error) {
           console.log(error);

@@ -242,7 +242,6 @@ export default {
         .get("roles/list")
         .then(function (response) {
           me.userrolList = response.data;
-          console.log(me.userrolList);
         })
         .catch(function (error) {
           console.log(error);
@@ -346,7 +345,6 @@ export default {
     editItem(item) {
       this.editedIndex = this.usersArray.indexOf(item);
       this.editedItem = Object.assign({}, item);
-      console.log(this.editedItem);
       this.getRole();
       this.dialog = true;
     },
@@ -431,7 +429,6 @@ export default {
               });
             });
         } else {
-          console.log(this.editedItem.username, this.editedItem.email);
           axios
             .post(
               "user/add",

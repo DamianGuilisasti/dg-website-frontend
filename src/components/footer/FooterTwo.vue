@@ -111,7 +111,6 @@ export default {
       axios
         .get("settings/list")
         .then(function (response) {
-          console.log(response.data);
           me.socialMedia = response.data[0].socialMedia;
           me.imageURL = response.data[0].logoURL.imageURL;
         })
