@@ -74,7 +74,10 @@
         <v-col lg="4" md="4" sm="12" cols="12">
           <div class="inner text-center mt_md--20 mt_sm--20">
             <div class="text">
-              <p>© {{ new Date().getFullYear() }} Damián Guilisasti.</p>
+              <p>
+                © {{ new Date().getFullYear() }}
+                <a target="_blank" href="https://damianguilisasti.com.ar">Damián Guilisasti</a>.
+              </p>
             </div>
           </div>
         </v-col>
@@ -90,19 +93,8 @@ import axios from "axios";
 export default {
   data() {
     return {
-      socialMedia: "",
+      socialMedia: [],
       imageURL: "",
-      socialList: [
-        {
-          icon: "fa-linkedin-in",
-          url:
-            "https://www.linkedin.com/in/dami%C3%A1n-roque-guilisasti-81055bb4/",
-        },
-        {
-          icon: "fa-instagram-square",
-          url: "https://instagram.com/guilisastiweb",
-        },
-      ],
     };
   },
   methods: {
@@ -118,10 +110,8 @@ export default {
           console.log(error);
         });
     },
-    getSocialMedia() {},
   },
   created() {
-    this.getSocialMedia();
     this.getSettings();
   },
 };

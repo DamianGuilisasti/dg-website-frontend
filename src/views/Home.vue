@@ -69,7 +69,7 @@
     <!-- End Technologies Area -->
 
     <!-- Start Portfolio Area -->
-    <v-container fluid>
+<!--     <v-container fluid>
       <div
         class="section rn-portfolio-area rn-section-gap bg_color--1"
         id="portfolio"
@@ -98,7 +98,7 @@
           >
         </div>
       </div>
-    </v-container>
+    </v-container> -->
     <!-- End Portfolio Area -->
 
     <!-- Start Counterup Area -->
