@@ -1,12 +1,18 @@
 <template>
   <div>
     <VueSlickCarousel
-    v-if="sliders"
+      v-if="sliders"
       v-bind="settings"
       class="rn-slider-area slider-activation rn-slick-dot dot-light mb--0"
     >
       <div
-        class="slide slide-style-2 align-center justify-center fullscreen bg_image"
+        class="
+          slide slide-style-2
+          align-center
+          justify-center
+          fullscreen
+          bg_image
+        "
         data-black-overlay="5"
         v-for="slider in sliders"
         :key="slider._id"
@@ -61,8 +67,8 @@ export default {
       sliders: [
         {
           title: "",
-          subtitle: ""
-        }
+          subtitle: "",
+        },
       ],
       settings: {
         fade: true,
@@ -76,16 +82,21 @@ export default {
       },
     };
   },
+  methods: {
+    getSettings() {
+      let me = this;
+      axios
+        .get("sliders/list")
+        .then(function (response) {
+          me.sliders = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+  },
   created() {
-    let me = this;
-    axios
-      .get("sliders/list")
-      .then(function (response) {
-        me.sliders = response.data;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    this.getSettings();
   },
 };
 </script>

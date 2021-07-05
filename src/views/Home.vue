@@ -30,7 +30,14 @@
         <v-row>
           <v-col lg="4" cols="12">
             <div
-              class="section-title text-left mt--30 mt_md--5 mt_mobile--5 mb_mobile--10"
+              class="
+                section-title
+                text-left
+                mt--30
+                mt_md--5
+                mt_mobile--5
+                mb_mobile--10
+              "
             >
               <h2 class="heading-title">Servicios</h2>
               <p>Calidad - Atención - Velocidad - Relaciones a largo plazo.</p>
@@ -69,7 +76,7 @@
     <!-- End Technologies Area -->
 
     <!-- Start Portfolio Area -->
-<!--     <v-container fluid>
+    <!--     <v-container fluid>
       <div
         class="section rn-portfolio-area rn-section-gap bg_color--1"
         id="portfolio"
@@ -154,7 +161,7 @@
     <!-- End Blog Area  -->
 
     <!-- Start Brand Area -->
-    <div class="rn-brand-area brand-separation">
+    <div class="rn-brand-area brand-separation" v-if="logos.length > 0">
       <v-container>
         <v-row>
           <v-col cols="12" class="mt-10">
@@ -240,9 +247,21 @@ export default {
       about: "",
       sliders: [],
       companyImg: "",
+      logos: [],
     };
   },
   methods: {
+    getLogos() {
+      let me = this;
+      axios
+        .get("logos/list")
+        .then(function (response) {
+          me.logos = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     getSettings() {
       let me = this;
       axios
@@ -274,6 +293,7 @@ export default {
   created() {
     this.getSettings();
     this.getSliders();
+    this.getLogos();
   },
 };
 </script>

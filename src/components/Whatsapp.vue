@@ -11,21 +11,26 @@ export default {
     text: "",
   }),
   created() {
-    let me = this;
-    axios
-      .get("settings/list")
-      .then(function (response) {
-        me.phone = response.data[0].whatsapp.phone;
-        me.text = response.data[0].whatsapp.text;
-        me.dataId = response.data[0]._id;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    this.getSettings();
   },
   computed: {
     whatsappLink() {
       return "https://wa.me/" + this.phone + "?text=" + this.text;
+    },
+  },
+  methods: {
+    getSettings() {
+      let me = this;
+      axios
+        .get("settings/list")
+        .then(function (response) {
+          me.phone = response.data[0].whatsapp.phone;
+          me.text = response.data[0].whatsapp.text;
+          me.dataId = response.data[0]._id;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
   },
 };

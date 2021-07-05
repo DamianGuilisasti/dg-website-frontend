@@ -16,7 +16,7 @@
           </div>
         </v-col>
         <!-- End .col -->
-        <v-col lg="4" md="4" sm="6" cols="12" class="d-flex">
+        <v-col lg="4" md="4" sm="6" cols="12" class="text-center">
           <div class="inner">
             <ul class="social-share rn-lg-size">
               <li class="d-inline" v-if="socialMedia.facebook">
@@ -76,7 +76,10 @@
             <div class="text">
               <p>
                 © {{ new Date().getFullYear() }}
-                <a target="_blank" href="https://damianguilisasti.com.ar">Damián Guilisasti</a>.
+                <a target="_blank" href="https://damianguilisasti.com.ar">{{
+                  companyName
+                }}</a
+                >.
               </p>
             </div>
           </div>
@@ -95,6 +98,7 @@ export default {
     return {
       socialMedia: [],
       imageURL: "",
+      companyName: "",
     };
   },
   methods: {
@@ -105,6 +109,7 @@ export default {
         .then(function (response) {
           me.socialMedia = response.data[0].socialMedia;
           me.imageURL = response.data[0].logoURL.imageURL;
+          me.companyName = response.data[0].companyName;
         })
         .catch(function (error) {
           console.log(error);

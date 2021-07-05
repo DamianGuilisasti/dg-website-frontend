@@ -165,17 +165,22 @@ export default {
       this.drawer = false;
     },
   },
+  methods: {
+    getSettings() {
+      let me = this;
+      axios
+        .get("settings/list")
+        .then(function (response) {
+          me.imageURL = response.data[0].logoURL.imageURL;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+  },
 
   created() {
-    let me = this;
-    axios
-      .get("settings/list")
-      .then(function (response) {
-        me.imageURL = response.data[0].logoURL.imageURL;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    this.getSettings();
   },
 };
 </script>

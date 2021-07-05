@@ -49,52 +49,55 @@ export default {
     toTop() {
       this.$vuetify.goTo(0);
     },
+    getSettings() {
+      axios
+        .get("settings/list")
+        .then(function (response) {
+          if (response.data.length == 0) {
+            axios
+              .post("settings/add", {
+                aboutInfo: "",
+                companyName: "",
+                companyPhone: "",
+                companyAddress: "",
+                companyEmail: "",
+                socialMedia: {
+                  facebook: "",
+                  instagram: "",
+                  twitter: "",
+                  google: "",
+                  youtube: "",
+                  linkedin: "",
+                },
+                logoURL: {
+                  public_id: "",
+                  imageURL: "",
+                },
+                whatsapp: {
+                  phone: "",
+                  text: "",
+                },
+                companyImg: {
+                  public_id: "",
+                  imageURL: "",
+                },
+              })
+              .then(function (response) {})
+              .catch(function (error) {
+                console.log(error);
+              });
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
   },
   computed: {
     ...mapState(["snackbar"]),
   },
   created() {
-    axios
-      .get("settings/list")
-      .then(function (response) {
-        if (response.data.length == 0) {
-          axios
-            .post("settings/add", {
-              aboutInfo: "",
-              companyName: "",
-              companyPhone: "",
-              companyAddress: "",
-              companyEmail: "",
-              socialMedia: {
-                facebook: "",
-                instagram: "",
-                twitter: "",
-                google: "",
-                youtube: "",
-                linkedin: "",
-              },
-              logoURL: {
-                public_id: "",
-                imageURL: "",
-              },
-              whatsapp: {
-                phone: "",
-                text: "",
-              },
-              companyImg: {
-                public_id: "",
-                imageURL: "",
-              },
-            })
-            .then(function (response) {})
-            .catch(function (error) {
-              console.log(error);
-            });
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    this.getSettings();
   },
 };
 </script>

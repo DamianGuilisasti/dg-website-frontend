@@ -5,11 +5,17 @@
       class="slider-activation rn-slick-dot dot-light"
     >
       <div
-        class="slide slide-style-2 slider-box-content without-overlay d-flex align-center bg_image"
+        class="
+          slide slide-style-2
+          slider-box-content
+          without-overlay
+          d-flex
+          align-center
+          bg_image
+        "
         data-black-overlay="1"
         v-for="(slider, i) in sliders"
         :key="i"
-        
       >
         <v-container>
           <div class="inner" :class="slider.text_position">
@@ -31,15 +37,14 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 import VueSlickCarousel from "vue-slick-carousel";
 
 export default {
-  
   components: { VueSlickCarousel },
   data() {
     return {
-            sliderContent: [
+      sliderContent: [
         {
           src: require("../../assets/images/bg/dg-bg.jpg"),
           title: "Web Development.",
@@ -55,7 +60,7 @@ export default {
         {
           title: "",
           subtitle: "",
-        }
+        },
       ],
       settings: {
         fade: true,
@@ -71,7 +76,11 @@ export default {
     };
   },
   created() {
-         let me = this;
+    this.getSettings();
+  },
+  methods: {
+    getSettings() {
+      let me = this;
       axios
         .get("sliders/list")
         .then(function (response) {
@@ -80,6 +89,7 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
   },
 };
 </script>

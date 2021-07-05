@@ -12,11 +12,11 @@
       <v-row class="text-center">
         <v-col cols="12" sm="12" md="4">
           <h3 class="white--text pb-5">Teléfono</h3>
-          <p class="white--text">{{companyPhone}}</p>
+          <p class="white--text">{{ companyPhone }}</p>
         </v-col>
         <v-col cols="12" sm="12" md="4">
           <h3 class="white--text pb-5">Email</h3>
-          <p class="white--text">{{companyEmail}}</p></v-col
+          <p class="white--text">{{ companyEmail }}</p></v-col
         >
         <v-col cols="12" sm="12" md="4">
           <h3 class="white--text">Sígueme</h3>
@@ -110,26 +110,31 @@ export default {
     youtube: "",
     linkedin: "",
     twitter: "",
-    google: ""
+    google: "",
   }),
+  methods: {
+    getSettings() {
+      let me = this;
+      axios
+        .get("settings/list")
+        .then(function (response) {
+          me.companyPhone = response.data[0].companyPhone;
+          me.companyEmail = response.data[0].companyEmail;
+          me.facebook = response.data[0].socialMedia.facebook;
+          me.instagram = response.data[0].socialMedia.instagram;
+          me.youtube = response.data[0].socialMedia.youtube;
+          me.linkedin = response.data[0].socialMedia.linkedin;
+          me.twitter = response.data[0].socialMedia.twitter;
+          me.google = response.data[0].socialMedia.google;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      //.finally(() => console.log("termine"));
+    },
+  },
   created() {
-    let me = this;
-    axios
-      .get("settings/list")
-      .then(function (response) {
-        me.companyPhone = response.data[0].companyPhone;
-        me.companyEmail = response.data[0].companyEmail;
-        me.facebook = response.data[0].socialMedia.facebook;
-        me.instagram = response.data[0].socialMedia.instagram;
-        me.youtube = response.data[0].socialMedia.youtube;
-        me.linkedin = response.data[0].socialMedia.linkedin;
-        me.twitter = response.data[0].socialMedia.twitter;
-        me.google = response.data[0].socialMedia.google;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    //.finally(() => console.log("termine"));
+    this.getSettings();
   },
 };
 </script>

@@ -302,7 +302,11 @@ export default {
     loadingLogo: false,
   }),
   created() {
-    let me = this;
+    this.getSettings();
+  },
+  methods: {
+    getSettings(){
+          let me = this;
     axios
       .get("settings/list")
       .then(function (response) {
@@ -324,8 +328,7 @@ export default {
       .catch(function (error) {
         console.log(error);
       });
-  },
-  methods: {
+    }
     deleteLogo() {
       let me = this;
       axios
@@ -340,8 +343,7 @@ export default {
         .catch(function (error) {
           console.log(error);
           me.$store.dispatch("setSnackbar", {
-            text:
-              "Hubo un error al eliminar el logo, por favor actualice la página e intente nuevamente.",
+            text: "Hubo un error al eliminar el logo, por favor actualice la página e intente nuevamente.",
             color: "error",
           });
         });
@@ -375,8 +377,7 @@ export default {
         .catch(function (error) {
           console.log(error);
           me.$store.dispatch("setSnackbar", {
-            text:
-              "Hubo un error al actualizar la información, por favor actualice la página e intente nuevamente.",
+            text: "Hubo un error al actualizar la información, por favor actualice la página e intente nuevamente.",
             color: "error",
           });
         });
@@ -401,8 +402,7 @@ export default {
         .catch(function (error) {
           console.log(error);
           me.$store.dispatch("setSnackbar", {
-            text:
-              "Hubo un error al actualizar las redes sociales, por favor actualice la página e intente nuevamente.",
+            text: "Hubo un error al actualizar las redes sociales, por favor actualice la página e intente nuevamente.",
             color: "error",
           });
         });
@@ -423,8 +423,7 @@ export default {
         .catch(function (error) {
           console.log(error);
           me.$store.dispatch("setSnackbar", {
-            text:
-              "Hubo un error al actualizar la información de Whatsapp, por favor actualice la página e intente nuevamente.",
+            text: "Hubo un error al actualizar la información de Whatsapp, por favor actualice la página e intente nuevamente.",
             color: "error",
           });
         });
@@ -456,8 +455,7 @@ export default {
         .catch(function (error) {
           console.log(error);
           me.$store.dispatch("setSnackbar", {
-            text:
-              "Hubo un error al actualizar el logo, por favor actualice la página e intente nuevamente.",
+            text: "Hubo un error al actualizar el logo, por favor actualice la página e intente nuevamente.",
             color: "error",
           });
         });

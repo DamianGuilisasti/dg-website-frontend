@@ -8,10 +8,6 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "*",
-    component: ErrorPath,
-  },
-  {
     path: "/",
     component: Layout,
     name: "Layout",
@@ -20,6 +16,10 @@ const routes = [
         path: "/",
         component: Home,
         name: "Home",
+      },
+      {
+        path: "*",
+        component: ErrorPath,
       },
     ],
   },

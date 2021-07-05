@@ -26,7 +26,7 @@
     </div>
     <!-- End 404 Page  -->
     <!-- Start Call to action Area  -->
-    <CallToAction />
+    <!-- <CallToAction /> -->
     <!-- End Call to action Area  -->
 
     <!-- Start Footer Area  -->
@@ -49,16 +49,21 @@ export default {
   data() {
     return { imageURL: "" };
   },
+  methods: {
+    getSettings() {
+      let me = this;
+      axios
+        .get("settings/list")
+        .then(function (response) {
+          me.imageURL = response.data[0].logoURL.imageURL;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+  },
   created() {
-    let me = this;
-    axios
-      .get("settings/list")
-      .then(function (response) {
-        me.imageURL = response.data[0].logoURL.imageURL;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    this.getSettings();
   },
 };
 </script>
