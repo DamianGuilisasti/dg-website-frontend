@@ -30,8 +30,8 @@
                   <a
                     class="rn-button-style--2 btn-primary-color"
                     href="
-                    #contact"
-                    >Contáctame</a
+                    #service"
+                    >Services</a
                   >
                 </div>
               </div>
@@ -52,18 +52,6 @@ export default {
   components: { VueSlickCarousel },
   data() {
     return {
-      sliderContent: [
-        {
-          src: require("../../assets/images/bg/dg-bg.jpg"),
-          title: "Web Development.",
-          desc: ` Posiciona tu negocio con un Sitio Web desarrollado con las mejores y útlimas tecnologías del mercado. Competí inteligentemente.`,
-        },
-        {
-          src: require("../../assets/images/bg/dg-bg-slider-2.jpg"),
-          title: "Ecommerce.",
-          desc: ` Vendé tus productos de manera digital y ofrecé la mejor experiencia a tus clientes. `,
-        },
-      ],
       sliders: [
         {
           title: "",

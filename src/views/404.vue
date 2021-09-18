@@ -1,10 +1,5 @@
 <template>
   <div>
-    <!-- Start Header Area -->
-    <Header>
-      <img slot="logo" class="shrink" contain width="250" :src="imageURL" />
-    </Header>
-    <!-- End Header Area -->
     <!-- Start 404 Page  -->
     <div class="error-page-inner bg_color--4">
       <v-container>
@@ -28,42 +23,19 @@
     <!-- Start Call to action Area  -->
     <!-- <CallToAction /> -->
     <!-- End Call to action Area  -->
-
-    <!-- Start Footer Area  -->
-    <FooterTwo />
-    <!-- End Footer Area  -->
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import Header from "../components/header/HeaderOnePage";
-import FooterTwo from "../components/footer/FooterTwo";
 import CallToAction from "../components/callto-action/CallToAction";
 export default {
   components: {
-    Header,
-    FooterTwo,
     CallToAction,
   },
   data() {
-    return { imageURL: "" };
+    return {};
   },
-  methods: {
-    getSettings() {
-      let me = this;
-      axios
-        .get("settings/list")
-        .then(function (response) {
-          me.imageURL = response.data[0].logoURL.imageURL;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-  },
-  created() {
-    this.getSettings();
-  },
+  methods: {},
+  created() {},
 };
 </script>

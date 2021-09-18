@@ -8,16 +8,16 @@
     <v-col lg="7" md="7" cols="12">
       <div class="about-inner inner pt--100 pt_sm--40 pt_md--40">
         <div class="section-title">
-          <h2 class="heading-title">Sobre mi</h2>
+          <h2 class="heading-title">About me</h2>
           <div id="description">
           </div>
         </div>
         <!-- End .section-title -->
-        <div class="tab-wrapper mt--30">
+<!--         <div class="tab-wrapper mt--30">
           <v-row>
             <TabTwo />
           </v-row>
-        </div>
+        </div> -->
       </div>
     </v-col>
   </v-row>

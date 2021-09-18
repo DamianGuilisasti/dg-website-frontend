@@ -9,7 +9,7 @@
             class="shrink"
             contain
             height="20"
-            width="250"
+            width="200"
           />
 
           <v-spacer></v-spacer>

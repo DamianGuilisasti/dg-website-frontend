@@ -70,10 +70,34 @@
             class="scrollactive-item"
             >{{ item.title }}</v-btn
           >
+<!--           <v-menu
+            open-on-hover
+            bottom
+            min-width="240"
+            offset-y
+            transition="scroll-y-reverse-transition"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn :ripple="false" text v-bind="attrs" v-on="on">
+                Products <v-icon>mdi-chevron-down</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list>
+              <v-list-item
+                link
+                v-for="(item, index) in ServicesdropDownItems"
+                :key="index"
+                :to="item.to"
+              >
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu> -->
         </scrollactive>
 
         <a class="rn-btn" href="#contact">
-          <span>Contacto</span>
+          <span>Contact</span>
         </a>
       </v-toolbar-items>
       <!-- End header menu item -->
@@ -89,9 +113,14 @@ export default {
     drawer: false,
     items: [
       { title: "Home", to: "/#home" },
-      { title: "Sobre mi", to: "/#about" },
-      { title: "Servicios", to: "/#service" },
-      { title: "Reseñas", to: "/#tesimonial" },
+      { title: "About", to: "/#about" },
+      { title: "Services", to: "/#service" },
+      { title: "Work", to: "/#portfolio" },
+      { title: "Reviews", to: "/#tesimonial" },
+    ],
+    ServicesdropDownItems: [
+      { title: "Pro Website", to: "/service" },
+      { title: "Pro Store", to: "/service-details" },
     ],
     icon: "menu",
     closeIcon: "x",

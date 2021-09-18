@@ -66,11 +66,11 @@
           },
           {
             id: 3,
-            name: "Logo Design",
+            name: "Ecommerce",
           },
           {
             id: 4,
-            name: "Mobile App",
+            name: "Dapps",
           },
         ],
         tabContent: [

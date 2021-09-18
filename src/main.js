@@ -6,6 +6,7 @@ import vuetify from "./plugins/vuetify";
 import axios from "axios";
 import CoolLightBox from "vue-cool-lightbox";
 import VueScrollactive from "vue-scrollactive";
+import VueSocialSharing from 'vue-social-sharing'
 import "vue-slick-carousel/dist/vue-slick-carousel.css";
 import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -16,6 +17,7 @@ Vue.config.productionTip = false;
 
 Vue.use(CoolLightBox);
 Vue.use(VueScrollactive);
+Vue.use(VueSocialSharing);
 
 if (process.env.NODE_ENV == "development") {
   axios.defaults.baseURL = "http://localhost:4000/api";

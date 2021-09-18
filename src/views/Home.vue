@@ -1,11 +1,5 @@
 <template>
   <div>
-    <!-- Start Header Area -->
-    <Header class="section" id="home">
-      <img class="shrink" contain width="250" slot="logo" :src="imageURL" />
-    </Header>
-    <!-- End Header Area -->
-
     <!-- Start Slider Area -->
     <div class="slider-wrapper">
       <SliderFive />
@@ -39,11 +33,11 @@
                 mb_mobile--10
               "
             >
-              <h2 class="heading-title">Servicios</h2>
-              <p>Calidad - Atención - Velocidad - Relaciones a largo plazo.</p>
+              <h2 class="heading-title">Services</h2>
+              <p>Quality, scalable, manageable and easy to use software.</p>
               <div class="service-btn">
                 <a class="btn-transparent rn-btn-dark" href="#contact"
-                  ><span class="text">Solicitar presupuesto</span></a
+                  ><span class="text">Request a quote</span></a
                 >
               </div>
             </div>
@@ -76,7 +70,7 @@
     <!-- End Technologies Area -->
 
     <!-- Start Portfolio Area -->
-    <!--     <v-container fluid>
+    <v-container fluid>
       <div
         class="section rn-portfolio-area rn-section-gap bg_color--1"
         id="portfolio"
@@ -86,12 +80,9 @@
             <v-row>
               <v-col lg="12">
                 <div class="section-title text-center mb--20 mb_sm--0 mb_md--0">
-                  <h2 class="heading-title">Proyectos realizados</h2>
+                  <h2 class="heading-title">Success Stories</h2>
                   <p>
-                    There are many variations of passages of Lorem Ipsum
-                    available,
-                    <br />
-                    but the majority have suffered alteration.
+                    Get to know some of the great things I’ve done
                   </p>
                 </div>
               </v-col>
@@ -99,13 +90,13 @@
           </v-container>
           <Portfolio />
         </div>
-        <div class="mt--50 text-center">
-          <a class="rn-button-style--2 btn_solid" href="about.html"
-            >Ver más proyectos</a
+<!--         <div class="mt--50 text-center">
+          <a class="rn-button-style--2 btn_solid" href="/portfolios"
+            >More Projects</a
           >
-        </div>
+        </div> -->
       </div>
-    </v-container> -->
+    </v-container>
     <!-- End Portfolio Area -->
 
     <!-- Start Counterup Area -->
@@ -114,7 +105,7 @@
         <v-row>
           <v-col cols="12" class="mt-15">
             <div class="section-title text-center">
-              <h3 class="fontWeight500">Mis estadísticas divertidas</h3>
+              <h3 class="fontWeight500">My funny stats</h3>
             </div>
           </v-col>
         </v-row>
@@ -166,7 +157,7 @@
         <v-row>
           <v-col cols="12" class="mt-10">
             <div class="section-title text-center">
-              <h3 class="fontWeight500">Algunos clientes</h3>
+              <h3 class="fontWeight500">Some Success Customers</h3>
             </div>
             <Brand />
           </v-col>
@@ -199,16 +190,11 @@
       </div>
     </div>
     <!-- End Contact Area  -->
-
-    <!-- Start Footer Area  -->
-    <Footer />
-    <!-- End Footer Area  -->
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import Header from "../components/header/HeaderOnePage";
 import SliderFive from "../components/slider/SliderFive";
 import About from "../components/about/AboutFour";
 import ServiceTwo from "../components/service/ServiceTwo";
@@ -218,13 +204,11 @@ import Testimonial from "../components/testimonial/Testimonial";
 import Blog from "../components/blog/Blog";
 import Brand from "../components/brand/Brand";
 import Contact from "../components/contact/ContactAddress";
-import Footer from "../components/footer/FooterTwo";
 import CallToAction from "../components/callto-action/CallToAction";
 import Technologies from "../components/brand/BrandThree";
 
 export default {
   components: {
-    Header,
     SliderFive,
     About,
     ServiceTwo,
@@ -233,7 +217,6 @@ export default {
     Testimonial,
     Blog,
     Brand,
-    Footer,
     CallToAction,
     Contact,
     Technologies,
@@ -248,6 +231,7 @@ export default {
       sliders: [],
       companyImg: "",
       logos: [],
+      sliderShowed: false,
     };
   },
   methods: {
@@ -284,6 +268,8 @@ export default {
         .get("sliders/list")
         .then(function (response) {
           me.sliders = response.data;
+          me.$store.dispatch("removeLoadingOverlay");
+          me.sliderShowed = true;
         })
         .catch(function (error) {
           console.log(error);
@@ -291,6 +277,7 @@ export default {
     },
   },
   created() {
+    this.$store.dispatch("setLoadingOverlay");
     this.getSettings();
     this.getSliders();
     this.getLogos();

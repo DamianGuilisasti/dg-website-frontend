@@ -7,10 +7,10 @@
       <v-row>
         <v-col lg="12">
           <div class="inner text-center">
-            <span>Vayamos al siguiente nivel</span>
-            <h2>Comencemos a trabajar</h2>
+            <span>LET'S GO TO THE NEXT LEVEL</span>
+            <h2>Let's start working</h2>
             <a class="rn-button-style--2" href="#contact"
-              ><span>Contáctame</span></a
+              ><span>Contact</span></a
             >
           </div>
         </v-col>

@@ -7,7 +7,7 @@
           <i class="fas fa-phone"></i>
         </div>
         <div class="inner">
-          <h4 class="title">Contáctame por teléfono</h4>
+          <h4 class="title">Phone</h4>
           <p>
             <a :href="`tel:${phone}`">{{ phone }}</a>
           </p>
@@ -39,7 +39,7 @@
           <i class="fas fa-map-marker-alt"></i>
         </div>
         <div class="inner">
-          <h4 class="title">Ubicación</h4>
+          <h4 class="title">Location</h4>
           <p>{{ address }}</p>
         </div>
       </div>
@@ -51,7 +51,7 @@
 <script>
 export default {
   props: {
-    phone: Number,
+    phone: String,
     email: String,
     address: String,
   },

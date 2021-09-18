@@ -13,15 +13,15 @@
       <div class="single-service service__style--4">
         <!--<router-link>
           to="/service-details" -->
-          <div class="service">
-            <div class="icon" v-html="iconSvg(service.icon)"></div>
-            <div class="content">
-              <h3 class="heading-title">{{ service.title }}</h3>
-              <p>
-                {{ service.desc }}
-              </p>
-            </div>
+        <div class="service">
+          <div class="icon" v-html="iconSvg(service.icon)"></div>
+          <div class="content">
+            <h3 class="heading-title">{{ service.title }}</h3>
+            <p>
+              {{ service.desc }}
+            </p>
           </div>
+        </div>
         <!--</router-link> -->
       </div>
     </v-col>
@@ -37,15 +37,25 @@ export default {
     return {
       serviceContent: [
         {
-          icon: "monitor",
-          title: "Desarrollo Web",
-          desc: ` Desarrollo de Páginas Web para todo tipo de empresas/negocios. Proyectos realizados con las útlimas y mejores tecnologías del mercado.`,
+          icon: "code",
+          title: "Web Development",
+           desc: ` Web Applications Development for all types businesses.`, 
         },
         {
           icon: "shopping-cart",
-          title: "Ecommerce",
-          desc: ` Desarrollo de Tiendas Online para que puedas vender todos tus productos de manera online, cobrando a través de MercadoPago.`,
+          title: "eCommerce",
+           desc: ` Online store solutions to sell your products efficiently.`, 
         },
+/*         {
+          icon: "smartphone",
+          title: "Mobile apps",
+          desc: ` Hybrid Mobile Apps.`,
+        },
+        {
+          icon: "file-text",
+          title: "Dapps",
+          desc: ` Secure, trustless, rapid, scalable, and stable Decentralized Applicactions.`,
+        }, */
       ],
     };
   },

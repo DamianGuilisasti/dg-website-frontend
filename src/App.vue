@@ -30,6 +30,13 @@
         </template>
       </v-snackbar>
     </div>
+    <v-overlay v-if="loadingOverlay" opacity=1>
+      <v-progress-circular
+        color="#fff"
+        indeterminate
+        size="100"
+      ></v-progress-circular>
+    </v-overlay>
   </v-app>
 </template>
 
@@ -82,7 +89,7 @@ export default {
                   imageURL: "",
                 },
               })
-              .then(function (response) {})
+              .then(function () {})
               .catch(function (error) {
                 console.log(error);
               });
@@ -94,7 +101,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["snackbar"]),
+    ...mapState(["snackbar", "loadingOverlay"]),
   },
   created() {
     this.getSettings();

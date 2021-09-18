@@ -8,24 +8,31 @@
       sm="6"
       cols="12"
       class="portfolio-tilthover"
-      v-for="(item, i) in portfolioContent"
+      v-for="(item, i) in portfolios"
       :key="i"
     >
       <div class="Tilt-inner">
         <div class="portfolio">
           <div class="thumbnail-inner">
-            <div class="thumbnail" :class="item.img"></div>
-            <div class="bg-blr-image" :class="item.img"></div>
+            <v-img class="thumbnail" :src="item.portfolioimages[0].url"></v-img>
+            <v-img
+              class="bg-blr-image"
+              :src="item.portfolioimages[0].url"
+            ></v-img>
           </div>
           <div class="content">
             <div class="inner">
-              <p>{{ item.meta }}</p>
+              <p>{{ item.projectType }}</p>
               <h4>
-                <a href="portfolio-details.html">{{ item.title }}</a>
+                <a :href="`/portfolio-details/${item.slug}`">{{
+                  item.client.lastname
+                }}</a>
               </h4>
               <div class="portfolio-button">
-                <router-link class="rn-btn" to="/portfolio-details"
-                  >Case Study</router-link
+                <router-link
+                  class="rn-btn"
+                  :to="`/portfolio-details/${item.slug}`"
+                  >View project details</router-link
                 >
               </div>
             </div>
@@ -38,52 +45,28 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        portfolioContent: [
-          {
-            img: "image-1",
-            meta: "Development",
-            title: "Getting tickets to the big show",
-          },
-          {
-            img: "image-2",
-            meta: "Development",
-            title: "Getting tickets to the big show",
-          },
-          {
-            img: "image-3",
-            meta: "Development",
-            title: "Getting tickets to the big show",
-          },
-          {
-            img: "image-4",
-            meta: "Development",
-            title: "Getting tickets to the big show",
-          },
-          {
-            img: "image-5",
-            meta: "Development",
-            title: "Getting tickets to the big show",
-          },
-          {
-            img: "image-6",
-            meta: "Development",
-            title: "Getting tickets to the big show",
-          },
-          {
-            img: "image-7",
-            meta: "Development",
-            title: "Getting tickets to the big show",
-          },
-          {
-            img: "image-8",
-            meta: "Development",
-            title: "Getting tickets to the big show",
-          },
-        ],
-      };
+import axios from "axios";
+export default {
+  data() {
+    return {
+      portfolios: [],
+    };
+  },
+  methods: {
+    initialize() {
+      let me = this;
+      axios
+        .get("portfolio/list")
+        .then(function (response) {
+          me.portfolios = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
-  };
+  },
+  created() {
+    this.initialize();
+  },
+};
 </script>
