@@ -2,7 +2,7 @@
   <div>
     <!-- Start Slider Area -->
     <div class="slider-wrapper">
-      <SliderFive />
+      <Sliders />
     </div>
     <!-- End Slider Area -->
 
@@ -43,34 +43,15 @@
             </div>
           </v-col>
           <v-col lg="8" cols="12" class="mt_md--50">
-            <ServiceTwo />
+            <Services :services="services" />
           </v-col>
         </v-row>
-        <!--         <v-row class="mt-15">
-          <v-col lg="8" cols="12" class="mt_md--50">
-            <Technologies />
-          </v-col>
-          <v-col lg="4" cols="12">
-            <div
-              class="section-title text-left mt--30 mt_md--5 mt_mobile--5 mb_mobile--10"
-            >
-              <h2 class="heading-title">Tecnologías</h2>
-              <p>Últimas tecnologías del mercado.</p>
-            </div>
-          </v-col>
-        </v-row> -->
       </v-container>
     </div>
     <!-- End Service Area -->
 
-    <!-- Start Technologies Area -->
-    <div class="rn-brand-area brand-separation">
-      <v-container> </v-container>
-    </div>
-    <!-- End Technologies Area -->
-
     <!-- Start Portfolio Area -->
-    <v-container fluid>
+    <v-container fluid v-if="portfolios.length > 0">
       <div
         class="section rn-portfolio-area rn-section-gap bg_color--1"
         id="portfolio"
@@ -81,20 +62,18 @@
               <v-col lg="12">
                 <div class="section-title text-center mb--20 mb_sm--0 mb_md--0">
                   <h2 class="heading-title">Success Stories</h2>
-                  <p>
-                    Get to know some of the great things I’ve done
-                  </p>
+                  <p>Get to know some of the great things I’ve done</p>
                 </div>
               </v-col>
             </v-row>
           </v-container>
-          <Portfolio />
+          <Portfolios :portfolios="portfolios" />
         </div>
-<!--         <div class="mt--50 text-center">
+        <div class="mt--50 text-center">
           <a class="rn-button-style--2 btn_solid" href="/portfolios"
             >More Projects</a
           >
-        </div> -->
+        </div>
       </div>
     </v-container>
     <!-- End Portfolio Area -->
@@ -109,7 +88,7 @@
             </div>
           </v-col>
         </v-row>
-        <CounterOne />
+        <Counter />
       </v-container>
     </div>
     <!-- End Counterup Area -->
@@ -117,7 +96,7 @@
     <!-- Start Testimonial Area  -->
     <div
       class="section rn-testimonial-area rn-section-gap bg_color--5"
-      id="tesimonial"
+      id="testimonial"
     >
       <v-container>
         <Testimonial />
@@ -125,8 +104,23 @@
     </div>
     <!-- Start Testimonial Area  -->
 
+    <!-- Start Brand Area -->
+    <div class="rn-brand-area brand-separation" v-if="logos.length > 0">
+      <v-container>
+        <v-row>
+          <v-col cols="12" class="mt-10">
+            <div class="section-title text-center">
+              <h3 class="fontWeight500">Some Success Customers</h3>
+            </div>
+            <Brand :logos="logos" />
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
+    <!-- End Brand Area -->
+
     <!-- Start Blog Area  -->
-    <!-- <div class="section rn-blog-area rn-section-gapTop bg_color--1" id="blog">
+    <!--     <div class="section rn-blog-area rn-section-gapTop bg_color--1 mb--50" id="blog">
       <v-container>
         <v-row align="end" class="mb--20">
           <v-col lg="6" md="6" sm="12" cols="12">
@@ -151,21 +145,6 @@
     </div> -->
     <!-- End Blog Area  -->
 
-    <!-- Start Brand Area -->
-    <div class="rn-brand-area brand-separation" v-if="logos.length > 0">
-      <v-container>
-        <v-row>
-          <v-col cols="12" class="mt-10">
-            <div class="section-title text-center">
-              <h3 class="fontWeight500">Some Success Customers</h3>
-            </div>
-            <Brand />
-          </v-col>
-        </v-row>
-      </v-container>
-    </div>
-    <!-- End Brand Area -->
-
     <!-- Start Call to action Area  -->
     <CallToAction />
     <!-- End Call to action Area  -->
@@ -178,14 +157,7 @@
     >
       <div class="contact-form--1">
         <v-container>
-          <Contact :phone="phone" :address="address" :email="email">
-            <!--             <img
-              slot="contact-img"
-              class="w-100"
-              src="../assets/images/about/about-6.jpg"
-              alt="trydo"
-            /> -->
-          </Contact>
+          <Contact :phone="phone" :address="address" :email="email" />
         </v-container>
       </div>
     </div>
@@ -195,31 +167,29 @@
 
 <script>
 import axios from "axios";
-import SliderFive from "../components/slider/SliderFive";
+import Sliders from "../components/slider/SliderFive";
 import About from "../components/about/AboutFour";
-import ServiceTwo from "../components/service/ServiceTwo";
-import Portfolio from "../components/portfolio/PortfolioSix";
-import CounterOne from "../components/counter/CounterOne";
+import Services from "../components/service/ServiceFive";
+import Portfolios from "../components/portfolio/PortfolioSix";
+import Counter from "../components/counter/CounterOne";
 import Testimonial from "../components/testimonial/Testimonial";
 import Blog from "../components/blog/Blog";
 import Brand from "../components/brand/Brand";
 import Contact from "../components/contact/ContactAddress";
 import CallToAction from "../components/callto-action/CallToAction";
-import Technologies from "../components/brand/BrandThree";
 
 export default {
   components: {
-    SliderFive,
+    Sliders,
     About,
-    ServiceTwo,
-    Portfolio,
-    CounterOne,
+    Services,
+    Portfolios,
+    Counter,
     Testimonial,
     Blog,
     Brand,
     CallToAction,
     Contact,
-    Technologies,
   },
   data() {
     return {
@@ -228,10 +198,10 @@ export default {
       address: "",
       phone: "",
       about: "",
-      sliders: [],
       companyImg: "",
       logos: [],
-      sliderShowed: false,
+      portfolios: [],
+      services: [],
     };
   },
   methods: {
@@ -241,6 +211,17 @@ export default {
         .get("logos/list")
         .then(function (response) {
           me.logos = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    getPortfolios() {
+      let me = this;
+      axios
+        .get("portfolio/listActives")
+        .then(function (response) {
+          me.portfolios = response.data;
         })
         .catch(function (error) {
           console.log(error);
@@ -262,14 +243,12 @@ export default {
           console.log(error);
         });
     },
-    getSliders() {
+    getServices() {
       let me = this;
       axios
-        .get("sliders/list")
+        .get("services/list")
         .then(function (response) {
-          me.sliders = response.data;
-          me.$store.dispatch("removeLoadingOverlay");
-          me.sliderShowed = true;
+          me.services = response.data;
         })
         .catch(function (error) {
           console.log(error);
@@ -277,10 +256,10 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("setLoadingOverlay");
     this.getSettings();
-    this.getSliders();
     this.getLogos();
+    this.getPortfolios();
+    this.getServices();
   },
 };
 </script>

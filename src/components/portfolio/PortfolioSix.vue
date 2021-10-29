@@ -8,7 +8,7 @@
       sm="6"
       cols="12"
       class="portfolio-tilthover"
-      v-for="(item, i) in portfolios"
+      v-for="(item, i) in portfolios.slice(0, 5)"
       :key="i"
     >
       <div class="Tilt-inner">
@@ -45,28 +45,9 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
-  data() {
-    return {
-      portfolios: [],
-    };
-  },
-  methods: {
-    initialize() {
-      let me = this;
-      axios
-        .get("portfolio/list")
-        .then(function (response) {
-          me.portfolios = response.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-  },
-  created() {
-    this.initialize();
+  props: {
+    portfolios: Array,
   },
 };
 </script>

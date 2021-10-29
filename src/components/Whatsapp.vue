@@ -4,33 +4,15 @@
   >
 </template>
 <script>
-import axios from "axios";
 export default {
-  data: () => ({
-    phone: "",
-    text: "",
-  }),
-  created() {
-    this.getSettings();
+  props: {
+    phone: String,
+    text: String,
+    dataId: String,
   },
   computed: {
     whatsappLink() {
       return "https://wa.me/" + this.phone + "?text=" + this.text;
-    },
-  },
-  methods: {
-    getSettings() {
-      let me = this;
-      axios
-        .get("settings/list")
-        .then(function (response) {
-          me.phone = response.data[0].whatsapp.phone;
-          me.text = response.data[0].whatsapp.text;
-          me.dataId = response.data[0]._id;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
     },
   },
 };

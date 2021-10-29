@@ -3,7 +3,8 @@ import VueRouter from "vue-router";
 import Layout from "../views/Layout";
 import Home from "../views/Home";
 import PortfolioDetails from "../views/portfolio/PortfolioDetails";
-import Portfolios from "../views/portfolio/Portfolio";
+import ServiceDetails from "../views/services/ServiceDetail";
+import Portfolios from "../views/Portfolios";
 import ErrorPath from "../views/404";
 
 Vue.use(VueRouter);
@@ -28,6 +29,12 @@ const routes = [
         path: "/portfolios",
         component: Portfolios,
         name: "Portfolios",
+      },
+      {
+        path: "/service-details/:slug",
+        component: ServiceDetails,
+        name: "ServiceDetails",
+        props: true
       },
       {
         path: "*",

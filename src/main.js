@@ -19,11 +19,13 @@ Vue.use(CoolLightBox);
 Vue.use(VueScrollactive);
 Vue.use(VueSocialSharing);
 
-if (process.env.NODE_ENV == "development") {
+/* if (process.env.NODE_ENV == "development") {
   axios.defaults.baseURL = "http://localhost:4000/api";
 } else {
   axios.defaults.baseURL = "/api";
-}
+} */
+
+axios.defaults.baseURL = "http://localhost:4000/api";
 
 new Vue({
   router,

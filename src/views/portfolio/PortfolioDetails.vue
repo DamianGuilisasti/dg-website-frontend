@@ -31,22 +31,22 @@
           <v-col>
             <div class="portfolio-details">
               <div class="inner">
-                <h2 v-if="portfolio">Project Details</h2>
+                <h2>Project Details</h2>
                 <p class="subtitle"></p>
-                <h3>Challenge</h3>
+                <h3 v-if="portfolio.problem">Challenge</h3>
                 <p>
                   {{ portfolio.problem }}
                 </p>
-                <h3>Solution</h3>
+                <h3 v-if="portfolio.solution">Solution</h3>
                 <p>
                   {{ portfolio.solution }}
                 </p>
                 <div class="portfolio-view-list d-flex flex-wrap">
-                  <div class="port-view">
+                  <div class="port-view" v-if="portfolio.projectType">
                     <h3>Project Type</h3>
                     <p>{{ portfolio.projectType }}</p>
                   </div>
-                  <div class="port-view">
+                  <div class="port-view" v-if="portfolio.projectLink">
                     <h3>Project Link</h3>
                     <p>
                       <a :href="`${portfolio.projectLink}`" target="_blank">{{
@@ -54,17 +54,14 @@
                       }}</a>
                     </p>
                   </div>
-                  <div class="port-view">
+                  <div class="port-view" v-if="portfolio.clientReview">
                     <h3>Client Review</h3>
                     <p>{{ portfolio.clientReview }}</p>
                   </div>
 
                   <div class="port-view">
                     <h3>Share on</h3>
-                    <div
-                      class="portfolio-share-link mt--20 pb--70 pb_sm--40"
-                      v-if="portfolio"
-                    >
+                    <div class="portfolio-share-link mt--20 pb--70 pb_sm--40">
                       <ul
                         class="
                           social-share
@@ -113,10 +110,12 @@
               <div class="portfolio-thumb-inner">
                 <div
                   class="thumb mb--30"
-                  v-for="(image, imageIndex) in portfolio.portfolioimages"
+                  v-for="(image, imageIndex) in portfolio.portfolioimages.slice(
+                    1
+                  )"
                   :key="imageIndex"
                 >
-                  <img :src="image.url" alt="Portfolio Images" />
+                  <img width="100%" :src="image.url" alt="Portfolio Images" />
                 </div>
               </div>
             </div>
@@ -170,7 +169,7 @@
           </v-col>
           <!-- End Single Work  -->
         </v-row>
-<!--         <div class="mt--50 text-center">
+        <!--         <div class="mt--50 text-center">
           <a class="rn-button-style--2 btn_solid" href="/portfolios"
             >More projects</a
           >
@@ -186,8 +185,7 @@ import axios from "axios";
 import feather from "feather-icons";
 
 export default {
-  components: {
-  },
+  components: {},
   data() {
     return {
       limit: 4,

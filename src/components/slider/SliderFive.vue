@@ -26,12 +26,14 @@
                 <p class="description">
                   {{ slider.subtitle }}
                 </p>
-                <div class="slide-btn">
+                <div
+                  class="slide-btn"
+                  v-if="slider.buttonText && slider.buttonURL"
+                >
                   <a
                     class="rn-button-style--2 btn-primary-color"
-                    href="
-                    #service"
-                    >Services</a
+                    :href="slider.buttonURL"
+                    >{{ slider.buttonText }}</a
                   >
                 </div>
               </div>
@@ -71,7 +73,7 @@ export default {
     };
   },
   methods: {
-    getSettings() {
+    getSliders() {
       let me = this;
       axios
         .get("sliders/list")
@@ -84,7 +86,7 @@ export default {
     },
   },
   created() {
-    this.getSettings();
+    this.getSliders();
   },
 };
 </script>
@@ -96,7 +98,4 @@ export default {
     width: 100%;
   }
 }
-/* .slick-slide {
-    float: initial !important;
-} */
 </style>

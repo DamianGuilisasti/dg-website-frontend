@@ -70,7 +70,31 @@
             class="scrollactive-item"
             >{{ item.title }}</v-btn
           >
-<!--           <v-menu
+          <!--           <v-menu
+            open-on-hover
+            bottom
+            min-width="240"
+            offset-y
+            transition="scroll-y-reverse-transition"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn :ripple="false" text v-bind="attrs" v-on="on">
+                Services <v-icon>mdi-chevron-down</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list>
+              <v-list-item
+                link
+                v-for="(item, index) in ServicesdropDownItems"
+                :key="index"
+                :to="item.to"
+              >
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu> -->
+          <!--           <v-menu
             open-on-hover
             bottom
             min-width="240"
@@ -109,6 +133,9 @@
 <script>
 import feather from "feather-icons";
 export default {
+    props: {
+    imageURL: String,
+  },
   data: () => ({
     drawer: false,
     items: [
@@ -116,7 +143,7 @@ export default {
       { title: "About", to: "/#about" },
       { title: "Services", to: "/#service" },
       { title: "Work", to: "/#portfolio" },
-      { title: "Reviews", to: "/#tesimonial" },
+      { title: "Reviews", to: "/#testimonial" },
     ],
     ServicesdropDownItems: [
       { title: "Pro Website", to: "/service" },

@@ -44,15 +44,15 @@ export default {
       counterUpContent: [
         {
           endVal: 3650,
-          desc: `Tazas de café.`,
+          desc: `Coffee cups.`,
         },
         {
           endVal: 1825,
-          desc: `Mates tomados.`,
+          desc: `Mates drunk.`,
         },
         {
           endVal: 30000,
-          desc: `Líneas de código.`,
+          desc: `Code lines..`,
         },
       ],
     };

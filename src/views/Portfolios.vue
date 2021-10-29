@@ -29,7 +29,7 @@
       <div class="rn-masonary-wrapper">
         <div class="wrapper plr--70 plr_sm--30 plr_md--30">
           <div class="be-custom-gallery">
-            <PortfolioThree />
+            <Portfolios :portfolios="portfolios" />
           </div>
         </div>
       </div>
@@ -38,15 +38,29 @@
   </div>
 </template>
 <script>
-import BannerThree from "../../components/slider/BannerThree";
-import PortfolioThree from "../../components/portfolio/PortfolioThree";
+import BannerThree from "../components/slider/BannerThree";
+import Portfolios from "../components/portfolio/PortfolioThree";
+import axios from "axios";
 export default {
   components: {
     BannerThree,
-    PortfolioThree,
+    Portfolios,
+  },
+  getPortfolios() {
+    let me = this;
+    axios
+      .get("portfolio/listActives")
+      .then(function (response) {
+        me.portfolios = response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   },
   data() {
-    return {};
+    return {
+      portfolios: [],
+    };
   },
 };
 </script>

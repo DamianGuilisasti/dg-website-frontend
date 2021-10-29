@@ -7,11 +7,11 @@
           <v-col cols="12">
             <div class="inner">
               <h1 class="heading-title theme-gradient">404!</h1>
-              <h3 class="sub-title">Página no encontrada</h3>
-              <span>La página que estabas buscando no existe.</span>
+              <h3 class="sub-title">Page Not Found</h3>
+              <span>This page that you are looking for is not found.</span>
               <div class="error-button">
                 <router-link class="rn-button-style--2 btn_solid" to="/"
-                  >Volver al Inicio</router-link
+                  >Go to Home</router-link
                 >
               </div>
             </div>

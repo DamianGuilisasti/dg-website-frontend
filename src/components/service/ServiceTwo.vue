@@ -2,6 +2,8 @@
   <!-- Start Service Area  -->
   <v-row class="service-one-wrapper">
     <!-- Start Single Service  -->
+
+    <!-- ACÁ PONER LO QUE ESTÁ EN LA BASE DE DATOS. -->
     <v-col
       lg="6"
       md="6"
@@ -32,21 +34,23 @@
 
 <script>
 import feather from "feather-icons";
+import axios from "axios";
 export default {
   data() {
     return {
+      services: [],
       serviceContent: [
         {
           icon: "code",
           title: "Web Development",
-           desc: ` Web Applications Development for all types businesses.`, 
+          desc: ` Web Applications Development for all types businesses.`,
         },
         {
           icon: "shopping-cart",
           title: "eCommerce",
-           desc: ` Online store solutions to sell your products efficiently.`, 
+          desc: ` Online store solutions to sell your products efficiently.`,
         },
-/*         {
+        /*         {
           icon: "smartphone",
           title: "Mobile apps",
           desc: ` Hybrid Mobile Apps.`,
@@ -63,6 +67,21 @@ export default {
     iconSvg(icon) {
       return feather.icons[icon].toSvg();
     },
+    initialize() {
+      let me = this;
+      axios
+        .get("services/list")
+        .then(function (response) {
+          me.services = response.data;
+          console.log(me.services);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+  },
+  created() {
+    this.initialize();
   },
 };
 </script>
