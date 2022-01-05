@@ -28,6 +28,7 @@
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          
           <!-- End mobile menu sidebar item list -->
         </v-list>
       </scrollactive>

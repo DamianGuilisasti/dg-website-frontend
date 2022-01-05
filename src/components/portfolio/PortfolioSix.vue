@@ -22,7 +22,7 @@
           </div>
           <div class="content">
             <div class="inner">
-              <p>{{ item.projectType }}</p>
+              <p v-if="item.category">{{ item.category.name }}</p>
               <h4>
                 <a :href="`/portfolio-details/${item.slug}`">{{
                   item.client.lastname

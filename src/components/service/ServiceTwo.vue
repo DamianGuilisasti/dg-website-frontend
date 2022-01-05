@@ -70,7 +70,7 @@ export default {
     initialize() {
       let me = this;
       axios
-        .get("services/list")
+        .get("services")
         .then(function (response) {
           me.services = response.data;
           console.log(me.services);

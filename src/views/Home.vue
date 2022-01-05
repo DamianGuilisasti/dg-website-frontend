@@ -208,30 +208,30 @@ export default {
     getLogos() {
       let me = this;
       axios
-        .get("logos/list")
-        .then(function (response) {
+        .get("logos")
+        .then(function(response) {
           me.logos = response.data;
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
         });
     },
     getPortfolios() {
       let me = this;
       axios
-        .get("portfolio/listActives")
-        .then(function (response) {
+        .get("portfolios/listActives")
+        .then(function(response) {
           me.portfolios = response.data;
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
         });
     },
     getSettings() {
       let me = this;
       axios
-        .get("settings/list")
-        .then(function (response) {
+        .get("settings")
+        .then(function(response) {
           me.imageURL = response.data[0].logoURL.imageURL;
           me.email = response.data[0].companyEmail;
           me.address = response.data[0].companyAddress;
@@ -239,18 +239,18 @@ export default {
           me.about = response.data[0].aboutInfo;
           me.companyImg = response.data[0].companyImg.imageURL;
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
         });
     },
     getServices() {
       let me = this;
       axios
-        .get("services/list")
-        .then(function (response) {
+        .get("services")
+        .then(function(response) {
           me.services = response.data;
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
         });
     },

@@ -8,14 +8,14 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item v-for="item in tabContent" :key="item.id">
-        <CoolLightBox
+        <!--         <CoolLightBox
           :items="item.content"
           :index="index"
           :fullScreen="true"
           :effect="'fade'"
           @close="index = null"
         >
-        </CoolLightBox>
+        </CoolLightBox> -->
         <div
           class="gallery-wrapper gallery-grid mesonry-list grid-metro3"
           id="animated-thumbnials"
@@ -30,14 +30,34 @@
               <div class="portfolio-static">
                 <div class="thumbnail-inner">
                   <div class="thumbnail">
-                    <img :src="item.thumb" alt="portfolio image" />
+                    <a :href="`/portfolio-details/${item.slug}`">
+                      <v-img
+                        :src="item.portfolioimages[0].url"
+                        height="500px"
+                        width="auto"
+                        alt="portfolio image"
+                      />
+                    </a>
                   </div>
                 </div>
 
                 <div class="content">
                   <div class="inner">
-                    <p>{{ item.tag }}</p>
-                    <h4>{{ item.title }}</h4>
+                    <p :href="`/portfolio-details/${item.slug}`">
+                      {{ item.category }}
+                    </p>
+                    <a :href="`/portfolio-details/${item.slug}`">
+                      <h4>
+                        {{ item.name }}
+                      </h4>
+                    </a>
+                    <div class="portfolio-button">
+                      <router-link
+                        class="rn-btn"
+                        :to="`/portfolio-details/${item.slug}`"
+                        >View project details</router-link
+                      >
+                    </div>
                   </div>
                 </div>
               </div>
@@ -53,135 +73,13 @@
 export default {
   props: {
     portfolios: Array,
+    tabItems: Array,
+    tabContent: Array,
   },
   data() {
     return {
       tab: null,
       index: null,
-      tabItems: [
-        {
-          id: 1,
-          name: "All Project",
-        },
-        {
-          id: 2,
-          name: "Web Design",
-        },
-        {
-          id: 3,
-          name: "Ecommerce",
-        },
-        {
-          id: 4,
-          name: "Dapps",
-        },
-      ],
-      tabContent: [
-        {
-          id: 1,
-          content: [
-            {
-              thumb: require("../../assets/images/portfolio/dp-portfolio-01.jpg"),
-              src: require("../../assets/images/portfolio/big/dp-big--portfolio-01.jpg"),
-              tag: "Web Design",
-              title: `T-shirt design is the part of design`,
-            },
-            {
-              thumb: require("../../assets/images/portfolio/dp-portfolio-02.jpg"),
-              src: require("../../assets/images/portfolio/big/dp-big--portfolio-02.jpg"),
-              tag: "App Development",
-              title: `The service provide for designer`,
-            },
-            {
-              thumb: require("../../assets/images/portfolio/dp-portfolio-03.jpg"),
-              src: require("../../assets/images/portfolio/big/dp-big--portfolio-03.jpg"),
-              tag: "Web Design",
-              title: `Mobile App landing Design`,
-            },
-            {
-              thumb: require("../../assets/images/portfolio/dp-portfolio-04.jpg"),
-              src: require("../../assets/images/portfolio/big/dp-big--portfolio-04.jpg"),
-              tag: "Logo Design",
-              title: `Logo Design creativity`,
-            },
-            {
-              thumb: require("../../assets/images/portfolio/dp-portfolio-05.jpg"),
-              src: require("../../assets/images/portfolio/big/dp-big--portfolio-05.jpg"),
-              tag: "Web Design",
-              title: `Getting tickets to the big show`,
-            },
-            {
-              thumb: require("../../assets/images/portfolio/dp-portfolio-06.jpg"),
-              src: require("../../assets/images/portfolio/big/dp-big--portfolio-06.jpg"),
-              tag: "Web Design",
-              title: `T-shirt design is the part of design`,
-            },
-          ],
-        },
-        {
-          id: 2,
-          content: [
-            {
-              thumb: require("../../assets/images/portfolio/dp-portfolio-03.jpg"),
-              src: require("../../assets/images/portfolio/big/dp-big--portfolio-03.jpg"),
-              tag: "Web Design",
-              title: `Mobile App landing Design`,
-            },
-            {
-              thumb: require("../../assets/images/portfolio/dp-portfolio-04.jpg"),
-              src: require("../../assets/images/portfolio/big/dp-big--portfolio-04.jpg"),
-              tag: "Web Design",
-              title: `Web Design creativity`,
-            },
-            {
-              thumb: require("../../assets/images/portfolio/dp-portfolio-05.jpg"),
-              src: require("../../assets/images/portfolio/big/dp-big--portfolio-05.jpg"),
-              tag: "Web Design",
-              title: `Getting tickets to the big show`,
-            },
-          ],
-        },
-        {
-          id: 3,
-          content: [
-            {
-              thumb: require("../../assets/images/portfolio/dp-portfolio-02.jpg"),
-              src: require("../../assets/images/portfolio/big/dp-big--portfolio-02.jpg"),
-              tag: "Logo Design",
-              title: `The service provide for designer`,
-            },
-            {
-              thumb: require("../../assets/images/portfolio/dp-portfolio-04.jpg"),
-              src: require("../../assets/images/portfolio/big/dp-big--portfolio-04.jpg"),
-              tag: "Logo Design",
-              title: `Logo Design creativity`,
-            },
-          ],
-        },
-        {
-          id: 4,
-          content: [
-            {
-              thumb: require("../../assets/images/portfolio/dp-portfolio-01.jpg"),
-              src: require("../../assets/images/portfolio/big/dp-big--portfolio-01.jpg"),
-              tag: "Mobile App",
-              title: `T-shirt design is the part of design`,
-            },
-            {
-              thumb: require("../../assets/images/portfolio/dp-portfolio-03.jpg"),
-              src: require("../../assets/images/portfolio/big/dp-big--portfolio-03.jpg"),
-              tag: "Mobile App",
-              title: `Mobile App landing Design`,
-            },
-            {
-              thumb: require("../../assets/images/portfolio/dp-portfolio-05.jpg"),
-              src: require("../../assets/images/portfolio/big/dp-big--portfolio-05.jpg"),
-              tag: "Mobile App",
-              title: `Getting tickets to the big show`,
-            },
-          ],
-        },
-      ],
     };
   },
 };

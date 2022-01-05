@@ -82,7 +82,7 @@ export default {
     getSettings() {
       let me = this;
       axios
-        .get("sliders/list")
+        .get("sliders")
         .then(function (response) {
           me.sliders = response.data;
         })

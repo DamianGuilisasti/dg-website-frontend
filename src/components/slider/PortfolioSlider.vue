@@ -76,11 +76,11 @@ export default {
     getSliders() {
       let me = this;
       axios
-        .get("sliders")
-        .then(function(response) {
+        .get("portfoliosliders")
+        .then(function (response) {
           me.sliders = response.data;
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },

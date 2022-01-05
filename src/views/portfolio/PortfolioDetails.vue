@@ -42,15 +42,15 @@
                   {{ portfolio.solution }}
                 </p>
                 <div class="portfolio-view-list d-flex flex-wrap">
-                  <div class="port-view" v-if="portfolio.projectType">
-                    <h3>Project Type</h3>
-                    <p>{{ portfolio.projectType }}</p>
+                  <div class="port-view" v-if="portfolio.category">
+                    <h3>Category</h3>
+                    <p>{{ portfolio.category.name }}</p>
                   </div>
-                  <div class="port-view" v-if="portfolio.projectLink">
+                  <div class="port-view" v-if="portfolio.link">
                     <h3>Project Link</h3>
                     <p>
-                      <a :href="`${portfolio.projectLink}`" target="_blank">{{
-                        portfolio.projectLink
+                      <a :href="`${portfolio.link}`" target="_blank">{{
+                        portfolio.link
                       }}</a>
                     </p>
                   </div>
@@ -163,7 +163,7 @@
                 <h4>
                   <a :href="project.slug">{{ project.client.lastname }}</a>
                 </h4>
-                <span class="category">{{ project.projectType }}</span>
+                <span class="category">{{ project.category }}</span>
               </div>
             </div>
           </v-col>
@@ -206,7 +206,7 @@ export default {
     initialize() {
       let me = this;
       axios
-        .get("portfolio/query", { params: this.$route.params.slug })
+        .get("portfolios/portfolio", { params: this.$route.params.slug })
         .then(function (response) {
           me.portfolio = response.data;
         })
@@ -230,7 +230,7 @@ export default {
     getSettings() {
       let me = this;
       axios
-        .get("settings/list")
+        .get("settings")
         .then(function (response) {
           me.imageURL = response.data[0].logoURL.imageURL;
           me.email = response.data[0].companyEmail;

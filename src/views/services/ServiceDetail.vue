@@ -2,6 +2,7 @@
   <div>
     <!-- Start Breadcrump Area  -->
     <div
+      v-if="service.servicesimages.length > 0"
       class="rn-page-title-area pt--120 pb--190 bg_image"
       :style="{ backgroundImage: `url(${service.servicesimages[0].url})` }"
       data-black-overlay="5"
@@ -29,49 +30,19 @@
                 <v-row
                   class="sercice-details-content pb--80 align-items-center"
                 >
-                  <v-col lg="6" md="6" cols="12">
+                  <!--                   <v-col lg="6" md="6" cols="12">
                     <div class="thumb">
                       <img
+                        v-if="service.servicesimages.length > 0"
                         class="w-100"
                         :src="service.servicesimages[1].url"
                         alt="Service Images"
                       />
                     </div>
-                  </v-col>
-                  <v-col lg="6" md="6" cols="12">
+                  </v-col> -->
+                  <v-col lg="12" md="12" cols="12">
                     <div class="details mt_md--30 mt_sm--30">
-                      <p id="description1"></p>
-                      <!--                       <p>
-                        {{ service.description1 }}
-                      </p> -->
-                    </div>
-                  </v-col>
-                </v-row>
-                <!-- End Single Content  -->
-
-                <!-- Start Single Content  -->
-                <v-row class="sercice-details-content align-items-center">
-                  <v-col lg="6" md="6" cols="12" order="2" order-md="1">
-                    <div class="details mt_md--30 mt_sm--30">
-                      <p id="description2"></p>
-                    </div>
-                  </v-col>
-                  <v-col lg="6" md="6" cols="12" order="1" order-md="2">
-                    <div class="thumb position-relative">
-                      <CoolLightBox
-                        :items="items"
-                        :index="index"
-                        @close="index = null"
-                      >
-                      </CoolLightBox>
-
-                      <div class="thumbnail position-relative">
-                        <img
-                          class="w-100"
-                          :src="service.servicesimages[1].url"
-                          alt="About Images"
-                        />
-                      </div>
+                      <p v-html="service.description"></p>
                     </div>
                   </v-col>
                 </v-row>
@@ -82,6 +53,17 @@
         </v-row>
       </v-container>
     </div>
+
+    <!-- Start Testimonial Area  -->
+    <div
+      class="section rn-testimonial-area rn-section-gap bg_color--5"
+      id="testimonial"
+    >
+      <v-container>
+        <ServiceTestimonial />
+      </v-container>
+    </div>
+    <!-- Start Testimonial Area  -->
 
     <!-- Start Call to action Area  -->
     <CallToAction />
@@ -107,18 +89,27 @@
 import axios from "axios";
 import CallToAction from "../../components/callto-action/CallToAction";
 import Contact from "../../components/contact/ContactAddress";
+import ServiceTestimonial from "../../components/testimonial/ServiceTestimonial";
 export default {
   components: {
     CallToAction,
     Contact,
+    ServiceTestimonial,
   },
   data() {
     return {
       index: null,
-      service: "",
       phone: "",
       email: "",
       address: "",
+      service: {
+        servicesimages: ([0].url = ""),
+        servicesimages: ([1].url = ""),
+        name: "",
+        shortdescription: "",
+        description: "",
+        description2: "",
+      },
     };
   },
 
@@ -126,32 +117,25 @@ export default {
     getSettings() {
       let me = this;
       axios
-        .get("settings/list")
-        .then(function (response) {
+        .get("settings")
+        .then(function(response) {
           me.email = response.data[0].companyEmail;
           me.address = response.data[0].companyAddress;
           me.phone = response.data[0].companyPhone;
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
         });
-    },
-    convert() {
-      let description1 = document.getElementById("description1");
-      let description2 = document.getElementById("description2");
-
-      description1.insertAdjacentHTML("afterbegin", this.service.description1);
-      description2.insertAdjacentHTML("afterbegin", this.service.description2);
     },
     initialize() {
       let me = this;
       axios
-        .get("services/query", { params: this.$route.params.slug })
-        .then(function (response) {
+        .get("services/service", { params: this.$route.params.slug })
+        .then(function(response) {
           me.service = response.data;
           console.log(me.service);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
         });
     },
@@ -161,8 +145,16 @@ export default {
     this.initialize();
     this.getSettings();
   },
-  updated() {
-    this.convert();
-  },
 };
 </script>
+<style>
+.ql-align-right {
+  text-align: right;
+}
+.ql-align-center {
+  text-align: center;
+}
+.ql-align-left {
+  text-align: left;
+}
+</style>

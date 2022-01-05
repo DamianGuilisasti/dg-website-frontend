@@ -9,7 +9,7 @@
           <div class="inner text-center">
             <span>LET'S GO TO THE NEXT LEVEL</span>
             <h2>Let's start working</h2>
-            <a class="rn-button-style--2" href="#contact"
+            <a class="rn-button-style--2" href="/#contact"
               ><span>Contact</span></a
             >
           </div>
