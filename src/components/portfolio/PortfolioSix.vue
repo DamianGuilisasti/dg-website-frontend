@@ -32,7 +32,7 @@
                 <router-link
                   class="rn-btn"
                   :to="`/portfolio-details/${item.slug}`"
-                  >View project details</router-link
+                  >Ver detalles</router-link
                 >
               </div>
             </div>

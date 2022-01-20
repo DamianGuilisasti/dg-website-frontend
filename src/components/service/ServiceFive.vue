@@ -9,9 +9,9 @@
       :key="i"
     >
       <div class="standard-service">
-        <div class="thumbnai">
-          <router-link :to="`/service-details/${service.slug}`">
-            <img :src="service.servicesimages[0].url" />
+        <div class="thumbnail">
+          <router-link :to="`/service-details/${service.slug}`"
+            ><img width="100%" :src="service.servicesimages[0].url" />
           </router-link>
         </div>
         <div class="content">
@@ -26,7 +26,7 @@
           <router-link
             class="btn-transparent rn-btn-dark"
             :to="`/service-details/${service.slug}`"
-            >Read More</router-link
+            >Me interesa</router-link
           >
         </div>
       </div>
@@ -41,3 +41,11 @@ export default {
   },
 };
 </script>
+<style scoped>
+.thumbnail img {
+  width: 100%;
+  background-size: cover;
+  object-fit: cover;
+  height: 400px;
+}
+</style>

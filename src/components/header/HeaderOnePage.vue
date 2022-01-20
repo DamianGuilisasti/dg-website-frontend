@@ -122,7 +122,7 @@
         </scrollactive>
 
         <a class="rn-btn" href="#contact">
-          <span>Contact</span>
+          <span>Contacto</span>
         </a>
       </v-toolbar-items>
       <!-- End header menu item -->
@@ -140,11 +140,11 @@ export default {
   data: () => ({
     drawer: false,
     items: [
-      { title: "Home", to: "/#home" },
-      { title: "About", to: "/#about" },
-      { title: "Services", to: "/#service" },
-      { title: "Work", to: "/#portfolio" },
-      { title: "Reviews", to: "/#testimonial" },
+      { title: "Inicio", to: "/#home" },
+      { title: "Nosotros", to: "/#about" },
+      { title: "Servicios", to: "/#service" },
+      { title: "Trabajo", to: "/#portfolio" },
+      { title: "Reseñas", to: "/#testimonial" },
     ],
     ServicesdropDownItems: [
       { title: "Pro Website", to: "/service" },

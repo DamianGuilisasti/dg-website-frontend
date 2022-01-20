@@ -7,7 +7,7 @@
           <i class="fas fa-phone"></i>
         </div>
         <div class="inner">
-          <h4 class="title">Phone</h4>
+          <h4 class="title">Teléfono</h4>
           <p>
             <a :href="`tel:${phone}`">{{ phone }}</a>
           </p>
@@ -39,7 +39,7 @@
           <i class="fas fa-map-marker-alt"></i>
         </div>
         <div class="inner">
-          <h4 class="title">Location</h4>
+          <h4 class="title">Dirección</h4>
           <p>{{ address }}</p>
         </div>
       </div>

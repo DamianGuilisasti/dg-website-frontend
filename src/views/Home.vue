@@ -19,25 +19,30 @@
     <!-- Start About Area  -->
 
     <!-- Start Service Area -->
-    <div class="section service-area ptb--80 bg_image bg_image--3" id="service">
-      <v-container>
+    <div
+      class="section service-area  bg_image bg_image--3  pl--15 pr--15 pt--80 pb--80"
+      id="service"
+    >
+      <v-container class="container" fluid>
         <v-row>
-          <v-col lg="4" cols="12">
+          <v-col lg="4" cols="12" style="align-self: center;">
             <div
               class="
                 section-title
-                text-left
-                mt--30
+                text-center
                 mt_md--5
                 mt_mobile--5
                 mb_mobile--10
               "
             >
-              <h2 class="heading-title">Services</h2>
-              <p>Quality, scalable, manageable and easy to use software.</p>
+              <h2 class="heading-title">¿Qué hacemos?</h2>
+              <p>
+                Ayudamos a comercios y empresas a obtener nuevos clientes y
+                promocionar sus productos o servicios en internet.
+              </p>
               <div class="service-btn">
                 <a class="btn-transparent rn-btn-dark" href="#contact"
-                  ><span class="text">Request a quote</span></a
+                  ><span class="text">Solicitar presupuesto</span></a
                 >
               </div>
             </div>
@@ -61,8 +66,8 @@
             <v-row>
               <v-col lg="12">
                 <div class="section-title text-center mb--20 mb_sm--0 mb_md--0">
-                  <h2 class="heading-title">Success Stories</h2>
-                  <p>Get to know some of the great things I’ve done</p>
+                  <h2 class="heading-title">Nuestro trabajo</h2>
+                  <p>Conozca algunas de las grandes cosas que hemos hecho.</p>
                 </div>
               </v-col>
             </v-row>
@@ -71,7 +76,7 @@
         </div>
         <div class="mt--50 text-center">
           <a class="rn-button-style--2 btn_solid" href="/portfolios"
-            >More Projects</a
+            >Ver todos los proyectos</a
           >
         </div>
       </div>
@@ -79,7 +84,7 @@
     <!-- End Portfolio Area -->
 
     <!-- Start Counterup Area -->
-    <div class="rn-counterup-area pt--25 pb--110 bg_color--1">
+    <!--     <div class="rn-counterup-area pt--25 pb--110 bg_color--1">
       <v-container>
         <v-row>
           <v-col cols="12" class="mt-15">
@@ -90,7 +95,7 @@
         </v-row>
         <Counter />
       </v-container>
-    </div>
+    </div> -->
     <!-- End Counterup Area -->
 
     <!-- Start Testimonial Area  -->
@@ -99,7 +104,10 @@
       id="testimonial"
     >
       <v-container>
-        <Testimonial />
+        <Testimonial
+          :testimonialContent="testimonialContent"
+          :tabItems="tabItems"
+        />
       </v-container>
     </div>
     <!-- Start Testimonial Area  -->
@@ -110,7 +118,7 @@
         <v-row>
           <v-col cols="12" class="mt-10">
             <div class="section-title text-center">
-              <h3 class="fontWeight500">Some Success Customers</h3>
+              <h3 class="fontWeight500">Clientes</h3>
             </div>
             <Brand :logos="logos" />
           </v-col>
@@ -202,6 +210,9 @@ export default {
       logos: [],
       portfolios: [],
       services: [],
+
+      testimonialContent: [],
+      tabItems: [],
     };
   },
   methods: {
@@ -211,6 +222,39 @@ export default {
         .get("logos")
         .then(function(response) {
           me.logos = response.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    getReviews() {
+      let me = this;
+      axios
+        .get("reviews")
+        .then(function(response) {
+          me.reviews = response.data;
+
+          me.reviews.forEach(function(review, index) {
+            console.log(review, index);
+            me.testimonialContent.push({
+              id: index,
+              content: [
+                {
+                  name: review.author,
+                  description: review.text,
+                  designation: review.company,
+                },
+              ],
+            });
+          });
+
+          me.reviews.forEach(function(review, index) {
+            console.log(review, index);
+            me.tabItems.push({
+              id: index,
+              src: review.logo.url,
+            });
+          });
         })
         .catch(function(error) {
           console.log(error);
@@ -260,6 +304,7 @@ export default {
     this.getLogos();
     this.getPortfolios();
     this.getServices();
+    this.getReviews();
   },
 };
 </script>

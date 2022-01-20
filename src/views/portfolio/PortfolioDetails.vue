@@ -12,7 +12,7 @@
           <v-col cols="12">
             <div class="rn-page-title text-center pt--100">
               <h2 class="heading-title theme-gradient">
-                {{ portfolio.client.lastname }} Project
+                Proyecto: {{ portfolio.client.lastname }}
               </h2>
               <p>
                 {{ portfolio.description }}
@@ -31,23 +31,23 @@
           <v-col>
             <div class="portfolio-details">
               <div class="inner">
-                <h2>Project Details</h2>
+                <h2>Detalles del proyecto</h2>
                 <p class="subtitle"></p>
-                <h3 v-if="portfolio.problem">Challenge</h3>
+                <h3 v-if="portfolio.problem">Desafío</h3>
                 <p>
                   {{ portfolio.problem }}
                 </p>
-                <h3 v-if="portfolio.solution">Solution</h3>
+                <h3 v-if="portfolio.solution">Solución</h3>
                 <p>
                   {{ portfolio.solution }}
                 </p>
                 <div class="portfolio-view-list d-flex flex-wrap">
                   <div class="port-view" v-if="portfolio.category">
-                    <h3>Category</h3>
+                    <h3>Categoría</h3>
                     <p>{{ portfolio.category.name }}</p>
                   </div>
                   <div class="port-view" v-if="portfolio.link">
-                    <h3>Project Link</h3>
+                    <h3>Link</h3>
                     <p>
                       <a :href="`${portfolio.link}`" target="_blank">{{
                         portfolio.link
@@ -55,12 +55,12 @@
                     </p>
                   </div>
                   <div class="port-view" v-if="portfolio.clientReview">
-                    <h3>Client Review</h3>
+                    <h3>Reseña</h3>
                     <p>{{ portfolio.clientReview }}</p>
                   </div>
 
                   <div class="port-view">
-                    <h3>Share on</h3>
+                    <h3>Compartir en</h3>
                     <div class="portfolio-share-link mt--20 pb--70 pb_sm--40">
                       <ul
                         class="
@@ -134,10 +134,8 @@
         <v-row>
           <v-col>
             <div class="section-title text-center">
-              <span class="theme-color font--18 fontWeight600"
-                >Related Work</span
-              >
-              <h2>More Projects</h2>
+              <span class="theme-color font--18 fontWeight600">Más proyectos</span>
+              <h2>Proyectos relacionados</h2>
             </div>
           </v-col>
         </v-row>
@@ -163,7 +161,7 @@
                 <h4>
                   <a :href="project.slug">{{ project.client.lastname }}</a>
                 </h4>
-                <span class="category">{{ project.category }}</span>
+                <span class="category">{{ project.category.name }}</span>
               </div>
             </div>
           </v-col>
@@ -207,10 +205,10 @@ export default {
       let me = this;
       axios
         .get("portfolios/portfolio", { params: this.$route.params.slug })
-        .then(function (response) {
+        .then(function(response) {
           me.portfolio = response.data;
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
         });
     },
@@ -218,12 +216,12 @@ export default {
       let me = this;
       console.log(this.portfolio);
       axios
-        .post("portfolio/relatedprojects", { slug: this.$route.params.slug })
-        .then(function (response) {
+        .post("portfolios/relatedprojects", { slug: this.$route.params.slug })
+        .then(function(response) {
           me.relatedProjects = response.data;
           console.log(me.relatedProjects);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
         });
     },
@@ -231,7 +229,7 @@ export default {
       let me = this;
       axios
         .get("settings")
-        .then(function (response) {
+        .then(function(response) {
           me.imageURL = response.data[0].logoURL.imageURL;
           me.email = response.data[0].companyEmail;
           me.address = response.data[0].companyAddress;
@@ -239,7 +237,7 @@ export default {
           me.about = response.data[0].aboutInfo;
           me.companyImg = response.data[0].companyImg.imageURL;
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
         });
     },
@@ -262,3 +260,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.related-work .thumb a img {
+  width: 100%;
+  background-size: cover;
+  -o-object-fit: cover;
+  object-fit: cover;
+  height: 400px;
+}
+</style>
