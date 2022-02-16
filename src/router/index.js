@@ -6,6 +6,7 @@ import PortfolioDetails from "../views/portfolio/PortfolioDetails";
 import ServiceDetails from "../views/services/ServiceDetail";
 import Portfolios from "../views/Portfolios";
 import ErrorPath from "../views/404";
+import Demo from "../views/Demo";
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const routes = [
     component: Layout,
     name: "Layout",
     children: [
+      {
+        path: "/demo",
+        component: Demo,
+        name: "Demo",
+      },
       {
         path: "/",
         component: Home,
@@ -34,7 +40,7 @@ const routes = [
         path: "/service-details/:slug",
         component: ServiceDetails,
         name: "ServiceDetails",
-        props: true
+        props: true,
       },
       {
         path: "*",

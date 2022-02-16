@@ -29,37 +29,64 @@
 </template>
 
 <script>
-  import feather from "feather-icons";
-  export default {
-    data() {
-      return {
-        serviceContent: [
-          {
-            icon: "cast",
-            title: "Business Stratagy",
-            desc: ` I throw myself down among the tall grass by the stream as I lie
-                close to the earth.`,
-          },
-          {
-            icon: "layers",
-            title: "Website Development",
-            desc: ` I throw myself down among the tall grass by the stream as I lie
-                close to the earth.`,
-          },
-          {
-            icon: "cast",
-            title: "Marketing & Reporting",
-            desc: ` I throw myself down among the tall grass by the stream as I lie
-                close to the earth.`,
-          },
-        ],
-      };
-    },
+import feather from "feather-icons";
+export default {
+  data() {
+    return {
+      serviceContent: [
+        {
+          icon: "check",
+          title: "Autoadministrable",
+          desc: ` Administra toda tu página web con unos pocos clicks, sin necesidad de un programador.`,
+        },
+        {
+          icon: "check",
+          title: "Tecnologías modernas",
+          desc: ` Software desarrollado con las últimas y mejores tecnologías del mercado.`,
+        },
+        {
+          icon: "check",
+          title: "Compatible con smartphones",
+          desc: ` Tu página web estará disponible en todos los dispositivos móviles y tablets.`,
+        },
+        {
+          icon: "check",
+          title: "Velocidad",
+          desc: ` Software optimizado para que tu página web cargue lo más rápido posible.`,
+        },
+        {
+          icon: "check",
+          title: "Seguridad",
+          desc: ` Nuestro software utiliza los mejores standares de seguridad y además cuenta con SSL.`,
+        },
+        {
+          icon: "check",
+          title: "Subido a la Nube",
+          desc: ` Tu página web estará en la nube, en AWS, el mejor proovedor de servicios en la nube.`,
+        },
+        {
+          icon: "check",
+          title: "Portafolio",
+          desc: ` Exhibe todo tu talento con una página web de portafolios. Muestra tus proyectos realizados a todos tus potenciales clientes.`,
+        },
+        {
+          icon: "check",
+          title: "Presupuestos",
+          desc: ` Crea presupuestos para tus clientes en tan solo segundos. Podrás también editarlos o eliminarlos si lo deseas.`,
+        },
+        {
+          icon: "check",
+          title: "Administración de clientes",
+          desc: ` Administra a todos tus clientes, su información y sus servicios en un solo lugar.`,
+        },
+      ],
+    };
+  },
 
-    methods: {
-      iconSvg(icon) {
-        return feather.icons[icon].toSvg();
-      },
+  methods: {
+    iconSvg(icon) {
+      return feather.icons[icon].toSvg();
     },
-  };
+  },
+};
 </script>

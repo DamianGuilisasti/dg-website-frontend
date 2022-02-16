@@ -31,54 +31,48 @@
 </template>
 
 <script>
-  import feather from "feather-icons";
-  export default {
-    data() {
-      return {
-        serviceContent: [
-          {
-            icon: "cast",
-            title: "Business Stratagy",
-            desc: ` I throw myself down among the tall grass by the stream as I lie
-                close to the earth.`,
-          },
-          {
-            icon: "layers",
-            title: "Website Development",
-            desc: ` I throw myself down among the tall grass by the stream as I lie
-                close to the earth.`,
-          },
-          {
-            icon: "users",
-            title: "Marketing & Reporting",
-            desc: `I throw myself down among the tall grass by the stream as I lie
-                close to the earth.`,
-          },
-          {
-            icon: "monitor",
-            title: "Mobile Development",
-            desc: `I throw myself down among the tall grass by the stream as I lie
-                close to the earth.`,
-          },
-          {
-            icon: "users",
-            title: "Marketing & Reporting",
-            desc: `I throw myself down among the tall grass by the stream as I lie
-                close to the earth.`,
-          },
-          {
-            icon: "monitor",
-            title: "Mobile Development",
-            desc: ` I throw myself down among the tall grass by the stream as I lie
-                close to the earth.`,
-          },
-        ],
-      };
+import feather from "feather-icons";
+export default {
+  data() {
+    return {
+      serviceContent: [
+        {
+          icon: "truck",
+          title: "Blog",
+          desc: ` Crea, actualiza y elimina publicaciones. Muestrale al mundo todo tu potencial de manera super fácil.`,
+        },
+        {
+          icon: "truck",
+          title: "Formulario de contacto",
+          desc: ` Permíteles a tus clientes completar un formulario de contacto para contactarte vía mail.`,
+        },
+        {
+          icon: "truck",
+          title: "Mapa de Google",
+          desc: `Muestra la ubicación exacta de tu negocio y cómo llegar hasta el.`,
+        },
+        {
+          icon: "truck",
+          title: "Sección Equipo",
+          desc: `Muestra a tus clientes todo tu equipo de trabajo.`,
+        },
+        {
+          icon: "truck",
+          title: "Idiomas",
+          desc: `Muestrale al mundo tu negocio en diferentes idiomas, no te pierdas de ningún cliente.`,
+        },
+        {
+          icon: "truck",
+          title: "Sección Productos",
+          desc: ` Podrás cargar, modificar o eliminar productos y mostrarlos en tu página web.`,
+        },
+      ],
+    };
+  },
+  methods: {
+    iconSvg(icon) {
+      return feather.icons[icon].toSvg();
     },
-    methods: {
-      iconSvg(icon) {
-        return feather.icons[icon].toSvg();
-      },
-    },
-  };
+  },
+};
 </script>

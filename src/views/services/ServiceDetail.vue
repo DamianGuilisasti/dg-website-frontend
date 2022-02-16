@@ -20,7 +20,7 @@
     </div>
     <!-- End Breadcrump Area  -->
 
-    <div class="rn-service-details rn-section-gap bg_color--1">
+    <div class="rn-service-details rn-section-gap bg_color--1" v-if="service.description.length > 0">
       <v-container>
         <v-row>
           <v-col lg="12">
@@ -58,9 +58,13 @@
     <div
       class="section rn-testimonial-area rn-section-gap bg_color--5"
       id="testimonial"
+      v-if="testimonialContent.length > 0"
     >
       <v-container>
-        <ServiceTestimonial />
+        <Testimonial
+          :testimonialContent="testimonialContent"
+          :tabItems="tabItems"
+        />
       </v-container>
     </div>
     <!-- Start Testimonial Area  -->
@@ -89,15 +93,17 @@
 import axios from "axios";
 import CallToAction from "../../components/callto-action/CallToAction";
 import Contact from "../../components/contact/ContactAddress";
-import ServiceTestimonial from "../../components/testimonial/ServiceTestimonial";
+import Testimonial from "../../components/testimonial/Testimonial";
 export default {
   components: {
     CallToAction,
     Contact,
-    ServiceTestimonial,
+    Testimonial,
   },
   data() {
     return {
+      testimonialContent: [],
+      tabItems: [],
       index: null,
       phone: "",
       email: "",
@@ -114,6 +120,37 @@ export default {
   },
 
   methods: {
+    getReviews() {
+      let me = this;
+      axios
+        .get("reviews")
+        .then(function(response) {
+          me.reviews = response.data;
+
+          me.reviews.forEach(function(review, index) {
+            me.testimonialContent.push({
+              id: index,
+              content: [
+                {
+                  name: review.author,
+                  description: review.text,
+                  designation: review.company,
+                },
+              ],
+            });
+          });
+
+          me.reviews.forEach(function(review, index) {
+            me.tabItems.push({
+              id: index,
+              src: review.logo.url,
+            });
+          });
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
     getSettings() {
       let me = this;
       axios
@@ -144,6 +181,7 @@ export default {
     window.scrollTo(0, 0);
     this.initialize();
     this.getSettings();
+    this.getReviews();
   },
 };
 </script>

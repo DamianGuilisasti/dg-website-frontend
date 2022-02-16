@@ -7,7 +7,11 @@
     <!-- End Slider Area -->
 
     <!-- Start About Area  -->
-    <div class="section about-area rn-section-gap bg_color--1" id="about">
+    <div
+      class="section about-area rn-section-gap bg_color--1"
+      id="about"
+      v-if="about.length > 0"
+    >
       <div class="about-wrapper">
         <v-container>
           <About :about="about">
@@ -22,6 +26,7 @@
     <div
       class="section service-area  bg_image bg_image--3  pl--15 pr--15 pt--80 pb--80"
       id="service"
+      v-if="services.length > 0"
     >
       <v-container class="container" fluid>
         <v-row>
@@ -35,11 +40,11 @@
                 mb_mobile--10
               "
             >
-              <h2 class="heading-title">¿Qué hacemos?</h2>
+              <h2 class="heading-title">Servicios</h2>
               <p>
-                Ayudamos a comercios y empresas a obtener nuevos clientes y
-                promocionar sus productos o servicios en internet.
+                "La calidad es el único camino para el crecimiento".
               </p>
+              <!--- //aca -->
               <div class="service-btn">
                 <a class="btn-transparent rn-btn-dark" href="#contact"
                   ><span class="text">Solicitar presupuesto</span></a
@@ -66,8 +71,10 @@
             <v-row>
               <v-col lg="12">
                 <div class="section-title text-center mb--20 mb_sm--0 mb_md--0">
-                  <h2 class="heading-title">Nuestro trabajo</h2>
-                  <p>Conozca algunas de las grandes cosas que hemos hecho.</p>
+                  <h2 class="heading-title">Proyectos</h2>
+                  <p>
+                    "Un cliente satisfecho es la mejor estrategia de negocio".
+                  </p>
                 </div>
               </v-col>
             </v-row>
@@ -75,8 +82,8 @@
           <Portfolios :portfolios="portfolios" />
         </div>
         <div class="mt--50 text-center">
-          <a class="rn-button-style--2 btn_solid" href="/portfolios"
-            >Ver todos los proyectos</a
+          <router-link class="rn-button-style--2 btn_solid" :to="`/portfolios`">
+            Ver todos los proyectos</router-link
           >
         </div>
       </div>
@@ -102,6 +109,7 @@
     <div
       class="section rn-testimonial-area rn-section-gap bg_color--5"
       id="testimonial"
+      v-if="testimonialContent.length > 0"
     >
       <v-container>
         <Testimonial
@@ -154,7 +162,7 @@
     <!-- End Blog Area  -->
 
     <!-- Start Call to action Area  -->
-    <CallToAction />
+    <CallToAction v-if="calltoactions[0].backgroundImg.url > 0" />
     <!-- End Call to action Area  -->
 
     <!-- Start Contact Area  -->
@@ -210,9 +218,9 @@ export default {
       logos: [],
       portfolios: [],
       services: [],
-
       testimonialContent: [],
       tabItems: [],
+      calltoactions: [],
     };
   },
   methods: {
@@ -227,6 +235,17 @@ export default {
           console.log(error);
         });
     },
+    getCallToActions() {
+      let me = this;
+      axios
+        .get("calltoactions")
+        .then(function(response) {
+          me.calltoactions = response.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
     getReviews() {
       let me = this;
       axios
@@ -235,7 +254,6 @@ export default {
           me.reviews = response.data;
 
           me.reviews.forEach(function(review, index) {
-            console.log(review, index);
             me.testimonialContent.push({
               id: index,
               content: [
@@ -249,7 +267,6 @@ export default {
           });
 
           me.reviews.forEach(function(review, index) {
-            console.log(review, index);
             me.tabItems.push({
               id: index,
               src: review.logo.url,
@@ -305,6 +322,7 @@ export default {
     this.getPortfolios();
     this.getServices();
     this.getReviews();
+    this.getCallToActions();
   },
 };
 </script>

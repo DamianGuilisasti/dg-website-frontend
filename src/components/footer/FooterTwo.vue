@@ -75,10 +75,9 @@
           <div class="inner text-center mt_md--20 mt_sm--20">
             <div class="text">
               <p>
-                © {{ new Date().getFullYear() }}
-                <a target="_blank" href="https://damianguilisasti.com.ar">{{
-                  companyName
-                }}</a
+                {{ companyName }} © {{ new Date().getFullYear() }} - Powered by
+                <a target="_blank" href="https://damianguilisasti.com.ar">
+                  Damián Guilisasti</a
                 >.
               </p>
             </div>
@@ -106,12 +105,12 @@ export default {
       let me = this;
       axios
         .get("settings")
-        .then(function (response) {
+        .then(function(response) {
           me.socialMedia = response.data[0].socialMedia;
           me.imageURL = response.data[0].logoURL.imageURL;
           me.companyName = response.data[0].companyName;
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
         });
     },

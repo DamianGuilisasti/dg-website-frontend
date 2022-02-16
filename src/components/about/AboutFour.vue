@@ -8,7 +8,7 @@
     <v-col lg="7" md="7" cols="12">
       <div class="about-inner inner pt_sm--40 pt_md--40">
         <div class="section-title">
-          <h2 class="heading-title">¿Quiénes somos?</h2>
+          <h2 class="heading-title">Sobre mi</h2>
           <p style="align-self: center;" v-html="about"></p>
         </div>
         <!-- End .section-title -->

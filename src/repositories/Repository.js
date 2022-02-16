@@ -1,22 +1,11 @@
-import axios from 'axios';
-
-//const baseDomain = 'https://beta.apinouthemes.com'; // Change your API here
-const baseDomain = 'http://localhost:1337'; // Change your API here
+import axios from "axios";
 
 export const customHeaders = {
-    'Content-Type': 'application/json',
-    Accept: 'application/json'
+  "Content-Type": "application/json",
+  Accept: "application/json",
 };
 
-export const baseUrl = `${baseDomain}`;
+axios.defaults.baseURL = "http://localhost:4000/api";
+axios.defaults.headers = customHeaders;
 
-export default axios.create({
-    baseUrl,
-    headers: customHeaders
-});
-
-export const serializeQuery = query => {
-    return Object.keys(query)
-        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(query[key])}`)
-        .join('&');
-};
+export default axios;

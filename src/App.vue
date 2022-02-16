@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
     <v-main>
       <router-view></router-view>
     </v-main>

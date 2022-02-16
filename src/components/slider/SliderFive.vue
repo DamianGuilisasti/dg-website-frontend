@@ -13,11 +13,12 @@
           fullscreen
           bg_image
         "
-        data-black-overlay="5"
+        data-black-overlay="7" 
         v-for="slider in sliders"
         :key="slider._id"
         :style="{ backgroundImage: 'url(' + slider.sliderImg.url + ')' }"
       >
+      <!-- //aca -->
         <v-container>
           <v-row>
             <v-col cols="12">

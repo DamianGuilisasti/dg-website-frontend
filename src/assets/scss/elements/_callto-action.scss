@@ -3,7 +3,7 @@ Call To Action Wrapper
 -----------------------------*/ 
 
 .call-to-action {
-    background: linear-gradient(145deg, #f81f01 0%, #ee076e 100%);
+    //background: linear-gradient(145deg, #f81f01 0%, #ee076e 100%);
     position: relative;
     z-index: 2;
     &::before {
@@ -12,7 +12,7 @@ Call To Action Wrapper
         height: 100%;
         left: 0;
         top: 0;
-        background-image: url(../images/pattern-1.png);
+        //background-image: url(../images/pattern-1.png);
         background-repeat: repeat;
         content: "";
         z-index: -1;

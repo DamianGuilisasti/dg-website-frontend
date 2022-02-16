@@ -49,7 +49,7 @@ export default {
           me.dataId = response.data[0]._id;
           if (response.data.length == 0) {
             axios
-              .post("settings/add", {
+              .post("settings", {
                 aboutInfo: "",
                 companyName: "",
                 companyPhone: "",

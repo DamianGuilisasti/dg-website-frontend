@@ -18,17 +18,17 @@
         <v-list>
           <v-list-item
             :ripple="false"
-            v-for="item in items"
-            :key="item.title"
-            :to="item.to"
+            v-for="item in menus"
+            :key="item.name"
+            :to="item.link"
             link
             class="scrollactive-item"
           >
             <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
+              <v-list-item-title>{{ item.name }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          
+
           <!-- End mobile menu sidebar item list -->
         </v-list>
       </scrollactive>
@@ -62,14 +62,14 @@
           bezier-easing-value=".5,0,.35,1"
         >
           <v-btn
-            v-for="item in items"
-            :key="item.title"
-            :to="item.to"
+            v-for="item in menus"
+            :key="item.name"
+            :to="item.link"
             link
             :ripple="false"
             text
             class="scrollactive-item"
-            >{{ item.title }}</v-btn
+            >{{ item.name }}</v-btn
           >
           <!--           <v-menu
             open-on-hover
@@ -121,9 +121,9 @@
           </v-menu> -->
         </scrollactive>
 
-        <a class="rn-btn" href="#contact">
+<!--         <a class="rn-btn" href="/#contact">
           <span>Contacto</span>
-        </a>
+        </a> -->
       </v-toolbar-items>
       <!-- End header menu item -->
     </v-app-bar>
@@ -132,16 +132,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import feather from "feather-icons";
 export default {
-    props: {
+  props: {
     imageURL: String,
   },
   data: () => ({
     drawer: false,
     items: [
-      { title: "Inicio", to: "/#home" },
-      { title: "Nosotros", to: "/#about" },
+      { title: "Inicio2", to: "/#home" },
+      { title: "Sobre mi", to: "/#about" },
       { title: "Servicios", to: "/#service" },
       { title: "Trabajo", to: "/#portfolio" },
       { title: "Reseñas", to: "/#testimonial" },
@@ -157,6 +158,14 @@ export default {
     iconSvg(icon) {
       return feather.icons[icon].toSvg();
     },
+  },
+  computed: {
+    ...mapGetters("menus", ["menus"]),
+  },
+  async created() {
+    await this.$store.dispatch("menus/getMenus", null, {
+      root: true,
+    });
   },
 };
 </script>

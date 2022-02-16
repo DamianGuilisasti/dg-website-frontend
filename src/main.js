@@ -6,7 +6,7 @@ import vuetify from "./plugins/vuetify";
 import axios from "axios";
 import CoolLightBox from "vue-cool-lightbox";
 import VueScrollactive from "vue-scrollactive";
-import VueSocialSharing from 'vue-social-sharing'
+import VueSocialSharing from "vue-social-sharing";
 import "vue-slick-carousel/dist/vue-slick-carousel.css";
 import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -19,13 +19,12 @@ Vue.use(CoolLightBox);
 Vue.use(VueScrollactive);
 Vue.use(VueSocialSharing);
 
-/* if (process.env.NODE_ENV == "development") {
-  axios.defaults.baseURL = "http://localhost:4000/api";
-} else {
-  axios.defaults.baseURL = "/api";
-} */
+const { APP_API_URL, NODE_ENV } = process.env;
 
-axios.defaults.baseURL = "http://localhost:4000/api";
+const connectionString =
+  NODE_ENV === "production" ? APP_API_URL : "http://localhost:4000/api";
+
+axios.defaults.baseURL = connectionString;
 
 new Vue({
   router,
