@@ -1,8 +1,26 @@
 <template>
   <div>
+    <video-background
+      v-if="
+        settings[0].isBackgroundVideoActivated &&
+          settings[0].videobackground.url
+      "
+      class="video-background"
+      :src="settings[0].videobackground.url"
+      :poster="settings[0].backgroundVideoImage.url"
+      overlay="linear-gradient(180deg,#0000009b,#0000009b)"
+    >
+      <img
+        width="400"
+        :src="settings[0].logoURL.imageURL"
+        class="logoImg"
+        v-if="settings[0]"
+      />
+    </video-background>
+
     <VueSlickCarousel
-      v-if="sliders"
-      v-bind="settings"
+      v-if="sliders.length > 0 && !settings[0].isBackgroundVideoActivated"
+      v-bind="carouselSettings"
       class="rn-slider-area slider-activation rn-slick-dot dot-light mb--0"
     >
       <div
@@ -13,12 +31,11 @@
           fullscreen
           bg_image
         "
-        data-black-overlay="7" 
+        :data-black-overlay="settings[0].sliderOverlayLevel"
         v-for="slider in sliders"
         :key="slider._id"
         :style="{ backgroundImage: 'url(' + slider.sliderImg.url + ')' }"
       >
-      <!-- //aca -->
         <v-container>
           <v-row>
             <v-col cols="12">
@@ -42,26 +59,19 @@
           </v-row>
         </v-container>
       </div>
-      <!-- End Single Slide  -->
     </VueSlickCarousel>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import VueSlickCarousel from "vue-slick-carousel";
-import axios from "axios";
 
 export default {
   components: { VueSlickCarousel },
   data() {
     return {
-      sliders: [
-        {
-          title: "",
-          subtitle: "",
-        },
-      ],
-      settings: {
+      carouselSettings: {
         fade: true,
         dots: true,
         arrows: true,
@@ -73,21 +83,17 @@ export default {
       },
     };
   },
-  methods: {
-    getSliders() {
-      let me = this;
-      axios
-        .get("sliders")
-        .then(function(response) {
-          me.sliders = response.data;
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    },
+  computed: {
+    ...mapGetters("sliders", ["sliders"]),
+    ...mapGetters("settings", ["settings"]),
   },
-  created() {
-    this.getSliders();
+  async created() {
+    await this.$store.dispatch("sliders/getSliders", null, {
+      root: true,
+    });
+    await this.$store.dispatch("settings/getSettings", null, {
+      root: true,
+    });
   },
 };
 </script>
@@ -98,5 +104,15 @@ export default {
     display: block;
     width: 100%;
   }
+}
+.logoImg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.video-background {
+  width: 100vw;
+  height: 100vh;
 }
 </style>

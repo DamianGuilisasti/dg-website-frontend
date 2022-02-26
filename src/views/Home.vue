@@ -6,6 +6,108 @@
     </div>
     <!-- End Slider Area -->
 
+    <!-- Start Service Area  -->
+    <div class="rn-service-area rn-section-gap bg_color--1" id="service">
+      <v-container>
+        <v-row>
+          <v-col lg="8">
+            <div class="feature-area">
+              <span>FUTURE HOUSE</span>
+              <h3 class="heading-title mt--20 fontWeight500 lineheight--1-8">
+                What you look your hopefull house we can be made it for yours.
+                We can be design yours house so dont woory you can hire us.
+                Beautiful and hand made design we can be create.
+              </h3>
+            </div>
+          </v-col>
+        </v-row>
+        <ServiceSix class="interior-services" />
+      </v-container>
+    </div>
+    <!-- Start Service Area  -->
+
+    <!-- Start Content Box  -->
+    <div
+      v-if="portfolios.length > 0"
+      class="rn-content-box-area rn-content-box-style--1 bg_color--1"
+      id="about"
+    >
+      <v-row class="row--0" align="center">
+        <v-col lg="6" md="12" cols="12">
+          <div class="thumbnail">
+            <div class="slick-space-gutter--15">
+              <VueSlickCarousel
+                v-bind="settings"
+                class="rn-slider-area slider-activation rn-slick-dot dot-light mb--0"
+              >
+                <!-- Start Single Portfolio  -->
+                <div
+                  class="portfolio mt--30 mb--20"
+                  v-for="(item, i) in portfolios"
+                  :key="i"
+                >
+                  <div class="thumbnail-inner">
+                    <v-img
+                      class="thumbnail"
+                      :src="item.portfolioimages[0].url"
+                    ></v-img>
+                    <v-img
+                      class="bg-blr-image"
+                      :src="item.portfolioimages[0].url"
+                    ></v-img>
+                  </div>
+                  <div class="content">
+                    <div class="inner">
+                      <p>{{ item.category.name }}</p>
+                      <h4>
+                        <router-link to="portfolio-details">{{
+                          item.name
+                        }}</router-link>
+                      </h4>
+                      <div class="portfolio-button">
+                        <router-link
+                          class="rn-btn"
+                          :to="`/portfolio-details/${item.slug}`"
+                          >Ver proyecto</router-link
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Single Portfolio  -->
+              </VueSlickCarousel>
+            </div>
+          </div>
+        </v-col>
+        <!-- End .v-col -->
+        <v-col md="12" lg="6" cols="12" class="mt_lg--50 mt_md--30 mt_sm--30">
+          <div class="content">
+            <p class="subtitle"><span>Modern</span> Design For Interior</p>
+            <h2 class="fontWeight500">
+              Provide a Modern Design For Your Home and Office
+            </h2>
+            <p>
+              Uniq interior design provide for your home. you can be create as
+              you like. Our modern designer provide as you are like. A interior
+              designer can build your design and fullfile your demand.Uniq
+              interior design provide for your home. you can be create as you
+              like. Our modern designer provide as you are like. A interior
+              designer can build your design and fullfile your demand
+            </p>
+            <ul class="list-style mt--30">
+              <li>Yet this above sewed flirted opened ouch</li>
+              <li>Goldfinch realistic sporadic ingenuous</li>
+              <li>Abominable this abidin far successfully then like piquan</li>
+              <li>Risus commodo viverra</li>
+              <li>Lorem ipsum dolor sit amet, consectetur adipiscing</li>
+            </ul>
+          </div>
+        </v-col>
+        <!-- End .col -->
+      </v-row>
+    </div>
+    <!-- Start Content Box -->
+
     <!-- Start About Area  -->
     <div
       class="section about-area rn-section-gap bg_color--1"
@@ -41,10 +143,6 @@
               "
             >
               <h2 class="heading-title">Servicios</h2>
-              <p>
-                "La calidad es el único camino para el crecimiento".
-              </p>
-              <!--- //aca -->
               <div class="service-btn">
                 <a class="btn-transparent rn-btn-dark" href="#contact"
                   ><span class="text">Solicitar presupuesto</span></a
@@ -61,7 +159,7 @@
     <!-- End Service Area -->
 
     <!-- Start Portfolio Area -->
-    <v-container fluid v-if="portfolios.length > 0">
+<!--     <v-container fluid v-if="portfolios.length > 0">
       <div
         class="section rn-portfolio-area rn-section-gap bg_color--1"
         id="portfolio"
@@ -72,9 +170,6 @@
               <v-col lg="12">
                 <div class="section-title text-center mb--20 mb_sm--0 mb_md--0">
                   <h2 class="heading-title">Proyectos</h2>
-                  <p>
-                    "Un cliente satisfecho es la mejor estrategia de negocio".
-                  </p>
                 </div>
               </v-col>
             </v-row>
@@ -87,7 +182,7 @@
           >
         </div>
       </div>
-    </v-container>
+    </v-container> -->
     <!-- End Portfolio Area -->
 
     <!-- Start Counterup Area -->
@@ -162,7 +257,7 @@
     <!-- End Blog Area  -->
 
     <!-- Start Call to action Area  -->
-    <CallToAction v-if="calltoactions[0].backgroundImg.url > 0" />
+    <CallToAction v-if="calltoactions > 0" />
     <!-- End Call to action Area  -->
 
     <!-- Start Contact Area  -->
@@ -193,6 +288,8 @@ import Blog from "../components/blog/Blog";
 import Brand from "../components/brand/Brand";
 import Contact from "../components/contact/ContactAddress";
 import CallToAction from "../components/callto-action/CallToAction";
+import ServiceSix from "../components/service/ServiceSix";
+import VueSlickCarousel from "vue-slick-carousel";
 
 export default {
   components: {
@@ -206,9 +303,79 @@ export default {
     Brand,
     CallToAction,
     Contact,
+    ServiceSix,
+    VueSlickCarousel,
   },
   data() {
     return {
+      portfolioContent: [
+        {
+          src: require("../assets/images/portfolio/portfolio-2.jpg"),
+          meta: "Development",
+          title: "Getting tickets to the big show",
+        },
+        {
+          src: require("../assets/images/portfolio/portfolio-5.jpg"),
+          meta: "Development",
+          title: "Getting tickets to the big show bayazid",
+        },
+        {
+          src: require("../assets/images/portfolio/portfolio-6.jpg"),
+          meta: "Development",
+          title: "Getting tickets to the big show iqra",
+        },
+        {
+          src: require("../assets/images/portfolio/portfolio-7.jpg"),
+          meta: "Development",
+          title: "Getting tickets to the big show",
+        },
+        {
+          src: require("../assets/images/portfolio/portfolio-8.jpg"),
+          meta: "Development",
+          title: "Getting tickets to the big show",
+        },
+      ],
+      // for all works
+      settings: {
+        fade: false,
+        arrows: true,
+        dots: false,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        spaceBetween: 0,
+
+        responsive: [
+          {
+            breakpoint: 890,
+            settings: {
+              arrows: true,
+              slidesToShow: 3,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: true,
+            },
+          },
+          {
+            breakpoint: 770,
+            settings: {
+              arrows: true,
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: true,
+            },
+          },
+          {
+            breakpoint: 490,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              initialSlide: 1,
+            },
+          },
+        ],
+      },
       imageURL: "",
       email: "",
       address: "",
@@ -314,6 +481,11 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
+    },
+  },
+  computed: {
+    calltoactions() {
+      return this.calltoactions[0].backgroundImg.url;
     },
   },
   created() {

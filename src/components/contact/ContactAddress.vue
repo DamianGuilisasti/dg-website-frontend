@@ -1,5 +1,5 @@
 <template>
-  <v-row class="mt_dec--40" justify="center">
+  <v-row justify="center">
     <!-- Start Single Address  -->
     <v-col lg="4" md="4" sm="6" cols="12" class="mt--40" v-if="phone">
       <div class="rn-address">

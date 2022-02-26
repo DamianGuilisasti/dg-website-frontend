@@ -12,6 +12,7 @@ import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "vue-cool-lightbox/dist/vue-cool-lightbox.min.css";
 import "./assets/scss/main.scss";
+import VideoBackground from "vue-responsive-video-background-player";
 
 Vue.config.productionTip = false;
 
@@ -19,10 +20,12 @@ Vue.use(CoolLightBox);
 Vue.use(VueScrollactive);
 Vue.use(VueSocialSharing);
 
-const { APP_API_URL, NODE_ENV } = process.env;
+Vue.component("video-background", VideoBackground);
+
+const { NODE_ENV } = process.env;
 
 const connectionString =
-  NODE_ENV === "production" ? APP_API_URL : "http://localhost:4000/api";
+  NODE_ENV === "development" ? "http://localhost:4000/api" : "/api";
 
 axios.defaults.baseURL = connectionString;
 

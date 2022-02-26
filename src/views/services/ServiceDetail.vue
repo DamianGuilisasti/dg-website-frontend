@@ -20,7 +20,10 @@
     </div>
     <!-- End Breadcrump Area  -->
 
-    <div class="rn-service-details rn-section-gap bg_color--1" v-if="service.description.length > 0">
+    <div
+      class="rn-service-details rn-section-gap bg_color--1"
+      v-if="service.description.length > 0"
+    >
       <v-container>
         <v-row>
           <v-col lg="12">
@@ -70,7 +73,7 @@
     <!-- Start Testimonial Area  -->
 
     <!-- Start Call to action Area  -->
-    <CallToAction />
+    <CallToAction v-if="calltoactions[0].backgroundImg.url > 0" />
     <!-- End Call to action Area  -->
 
     <!-- Start Contact Area -->
@@ -102,6 +105,7 @@ export default {
   },
   data() {
     return {
+      calltoactions: [],
       testimonialContent: [],
       tabItems: [],
       index: null,
@@ -120,6 +124,17 @@ export default {
   },
 
   methods: {
+    getCallToActions() {
+      let me = this;
+      axios
+        .get("calltoactions")
+        .then(function(response) {
+          me.calltoactions = response.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
     getReviews() {
       let me = this;
       axios
@@ -182,6 +197,7 @@ export default {
     this.initialize();
     this.getSettings();
     this.getReviews();
+    this.getCallToActions();
   },
 };
 </script>

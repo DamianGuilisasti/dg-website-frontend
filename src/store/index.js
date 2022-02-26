@@ -4,6 +4,74 @@ import Repository from "../repositories/Repository";
 
 Vue.use(Vuex);
 
+const sliders = {
+  namespaced: true,
+  state: {
+    sliders: [
+      {
+        title: "",
+        subtitle: "",
+        sliderImg: {
+          public_id: "",
+          url: "",
+        },
+        buttonText: "",
+        buttonURL: "",
+      },
+    ],
+  },
+  mutations: {
+    setSliders(state, payload) {
+      state.sliders = payload;
+    },
+  },
+  actions: {
+    async getSliders({ commit }, payload) {
+      const response = await Repository.get(`/sliders`, {
+        headers: { token: this.state.token },
+      });
+      commit("setSliders", response.data);
+    },
+  },
+  getters: {
+    sliders: (state) => {
+      return state.sliders;
+    },
+  },
+};
+
+const settings = {
+  namespaced: true,
+  state: {
+    settings: [
+      {
+        videobackground: {
+          public_id: "",
+          url: "",
+        },
+      },
+    ],
+  },
+  mutations: {
+    setSettings(state, payload) {
+      state.settings = payload;
+    },
+  },
+  actions: {
+    async getSettings({ commit }, payload) {
+      const response = await Repository.get(`/settings`, {
+        headers: { token: this.state.token },
+      });
+      commit("setSettings", response.data);
+    },
+  },
+  getters: {
+    settings: (state) => {
+      return state.settings;
+    },
+  },
+};
+
 const calltoactions = {
   namespaced: true,
   state: { calltoactions: [] },
@@ -129,5 +197,7 @@ export default new Vuex.Store({
   modules: {
     menus: menus,
     calltoactions: calltoactions,
+    settings: settings,
+    sliders: sliders,
   },
 });
