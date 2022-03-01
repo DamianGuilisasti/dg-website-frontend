@@ -8,7 +8,7 @@ Footer Styles
 
 .footer-default {
     .footer-left {
-        background: linear-gradient(145deg, #f81f01 0%, #ee076e 100%);
+        background: linear-gradient(145deg, var(--primary-color) 0%, var(--secondary-color) 100%);
         padding: 120px 120px;
         position: relative;
         z-index: 2;

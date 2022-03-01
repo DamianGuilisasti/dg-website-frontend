@@ -33,6 +33,7 @@
                     <a :href="`/portfolio-details/${item.slug}`">
                       <v-img
                         :src="item.portfolioimages[0].url"
+                        :lazy-src="item.portfolioimages[0].url"
                         height="500px"
                         width="auto"
                         alt="portfolio image"

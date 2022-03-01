@@ -54,7 +54,7 @@ export default {
   line-height: 48px;
   font-size: 22px;
   font-weight: 600;
-  color: #f9004d;
+  color: var(--primary-color);
 }
 .v-btn--absolute.v-btn--bottom,
 .v-btn--fixed.v-btn--bottom {

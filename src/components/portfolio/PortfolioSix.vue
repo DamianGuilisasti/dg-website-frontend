@@ -14,10 +14,15 @@
       <div class="Tilt-inner">
         <div class="portfolio">
           <div class="thumbnail-inner">
-            <v-img class="thumbnail" :src="item.portfolioimages[0].url"></v-img>
+            <v-img
+              class="thumbnail"
+              :src="item.portfolioimages[0].url"
+              :lazy-src="item.portfolioimages[0].url"
+            ></v-img>
             <v-img
               class="bg-blr-image"
               :src="item.portfolioimages[0].url"
+              :lazy-src="item.portfolioimages[0].url"
             ></v-img>
           </div>
           <div class="content">

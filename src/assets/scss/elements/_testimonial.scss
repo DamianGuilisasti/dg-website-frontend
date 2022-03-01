@@ -200,7 +200,7 @@ Testimonial Thumbnail
                     &::after {
                         width: 13px;
                         height: 13px;
-                        background: #f9004d;
+                        background: var(--primary-color);
                         right: -8.5px;
                         top: -8.5px;
                         position: absolute;
@@ -297,7 +297,7 @@ Testimonial Thumbnail
         &::after{
             width: 13px;
             height: 13px;
-            background: #f9004d;
+            background: var(--primary-color);
             right: -5px;
             top: -5px;
             position: absolute;

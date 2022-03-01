@@ -175,7 +175,7 @@
         border-color: #fff transparent transparent transparent;
     }
     .header-area .header-wrapper .mainmenunav ul.mainmenu li.has-droupdown>a.open::after {
-        border-color: transparent transparent #f9004d transparent;
+        border-color: transparent transparent var(--primary-color) transparent;
     }
     ul.nav.tab-style--1 li a::before {
         background: rgba(198, 201, 216, .75);

@@ -12,8 +12,12 @@
     >
       <div class="portfolio">
         <div class="thumbnail-inner">
-          <v-img class="thumbnail" :src="item.src"></v-img>
-          <v-img class="bg-blr-image" :src="item.src"></v-img>
+          <v-img class="thumbnail" :src="item.src" :lazy-src="item.src"></v-img>
+          <v-img
+            class="bg-blr-image"
+            :src="item.src"
+            :lazy-src="item.src"
+          ></v-img>
         </div>
         <div class="content">
           <div class="inner">
@@ -35,42 +39,42 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        portfolioContent: [
-          {
-            src: require("../../assets/images/portfolio/portfolio-8.jpg"),
-            meta: "Development",
-            title: "Getting tickets to the big show",
-          },
-          {
-            src: require("../../assets/images/portfolio/portfolio-7.jpg"),
-            meta: "Development",
-            title: "Getting tickets to the big show",
-          },
-          {
-            src: require("../../assets/images/portfolio/portfolio-3.jpg"),
-            meta: "Development",
-            title: "Getting tickets to the big show",
-          },
-          {
-            src: require("../../assets/images/portfolio/portfolio-4.jpg"),
-            meta: "Development",
-            title: "Getting tickets to the big show",
-          },
-          {
-            src: require("../../assets/images/portfolio/portfolio-3.jpg"),
-            meta: "Development",
-            title: "Getting tickets to the big show",
-          },
-          {
-            src: require("../../assets/images/portfolio/portfolio-2.jpg"),
-            meta: "Development",
-            title: "Getting tickets to the big show",
-          },
-        ],
-      };
-    },
-  };
+export default {
+  data() {
+    return {
+      portfolioContent: [
+        {
+          src: require("../../assets/images/portfolio/portfolio-8.jpg"),
+          meta: "Development",
+          title: "Getting tickets to the big show",
+        },
+        {
+          src: require("../../assets/images/portfolio/portfolio-7.jpg"),
+          meta: "Development",
+          title: "Getting tickets to the big show",
+        },
+        {
+          src: require("../../assets/images/portfolio/portfolio-3.jpg"),
+          meta: "Development",
+          title: "Getting tickets to the big show",
+        },
+        {
+          src: require("../../assets/images/portfolio/portfolio-4.jpg"),
+          meta: "Development",
+          title: "Getting tickets to the big show",
+        },
+        {
+          src: require("../../assets/images/portfolio/portfolio-3.jpg"),
+          meta: "Development",
+          title: "Getting tickets to the big show",
+        },
+        {
+          src: require("../../assets/images/portfolio/portfolio-2.jpg"),
+          meta: "Development",
+          title: "Getting tickets to the big show",
+        },
+      ],
+    };
+  },
+};
 </script>

@@ -8,7 +8,7 @@ export default new Vuetify({
   theme: {
     themes: {
       light: {
-        primary: "#f9004d", //aca se debe poner la variable de color de la pagina
+        primary: "#536dfe",
         success: "#3EB75E",
         accent: "#FF7F5C",
         teal: "#26B0A1",

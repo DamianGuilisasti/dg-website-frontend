@@ -14,8 +14,16 @@
               :key="i"
             >
               <div class="thumbnail-inner">
-                <v-img class="thumbnail" :src="item.src"></v-img>
-                <v-img class="bg-blr-image" :src="item.src"></v-img>
+                <v-img
+                  class="thumbnail"
+                  :src="item.src"
+                  :lazy-src="item.src"
+                ></v-img>
+                <v-img
+                  class="bg-blr-image"
+                  :src="item.src"
+                  :lazy-src="item.src"
+                ></v-img>
               </div>
               <div class="content">
                 <div class="inner">
@@ -42,78 +50,78 @@
 </template>
 
 <script>
-  import VueSlickCarousel from "vue-slick-carousel";
-  export default {
-    components: {
-      VueSlickCarousel,
-    },
-    data() {
-      return {
-        portfolioContent: [
+import VueSlickCarousel from "vue-slick-carousel";
+export default {
+  components: {
+    VueSlickCarousel,
+  },
+  data() {
+    return {
+      portfolioContent: [
+        {
+          src: require("../../assets/images/portfolio/portfolio-2.jpg"),
+          meta: "Development",
+          title: "Getting tickets to the big show",
+        },
+        {
+          src: require("../../assets/images/portfolio/portfolio-5.jpg"),
+          meta: "Development",
+          title: "Getting tickets to the big show bayazid",
+        },
+        {
+          src: require("../../assets/images/portfolio/portfolio-6.jpg"),
+          meta: "Development",
+          title: "Getting tickets to the big show iqra",
+        },
+        {
+          src: require("../../assets/images/portfolio/portfolio-7.jpg"),
+          meta: "Development",
+          title: "Getting tickets to the big show",
+        },
+        {
+          src: require("../../assets/images/portfolio/portfolio-8.jpg"),
+          meta: "Development",
+          title: "Getting tickets to the big show",
+        },
+      ],
+      // for all works
+      settings: {
+        dots: true,
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        spaceBetween: 15,
+
+        responsive: [
           {
-            src: require("../../assets/images/portfolio/portfolio-2.jpg"),
-            meta: "Development",
-            title: "Getting tickets to the big show",
+            breakpoint: 890,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: true,
+            },
           },
           {
-            src: require("../../assets/images/portfolio/portfolio-5.jpg"),
-            meta: "Development",
-            title: "Getting tickets to the big show bayazid",
+            breakpoint: 770,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: true,
+            },
           },
           {
-            src: require("../../assets/images/portfolio/portfolio-6.jpg"),
-            meta: "Development",
-            title: "Getting tickets to the big show iqra",
-          },
-          {
-            src: require("../../assets/images/portfolio/portfolio-7.jpg"),
-            meta: "Development",
-            title: "Getting tickets to the big show",
-          },
-          {
-            src: require("../../assets/images/portfolio/portfolio-8.jpg"),
-            meta: "Development",
-            title: "Getting tickets to the big show",
+            breakpoint: 490,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              initialSlide: 1,
+            },
           },
         ],
-        // for all works
-        settings: {
-          dots: true,
-          infinite: true,
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          spaceBetween: 15,
-
-          responsive: [
-            {
-              breakpoint: 890,
-              settings: {
-                slidesToShow: 3,
-                slidesToScroll: 1,
-                infinite: true,
-                dots: true,
-              },
-            },
-            {
-              breakpoint: 770,
-              settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1,
-                infinite: true,
-                dots: true,
-              },
-            },
-            {
-              breakpoint: 490,
-              settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                initialSlide: 1,
-              },
-            },
-          ],
-        },
-      };
-    },
-  };
+      },
+    };
+  },
+};
 </script>

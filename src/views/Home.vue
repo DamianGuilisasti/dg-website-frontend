@@ -50,10 +50,12 @@
                     <v-img
                       class="thumbnail"
                       :src="item.portfolioimages[0].url"
+                      :lazy-src="item.portfolioimages[0].url"
                     ></v-img>
                     <v-img
                       class="bg-blr-image"
                       :src="item.portfolioimages[0].url"
+                      :lazy-src="item.portfolioimages[0].url"
                     ></v-img>
                   </div>
                   <div class="content">
@@ -159,7 +161,7 @@
     <!-- End Service Area -->
 
     <!-- Start Portfolio Area -->
-<!--     <v-container fluid v-if="portfolios.length > 0">
+    <!--     <v-container fluid v-if="portfolios.length > 0">
       <div
         class="section rn-portfolio-area rn-section-gap bg_color--1"
         id="portfolio"
@@ -257,7 +259,7 @@
     <!-- End Blog Area  -->
 
     <!-- Start Call to action Area  -->
-    <CallToAction v-if="calltoactions > 0" />
+    <CallToAction v-if="calltoactions[0].backgroundImg.url.length > 0" />
     <!-- End Call to action Area  -->
 
     <!-- Start Contact Area  -->
@@ -481,11 +483,6 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
-    },
-  },
-  computed: {
-    calltoactions() {
-      return this.calltoactions[0].backgroundImg.url;
     },
   },
   created() {
